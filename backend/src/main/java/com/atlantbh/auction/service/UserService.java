@@ -20,4 +20,7 @@ public class UserService implements BaseService<User> {
 
         return null;
     }
+    public User saveOrUpdateUser(User user){
+        return userRepository.save(user);
+    }
 }

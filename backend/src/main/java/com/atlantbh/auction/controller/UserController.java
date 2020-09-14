@@ -23,4 +23,9 @@ public class UserController extends BaseController<User>{
         super(userService);
     }
 
+    @PostMapping("")
+    public ResponseEntity<User> create(@RequestBody User user){
+        User user1 = userService.saveOrUpdateUser(user);
+        return new ResponseEntity<User>(user, HttpStatus.CREATED);
+    }
 }
