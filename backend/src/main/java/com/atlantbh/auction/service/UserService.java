@@ -5,22 +5,40 @@ import com.atlantbh.auction.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class UserService implements BaseService<User> {
+public class UserService extends BaseService<User, Long, UserRepository> {
 
     @Autowired
     private UserRepository userRepository;
 
-    /**
-     *
-     *todo- implementations of methods
-     */
     @Override
     public User getById(Long requestId) {
+        return userRepository.get(requestId);
+    }
 
-        return null;
+    @Override
+    public void create(User obj) {
+         userRepository.add(obj);
     }
-    public User saveOrUpdateUser(User user){
-        return userRepository.save(user);
+
+    @Override
+    public User update (User user) {
+        return userRepository.update(user);
     }
+
+    @Override
+    public void delete(User user) {
+        userRepository.delete(user);
+    }
+
+    @Override
+    public List<User> getAll() {
+        return userRepository.getAll();
+    }
+
+
+
+
 }

@@ -3,8 +3,12 @@ package com.atlantbh.auction.model;
 import javax.persistence.Entity;
 import java.util.Date;
 
+/**
+ * User is the main entity we'll be using to register and log in to our application
+ * @author Harun Hasic
+ */
 @Entity
-public class User extends BaseModel{
+public class User extends BaseModel<User, Long> {
 
     private String firstName;
     private String lastName;
@@ -14,7 +18,6 @@ public class User extends BaseModel{
     private String gender;
     private Date birthDate;
     private String profilePhoto;
-
 
     public String getFirstName() {
         return firstName;
@@ -80,5 +83,15 @@ public class User extends BaseModel{
         this.profilePhoto = profilePhoto;
     }
 
+    @Override
+    public void update() {
 
+    }
+
+    @Override
+    public User duplicate() {
+        return null;
+    }
+
+//todo
 }

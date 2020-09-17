@@ -1,9 +1,18 @@
 package com.atlantbh.auction.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
-public interface BaseService<T> {
-    T getById(Long requestId);
 
+
+public abstract class BaseService<M ,I,R> {
+
+    public abstract M getById(I requestId);
+
+    public abstract void create(M obj);
+
+    public abstract M update(M obj);
+
+    public abstract void delete(M obj);
+
+    public abstract List<M> getAll();
 }

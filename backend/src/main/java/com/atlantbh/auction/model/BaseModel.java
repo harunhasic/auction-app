@@ -1,22 +1,30 @@
 package com.atlantbh.auction.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Entity
-public class BaseModel {
+/**
+ * BaseModel is the main generic class used for deriving and making entity classes
+ * @author Harun Hasic
+ */
+@MappedSuperclass
+public abstract class BaseModel<M,I> {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+     protected I id;
 
-    public Long getId() {
+
+    public I getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(I id) {
         this.id = id;
     }
+
+    public abstract void update();
+    public abstract M duplicate();
+
+
 }
