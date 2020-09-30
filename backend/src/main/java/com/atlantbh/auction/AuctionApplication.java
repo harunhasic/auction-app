@@ -1,9 +1,12 @@
 package com.atlantbh.auction;
 
 
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+
+;
 
 @SpringBootApplication
 @ComponentScan("com.atlantbh.auction.*")
@@ -13,5 +16,4 @@ public class AuctionApplication {
 		SpringApplication.run(AuctionApplication.class, args);
 
 	}
-
 }

@@ -1,14 +1,59 @@
 package com.atlantbh.auction.repository;
 
+import com.atlantbh.auction.exceptions.RepositoryException;
 import com.atlantbh.auction.model.User;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
+import java.util.List;
 
+/**
+ * repository for the User entity..
+ *
+ * @author Harun Hasic
+ */
 @Repository
 public class UserRepository extends BaseRepositoryImpl<User, Long> {
 
-    public UserRepository(){
-        super(User.class);
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Transactional
+    public List<User> getAll() throws RepositoryException {
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<User> cq = cb.createQuery(User.class);
+            Root<User> rootEntry = cq.from(User.class);
+            CriteriaQuery<User> all = cq.select(rootEntry);
+            TypedQuery<User> allQuery = entityManager.createQuery(all);
+            return allQuery.getResultList();
+        } catch (Exception e) {
+            throw new RepositoryException("An error occured while trying to get all the objects");
+        }
     }
 
+    @Transactional
+    public User findByEmail(String email) throws RepositoryException {
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<User> q = cb.createQuery(User.class);
+            Root<User> resource = q.from(User.class);
+            q.select(resource);
+            Predicate predicateForEmail = cb.equal(resource.get("email"), email);
+            q.where(predicateForEmail);
+
+            User result = entityManager.createQuery(q).getSingleResult();
+
+            return result;
+        } catch (Exception e) {
+            throw new RepositoryException("The user with this " + email + "could not be found");
+        }
+    }
 }

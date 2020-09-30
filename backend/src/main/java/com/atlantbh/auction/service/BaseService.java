@@ -1,18 +1,55 @@
 package com.atlantbh.auction.service;
 
+import com.atlantbh.auction.exceptions.RepositoryException;
+import com.atlantbh.auction.exceptions.ServiceException;
+import com.atlantbh.auction.model.BaseModel;
+import com.atlantbh.auction.repository.BaseRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.List;
 
+/**
+ * The base service for bussiness logic, all other services will extend this one..
+ *
+ * @author Harun Hasic
+ */
 
+public class BaseService<M extends BaseModel<M, I>, I, R extends BaseRepository<M, I>> {
 
-public abstract class BaseService<M ,I,R> {
+    @Autowired
+    protected R repository;
 
-    public abstract M getById(I requestId);
+    public M getById(I requestId) throws ServiceException {
+        try {
+            return repository.get(requestId);
+        } catch (RepositoryException e) {
+            throw new ServiceException("There was an error while accessing this id" + requestId);
+        }
 
-    public abstract void create(M obj);
+    }
 
-    public abstract M update(M obj);
+    public M create(M entity) throws ServiceException {
+        try {
+            return repository.save(entity);
+        } catch (RepositoryException e) {
+            throw new ServiceException("There was an error while creating this user");
+        }
+    }
 
-    public abstract void delete(M obj);
+    public M update(M entity) throws ServiceException {
+        try {
+            return repository.update(entity);
+        } catch (RepositoryException e) {
+            throw new ServiceException("There was an error while updating the user with this id" + entity.getId());
+        }
+    }
 
-    public abstract List<M> getAll();
+    public void delete(I id) throws ServiceException {
+        try {
+            repository.delete(id);
+        } catch (RepositoryException e) {
+            throw new ServiceException("There was an error while trying to delete an user with this id" + id);
+        }
+    }
+
 }

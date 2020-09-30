@@ -1,20 +1,22 @@
 package com.atlantbh.auction.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 /**
- * BaseModel is the main generic class used for deriving and making entity classes
+ * main generic class used for deriving and making entity classes..
+ *
  * @author Harun Hasic
  */
 @MappedSuperclass
-public abstract class BaseModel<M,I> {
-
+public abstract class BaseModel<M, I> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-     protected I id;
+    protected I id;
 
-
+    @NotNull
     public I getId() {
         return id;
     }
@@ -23,8 +25,7 @@ public abstract class BaseModel<M,I> {
         this.id = id;
     }
 
-    public abstract void update();
-    public abstract M duplicate();
+    public abstract void update(M obj);
 
-
+    public abstract M duplicate(M obj);
 }

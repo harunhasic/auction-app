@@ -1,11 +1,26 @@
 package com.atlantbh.auction.repository;
 
-import java.util.List;
+import com.atlantbh.auction.exceptions.RepositoryException;
+import com.atlantbh.auction.model.BaseModel;
 
-public interface BaseRepository<M, I> {
-    public void add(M entityClass);
-    public M update(M entityClass);
-    public void delete(M obj);
-    public M get(I id);
-    public List<M> getAll();
+/**
+ * The base repository interface that needs to be implemented..
+ *
+ * @param <M> represents entity/model
+ * @param <I> represents models id
+ * @author Harun Hasic
+ */
+
+public interface BaseRepository<M extends BaseModel<M, I>, I> {
+
+    M save(M entity) throws RepositoryException;
+
+    M update(M entity) throws RepositoryException;
+
+    void delete(I id) throws RepositoryException;
+
+    M findById(I id);
+
+    M get(I id) throws RepositoryException;
+
 }
