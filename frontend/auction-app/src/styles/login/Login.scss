@@ -52,6 +52,15 @@ $font-stack: "Lato", sans-serif;
   color: #9b9b9b;
 }
 
+.input-field {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  height: 54px;
+  border: 1px solid #d8d8d8;
+  background-color: #fcfcfc;
+}
+
 .base-field {
   margin-top: 30px;
 }
