@@ -9,15 +9,15 @@ import PasswordField from '../core/PasswordField';
 
 
 
- class Login extends Component {
-  
+class Login extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
       loading: false,
-      message: ""
+      message: ''
     };
 
     this.authService = new AuthService();
@@ -47,7 +47,7 @@ import PasswordField from '../core/PasswordField';
     e.preventDefault();
 
     this.setState({
-      message: "",
+      message: '',
       loading: true
     });
     this.form.validateAll();
@@ -90,17 +90,17 @@ import PasswordField from '../core/PasswordField';
           }}
         >
           <div className="form-group">
-            <EmailField id={"email"} name={"email"} label={"Enter Email"} className={"input-field"} type={"text"} onChange={this.onChangeUsername}/>
+            <EmailField id={"email"} name={"email"} label={"Enter Email"} className={"input-field"} type={"text"} onChange={this.onChangeUsername} />
           </div>
           <small>
-                   <label className={"error"}>{this.state.message}</label>
-           </small>
+            <label className={"error"}>{this.state.message}</label>
+          </small>
           <div className="form-group">
-            <PasswordField id={"password"} name={"password"} label={"Enter Password"} className={"input-field"} type={"password"} onChange={this.onChangePassword}/>
+            <PasswordField id={"password"} name={"password"} label={"Enter Password"} className={"input-field"} type={"password"} onChange={this.onChangePassword} />
           </div>
-             <small>
-                   <label className={"error"}>{this.state.message}</label>
-             </small>
+          <small>
+            <label className={"error"}>{this.state.message}</label>
+          </small>
           <div className="form-group">
             <button
               className="button"

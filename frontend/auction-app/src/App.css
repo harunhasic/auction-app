@@ -127,7 +127,7 @@ h3 {
   color: #417505;
 }
 
-/*--------------BREADCRUMB--------------*/
+/* bracdcrumb */
 
 .breadcrumb {
   background: #fafafa;
@@ -138,8 +138,9 @@ h3 {
   height: 60px;
   align-items: center;
   border-radius: 0;
-  margin-bottom: 40px;
   position: relative;
+  margin-bottom: 40px;
+
 }
 
 .breadcrumb-title {
@@ -162,17 +163,4 @@ h3 {
     padding-left: 1%;
     padding-right: 1%;
   }
-}
-
-.breadcrumb-item > a {
-  font-weight: lighter;
-  color: #252525;
-}
-
-.breadcrumb-item > a:hover {
-  font-weight: normal;
-}
-
-.breadcrumb-item.active {
-  color: #252525;
 }
