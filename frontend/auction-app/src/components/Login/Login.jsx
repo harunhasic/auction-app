@@ -84,6 +84,7 @@ class Login extends Component {
           LOGIN
             </div>
         <Form className="login-form"
+          initialValues={{ email: rememberInfo.email || "", password: rememberInfo.password || "", remember: rememberInfo.email !== null }}
           onSubmit={this.handleLogin}
           ref={c => {
             this.form = c;

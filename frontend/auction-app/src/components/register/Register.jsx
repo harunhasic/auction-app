@@ -4,7 +4,7 @@ import AuthService from '../../Services/auth-service'
 import Form from 'react-validation/build/form';
 import CheckButton from 'react-validation/build/button';
 import EmailField from '../core/EmailInput';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PasswordField from '../core/PasswordField';
 import FirstNameField from '../core/NameField';
 import LastNameField from '../core/LastNameField';
