@@ -6,16 +6,12 @@ import org.hibernate.Session;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.lang.reflect.ParameterizedType;
-import java.util.List;
 
 /**
- * The base repository implementation used for data handling and db interaction
+ * Implementation of the base repository interface. It is used
+ * for database interaction.
  *
  * @param <M> represents entity/model
  * @param <I> represents models id
@@ -25,13 +21,13 @@ import java.util.List;
 public class BaseRepositoryImpl<M extends BaseModel<M, I>, I> implements BaseRepository<M, I> {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    protected EntityManager entityManager;
 
     private Class<M> getParameterType() {
         return (Class<M>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
-    public Session getSession() {
+    private Session getSession() {
         return entityManager.unwrap(Session.class);
     }
 
@@ -43,30 +39,40 @@ public class BaseRepositoryImpl<M extends BaseModel<M, I>, I> implements BaseRep
             entityManager.flush();
             return entity;
         } catch (Exception e) {
-            throw new RepositoryException("The object could not be saved.");
+            throw new RepositoryException("The object could not be saved.", e);
         }
     }
 
     @Override
     @Transactional
-    public M update(M obj) throws RepositoryException {
+    public M update(M entity) throws RepositoryException {
         try {
-            entityManager.merge(obj);
+            entityManager.merge(entity);
             entityManager.flush();
-            return obj;
+            return entity;
         } catch (Exception e) {
-            throw new RepositoryException("This object could not be updated " + obj.getId());
+            throw new RepositoryException("This object could not be updated " + entity.getId(), e);
         }
     }
 
     @Override
     @Transactional
-    public void delete(I id) throws RepositoryException {
+    public void deleteById(I id) throws RepositoryException {
         try {
             M obj = findById(id);
             getSession().delete(obj);
         } catch (Exception e) {
-            throw new RepositoryException("There was an error while deleting this user " + id);
+            throw new RepositoryException("There was an error while deleting user  with id " + id, e);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void delete(M obj) throws RepositoryException {
+        try {
+            getSession().remove(getSession().contains(obj) ? obj : getSession().merge(obj));
+        } catch (Exception e) {
+            throw new RepositoryException("There was a problem with the deletion of this user", e);
         }
     }
 
@@ -76,7 +82,7 @@ public class BaseRepositoryImpl<M extends BaseModel<M, I>, I> implements BaseRep
         try {
             return entityManager.find(getParameterType(), id);
         } catch (Exception e) {
-            throw new RepositoryException("There was an error while returning this user" + id);
+            throw new RepositoryException("There was an error while returning this user" + id, e);
         }
     }
 

@@ -4,13 +4,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
+/**
+ * Model that is used as an address property of the users of the application.
+ *
+ * @author Harun Hasic
+ */
 @Entity
 @Table(name = "address")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Address {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class Address extends BaseModel<Address, Long> {
 
     private String street;
     private String city;
@@ -20,11 +22,11 @@ public class Address {
     public Address() {
     }
 
-    public Address(String street, String city, String state, String country, String zip) {
+    public Address(String street, String city, String state, String country, String zipCode) {
         this.street = street;
         this.city = city;
         this.country = country;
-        this.zipCode = zip;
+        this.zipCode = zipCode;
     }
 
     public String getStreet() {
@@ -57,5 +59,15 @@ public class Address {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    @Override
+    public void update(Address obj) {
+
+    }
+
+    @Override
+    public Address duplicate(Address obj) {
+        return null;
     }
 }

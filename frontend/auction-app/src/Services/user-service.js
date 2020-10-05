@@ -3,14 +3,11 @@ import axios from 'axios';
 
 export default class UserService extends BaseService {
 
-  getPublicContent() {
-    return axios.get(this.BASE_URL + '');
-  }
-
-  getUserBoard() {
+  getByMail(email) {
     return this.authorizedApi({
       method: 'GET',
-      url: '/user'
+      url: '/api/users/' + email
     });
   }
+
 }

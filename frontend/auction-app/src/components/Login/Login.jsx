@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import EmailField from '../core/EmailInput'
 import { withRouter } from 'react-router-dom'
 import '../../styles/login/Login.scss';
-import AuthService from '../../Services/auth-service';
+import AuthService from '../../services/auth-service';
+import UserService from '../../services/user-service';
 import Form from 'react-validation/build/form';
 import CheckButton from 'react-validation/build/button';
 import PasswordField from '../core/PasswordField';
-
+import { saveUser } from '../../utils/LocalStorageUtils';
 
 
 class Login extends Component {
@@ -14,28 +15,29 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
+      email: '',
       password: '',
       loading: false,
       message: ''
     };
 
     this.authService = new AuthService();
+    this.userService = new UserService();
 
     this.handleLogin = this.handleLogin.bind(this);
-    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
   }
 
-  onChangeUsername(e) {
+  onChangeEmail(e) {
     this.setState({
-      username: e.target.value
+      email: e.target.value
     });
   }
-  toProfile() {
-    this.props.history.push('/home');
-  }
 
+  toProfile() {
+    this.props.history.push('/profile');
+  }
 
   onChangePassword(e) {
     this.setState({
@@ -54,53 +56,64 @@ class Login extends Component {
 
     if (!this.checkBtn.context._errors.length) {
       const user = {
-        email: this.state.username,
+        email: this.state.email,
         password: this.state.password
       };
       this.authService.login(user).then(() => {
         this.toProfile();
-        window.location.reload();
-      },
-        error => {
-          this.setState({
-            loading: false,
-            message: error.toString()
-          });
-        }
-
-      );
+        this.userService.getByMail(user.email).then(response => {
+          saveUser(response.data);
+          window.location.reload();
+        });
+      }).catch(error => {
+        this.setState({
+          loading: false,
+          message: 'The email and password you entered did not match our records. Please double-check and try again'
+        });
+      });
     } else {
       this.setState({
         loading: false
       });
     }
-  };
+  }
+
   render() {
     const { match, location, history } = this.props;
     return (
-
       <div className="login-container">
         <div className="login-title">
           LOGIN
             </div>
         <Form className="login-form"
-          initialValues={{ email: rememberInfo.email || "", password: rememberInfo.password || "", remember: rememberInfo.email !== null }}
           onSubmit={this.handleLogin}
-          ref={c => {
-            this.form = c;
+          ref={ref => {
+            this.form = ref;
           }}
         >
           <div className="form-group">
-            <EmailField id={"email"} name={"email"} label={"Enter Email"} className={"input-field"} type={"text"} onChange={this.onChangeUsername} />
+            <EmailField
+              id="email"
+              name="email"
+              label="Enter Email"
+              className="form-control"
+              type="text"
+              onChange={this.onChangeEmail}
+            />
           </div>
-          <small>
-            <label className={"error"}>{this.state.message}</label>
-          </small>
+
           <div className="form-group">
-            <PasswordField id={"password"} name={"password"} label={"Enter Password"} className={"input-field"} type={"password"} onChange={this.onChangePassword} />
+            <PasswordField
+              id="password"
+              name="password"
+              label="Enter password"
+              className="form-control"
+              type={"password"}
+              onChange={this.onChangePassword}
+            />
           </div>
           <small>
-            <label className={"error"}>{this.state.message}</label>
+            <label className="error">{this.state.message}</label>
           </small>
           <div className="form-group">
             <button
@@ -113,16 +126,14 @@ class Login extends Component {
             </button>
           </div>
           <CheckButton
-            style={{ display: "none" }}
-            ref={c => {
-              this.checkBtn = c;
+            className="btn-display"
+            ref={ref => {
+              this.checkBtn = ref;
             }}
           />
         </Form>
       </div>
-
     )
-
   }
 }
 export default withRouter(Login);

@@ -10,7 +10,6 @@ $font-stack: "Lato", sans-serif;
   height: 40px;
   color: white;
   font-size: 14px;
-  font-weight: bold;
   letter-spacing: 0.49px;
   padding-right: 11.1%;
   padding-left: 11.1%;
@@ -112,31 +111,15 @@ a:hover {
   text-decoration: none;
 }
 
-.purple-nav-link {
-  color: $purple-color;
-}
-
-.purple-nav-link:hover {
-  color: #573bac;
-}
-
-.white-nav-link {
-  color: white;
-}
-
-.white-nav-link:hover {
-  color: lightgray;
-}
-
-.black-nav-link {
+.dark-nav-link {
   color: #252525;
 }
 
-.black-nav-link:hover {
+.dark-nav-link:hover {
   color: $purple-color;
 }
 
-.black-active-nav-link {
+.dark-active-nav-link {
   color: $purple-color;
   font-weight: bold;
 }
@@ -144,3 +127,27 @@ a:hover {
 .hello-user {
   margin-right: 30px;
 }
+.auction-fill {
+  color: #c4bfd6;
+  margin-right: 5;
+}
+
+.welcome-msg {
+  font-size: 16px;
+}
+
+.name-msg {
+  margin-left: 5px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.dropdown-arrow {
+  background-color: #252525;
+  border: none;
+  margin-left: -15px;
+}
+.dropdown-arrow:hover, .dropdown-arrow:active {
+  background-color: transparent;
+}
+

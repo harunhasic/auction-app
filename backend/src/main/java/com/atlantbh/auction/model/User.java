@@ -1,5 +1,6 @@
 package com.atlantbh.auction.model;
 
+import com.atlantbh.auction.model.dto.RegisterRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -9,13 +10,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 /**
- * the main entity used to register and log in to our application..
+ * Model that is used for describing the main users of this application.
  *
  * @author Harun Hasic
  */
@@ -25,17 +25,9 @@ public class User extends BaseModel<User, Long> implements UserDetails {
 
     @ElementCollection(fetch = FetchType.EAGER)
     List<Role> roles;
-    @NotBlank(message = "User name is required!")
-    @Column(name = "first_name")
     private String firstName;
-    @NotBlank(message = "User name is required!")
-    @Column(name = "last_name")
     private String lastName;
-    @Email(message = "Valid email is required")
-    @NotBlank(message = "email is required")
-    @Column(unique = true)
     private String email;
-    @NotBlank(message = "User password is required!")
     private String password;
     private String phoneNumber;
     private String gender;
@@ -51,15 +43,22 @@ public class User extends BaseModel<User, Long> implements UserDetails {
 
     }
 
-    public User(@NotBlank String firstName, @NotBlank String lastName, @NotBlank String email, @NotBlank String password) {
-        super();
+    public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
     }
 
-    @NotNull
+    public User(RegisterRequest registerRequest) {
+        this.firstName = registerRequest.getFirstName();
+        this.lastName = registerRequest.getLastName();
+        this.email = registerRequest.getEmail();
+        this.password = registerRequest.getPassword();
+    }
+
+    @NotBlank(message = "User first name is required!")
+    @Column(name = "first_name")
     public String getFirstName() {
         return firstName;
     }
@@ -68,7 +67,8 @@ public class User extends BaseModel<User, Long> implements UserDetails {
         this.firstName = firstName;
     }
 
-    @NotNull
+    @NotBlank(message = "Users last name is required.")
+    @Column(name = "last_name")
     public String getLastName() {
         return lastName;
     }
@@ -77,7 +77,9 @@ public class User extends BaseModel<User, Long> implements UserDetails {
         this.lastName = lastName;
     }
 
-    @NotNull
+    @Email(message = "Valid email is required")
+    @Column(unique = true)
+    @NotBlank(message = "Users email is required.")
     public String getEmail() {
         return email;
     }
@@ -109,7 +111,8 @@ public class User extends BaseModel<User, Long> implements UserDetails {
     }
 
     @Override
-    @NotNull
+    @NotBlank(message = "User password is required!")
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -175,13 +178,14 @@ public class User extends BaseModel<User, Long> implements UserDetails {
     public void update(User model) {
         firstName = model.firstName;
         lastName = model.lastName;
-        gender = model.gender;
+        password = model.password;
+        email = model.email;
+        profilePhotoUrl = model.profilePhotoUrl;
+        address = model.address;
     }
 
     @Override
     public User duplicate(User obj) {
         return null;
     }
-
-//todo
 }

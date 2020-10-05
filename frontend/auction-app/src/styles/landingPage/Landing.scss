@@ -1,0 +1,15 @@
+.landing-page-top-container {
+    background: #FAFAFA;
+    min-height: 563px;
+    margin-left: -14.3%;
+    margin-right: -14.3%;
+    padding-left: 14.3%;
+    padding-right: 14.3%;
+    display: flex;
+}
+
+@media (max-width: 575px) {
+    .landing-page-top-container {
+        flex-wrap: wrap;
+    }
+}

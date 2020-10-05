@@ -2,6 +2,9 @@ package com.atlantbh.auction.security;
 
 import com.atlantbh.auction.model.User;
 import io.jsonwebtoken.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -9,14 +12,22 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.atlantbh.auction.security.JwtProperties.EXPIRATION_TIME;
-import static com.atlantbh.auction.security.JwtProperties.SECRET;
 
 @Component
 public class JwtTokenProvider {
 
-    //Generate the token
+    private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenProvider.class);
 
+    @Value("${jwt.secret}")
+    private String secret;
+
+    private String id = "id";
+    private String username = "username";
+    private String firstName = "firstName";
+
+    public static final long EXPIRATION_TIME = 900_000;
+
+    //Generate the token
     public String generateToken(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         Date now = new Date(System.currentTimeMillis());
@@ -26,41 +37,39 @@ public class JwtTokenProvider {
         String userId = Long.toString(user.getId());
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put("id", (Long.toString(user.getId())));
-        claims.put("username", user.getUsername());
-        claims.put("firstName", user.getFirstName());
+        claims.put(id, (Long.toString(user.getId())));
+        claims.put(username, user.getUsername());
+        claims.put(firstName, user.getFirstName());
 
         return Jwts.builder()
                 .setSubject(userId)
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .signWith(SignatureAlgorithm.HS512, SECRET)
+                .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
 
-    //Validate the token
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token);
+            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
             return true;
-        } catch (SignatureException ex) {
-            System.out.println("Invalid JWT Signature");
-        } catch (MalformedJwtException ex) {
-            System.out.println("Invalid JWT Token");
-        } catch (ExpiredJwtException ex) {
-            System.out.println("Expired JWT token");
-        } catch (UnsupportedJwtException ex) {
-            System.out.println("Unsupported JWT token");
-        } catch (IllegalArgumentException ex) {
-            System.out.println("JWT claims string is empty");
+        } catch (SignatureException e) {
+            LOGGER.error("Invalid JWT Signature", e);
+        } catch (MalformedJwtException e) {
+            LOGGER.error("Invalid JWT Token", e);
+        } catch (ExpiredJwtException e) {
+            LOGGER.error("Expired JWT Token", e);
+        } catch (UnsupportedJwtException e) {
+            LOGGER.error("Unsupported JWT Token", e);
+        } catch (IllegalArgumentException e) {
+            LOGGER.error("JWT Claims String is empty", e);
         }
         return false;
     }
 
-    //Get user Id from token
     public Long getUserIdFromJWT(String token) {
-        Claims claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
+        Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
         String id = (String) claims.get("id");
         return Long.parseLong(id);
     }

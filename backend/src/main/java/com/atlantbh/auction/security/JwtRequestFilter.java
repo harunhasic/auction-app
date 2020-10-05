@@ -1,8 +1,9 @@
 package com.atlantbh.auction.security;
 
 import com.atlantbh.auction.model.User;
-import com.atlantbh.auction.service.CustomUserDetailsService;
+import com.atlantbh.auction.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -17,8 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 
-import static com.atlantbh.auction.security.JwtProperties.HEADER_STRING;
-import static com.atlantbh.auction.security.JwtProperties.TOKEN_PREFIX;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
@@ -27,7 +26,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private JwtTokenProvider tokenProvider;
 
     @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    private UserService userService;
+
+    @Value("${header.string}")
+    private String header;
+
+    @Value("${token.prefix}")
+    private String tokenPrefix;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
@@ -39,14 +44,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
                 Long userId = tokenProvider.getUserIdFromJWT(jwt);
-                User userDetails = customUserDetailsService.loadUserById(userId);
+                User userDetails = userService.loadUserById(userId);
 
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, Collections.emptyList());
 
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-
             }
 
         } catch (Exception ex) {
@@ -57,9 +61,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     }
 
     private String getJWTFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader(HEADER_STRING);
+        String bearerToken = request.getHeader(header);
 
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(TOKEN_PREFIX)) {
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(tokenPrefix)) {
             return bearerToken.substring(7);
         }
 

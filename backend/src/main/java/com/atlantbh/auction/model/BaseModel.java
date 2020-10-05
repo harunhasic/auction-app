@@ -2,11 +2,11 @@ package com.atlantbh.auction.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 /**
- * main generic class used for deriving and making entity classes..
- *
+ * Represents a base model we'll be extending by all other models of this application.
+ * Assigns an unique ID of specified type to each model entry that extends this class.
+ * ID type is specified in the extended class, in the <> braces.
  * @author Harun Hasic
  */
 @MappedSuperclass
@@ -16,7 +16,7 @@ public abstract class BaseModel<M, I> {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected I id;
 
-    @NotNull
+    @NotNull(message = "Table ID cannot be null.")
     public I getId() {
         return id;
     }

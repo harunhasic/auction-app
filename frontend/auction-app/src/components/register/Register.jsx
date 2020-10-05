@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import '../../styles/register/Register.scss'
-import AuthService from '../../Services/auth-service'
+import AuthService from '../../services/auth-service'
 import Form from 'react-validation/build/form';
 import CheckButton from 'react-validation/build/button';
 import EmailField from '../core/EmailInput';
 import { Link } from 'react-router-dom';
 import PasswordField from '../core/PasswordField';
-import FirstNameField from '../core/NameField';
-import LastNameField from '../core/LastNameField';
+import NameField from '../core/NameField';
 
 export default class Register extends Component {
 
@@ -41,9 +40,7 @@ export default class Register extends Component {
       );
     }
   }
-  setErrorMessage(errorMessage) {
-    errorMessage = "Invalid information"
-  }
+
   onChangeFirstName(e) {
     this.setState({
       firstName: e.target.value
@@ -82,32 +79,26 @@ export default class Register extends Component {
       password: this.state.password
     }
     if (!this.checkBtn.context._errors.length) {
-      this.authService.register(
-        params
-      ).then(
-        response => {
-          this.setState({
-            message: response.data.message,
-            successful: true
-          });
-        },
-        error => {
-          this.setState({
-            successful: false,
-            message: error.toString()
-          });
-        }
-      );
-    };
+      this.authService.register(params).then(response => {
+        this.setState({
+          message: response.data.message,
+          successful: true
+        });
+      }).catch(error => {
+        this.setState({
+          successful: false,
+          message: 'User registration failed, please try again.'
+        });
+      });
+    }
   }
 
   render() {
     return (
-
       <div className="register-container">
         <div className="register-title">
           REGISTER
-  </div>
+        </div>
         <Form className='register-form'
           onSubmit={this.handleRegister}
           ref={c => {
@@ -117,46 +108,44 @@ export default class Register extends Component {
           {!this.state.successful && (
             <div>
               <div className="form-group">
-                <FirstNameField
-                  id={"firstName"}
-                  name={"firstName"}
-                  type={"text"}
-                  label={"First Name"}
-                  className={"input-field"}
+                <NameField
+                  id="firstName"
+                  name="firstName"
+                  type="text"
+                  label="First Name"
+                  className="form-control"
                   value={this.state.firstName}
                   onChange={(e) => this.onChangeFirstName(e)}
                 />
-
                 <div className="form-group">
-                  <LastNameField
-                    id={"lastName"}
-                    name={"lastName"}
-                    type={"text"}
-                    label={"Last Name"}
-                    className={"input-field"}
+                  <NameField
+                    id="lastName"
+                    name="lastName"
+                    type="text"
+                    label="Last Name"
+                    className="form-control"
                     value={this.state.lastName}
                     onChange={(e) => this.onChangeLastName(e)}
                   />
-
                 </div>
                 <div className="form-group">
                   <EmailField
-                    id={"email"}
-                    name={"email"}
-                    type={"email"}
-                    label={"Email"}
-                    className={"input-field"}
+                    id="email"
+                    name="email"
+                    type="email"
+                    label="Email"
+                    className="form-control"
                     value={this.state.email}
                     onChange={(e) => this.onChangeEmail(e)}
                   />
                 </div>
                 <div className="form-group">
                   <PasswordField
-                    id={"password"}
-                    name={"password"}
-                    type={"password"}
-                    label={"Password"}
-                    className={"input-field"}
+                    id="password"
+                    name="password"
+                    type="password"
+                    label="Password"
+                    className="form-control"
                     value={this.state.password}
                     onChange={(e) => this.onChangePassword(e)}
                     validation={this.isRequired}
@@ -191,12 +180,11 @@ export default class Register extends Component {
           <div className="already-registered">
             Already have an account?
               <Link className="purple-nav-link nav-link" to="/login">
-              Login
+                Login
               </Link>
           </div>
         </Form>
       </div>
-
     )
   }
 }

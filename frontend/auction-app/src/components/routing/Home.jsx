@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import UserService from '../../Services/user-service';
+import UserService from '../../services/user-service';
 
 export default class Home extends Component {
   constructor(props) {
@@ -22,10 +22,7 @@ export default class Home extends Component {
       },
       error => {
         this.setState({
-          content:
-            (error.response && error.response.data) ||
-            error.message ||
-            error.toString()
+          content:error.toString()       
         });
       }
     );
@@ -43,8 +40,8 @@ export default class Home extends Component {
                 }
               </div>
             ))
-
-          }</h3>
+          }
+          </h3>
         </header>
       </div>
     );

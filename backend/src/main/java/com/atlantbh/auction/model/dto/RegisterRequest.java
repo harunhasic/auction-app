@@ -6,18 +6,18 @@ import javax.validation.constraints.Size;
 
 public class RegisterRequest {
 
-    @NotBlank(message = "First name can't be blank")
+    @NotBlank(message = "First name can't be empty")
     private String firstName;
 
-    @NotBlank(message = "Last name can't be blank")
+    @NotBlank(message = "Last name can't be empty")
     private String lastName;
 
-    @NotBlank(message = "Email can't be blank")
+    @NotBlank(message = "Email can't be empty")
     @Email(message = "Wrong email format")
     private String email;
 
-    @NotBlank(message = "Password can't be blank")
-    @Size(min = 6, message = "Password needs at least 6 characters")
+    @NotBlank(message = "Password can't be empty")
+    @Size(min = 8, message = "Password needs to be at least 8 characters long")
     private String password;
 
     public String getFirstName() {

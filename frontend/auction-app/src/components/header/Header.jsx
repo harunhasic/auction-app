@@ -2,15 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { SiFacebook, SiTwitter, SiInstagram } from 'react-icons/si';
 import { Link, NavLink } from 'react-router-dom';
 import '../../styles/header/Header.scss';
-import { FormControl, Nav, Navbar } from 'react-bootstrap';
-import { validToken, removeSession } from '../../Services/CommonService'
+import { FormControl, Nav, Navbar, Dropdown } from 'react-bootstrap';
+import { isTokenValid, removeSession } from '../../utils/LocalStorageUtils'
 import { RiAuctionFill } from 'react-icons/ri';
-import { GrFormSearch } from 'react-icons/gr';
+
+export const getUserName = () => {
+    const user = localStorage.getItem('auctionapp-user');
+    console.log(user);
+    return user ? JSON.parse(user).firstName : null;
+}
+
 
 const Header = ({ loggedInState }) => {
 
-    const [isLoggedIn, setLoggedIn] = useState(validToken());
-
+    const [isLoggedIn, setLoggedIn] = useState(isTokenValid());
 
     const handleLogout = () => {
         setLoggedIn(false);
@@ -20,67 +25,65 @@ const Header = ({ loggedInState }) => {
     useEffect(() => {
         if (loggedInState !== null)
             setLoggedIn(!isLoggedIn);
-
     }, [loggedInState]);
 
-
     return (
-        <>
+        <div>
             <div className="header-container">
                 <div className="socials-container">
-                    {/* <a className="social-link"  rel="noopener noreferrer" href="https://www.facebook.com/AtlantBH" target="_blank">
-                        <SiFacebook />
-                    </a>
-                    <a className="social-link"  rel="noopener noreferrer" href="https://twitter.com/atlantbh" target="_blank">
-                        <SiTwitter />
-                    </a>
-                    <a className="social-link"  rel="noopener noreferrer" href="https://www.instagram.com/atlantbh" target="_blank">
-                        <SiInstagram />
-                    </a> */}
                 </div>
                 <Nav>
                     {isLoggedIn ?
                         (
-                            <>
-                                <Link className="header-logout" onClick={handleLogout} to="/">
-                                    Log out
-                                </Link>
-                            </>
+                            <div>
+                                <div className="row">
+                                    <div className="welcome-msg">Welcome, </div>
+                                    <div className="name-msg">{getUserName()}</div>
+                                    <Dropdown className="col">
+                                        <Dropdown.Toggle
+                                            size="sm"
+                                            variant="secondary"
+                                            id="dropdown-basic"
+                                            className="dropdown-arrow"
+                                        >
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu>
+                                            <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                </div>
+                            </div>
                         ) :
                         (
-                            <>
+                            <div>
                                 <div className="login-account">
                                     <Link className="header-text" to="/login">
                                         Login
-                                </Link>
+                                    </Link>
                                     <Navbar.Text className="header-or">
                                         or
-                                </Navbar.Text>
+                                    </Navbar.Text>
                                     <Link className="header-text" to="/register">
                                         Create an account
-                                </Link>
+                                    </Link>
                                 </div>
-                            </>
+                            </div>
                         )}
                 </Nav>
             </div>
             <div className="lower-header-container">
                 <Link className="col-md-4 lower-header-brand" to="/">
-                    <RiAuctionFill style={{ color: '#C4BFD6', marginRight: 5 }} />
+                    <RiAuctionFill className="auction-fill" />
                     AUCTION
                 </Link>
                 <div className="col-md-4">
-                    <FormControl size="xl-18" type="text" placeholder="Try enter: Shoes" />
-                    <GrFormSearch className="lower-header-search-icon" />
+
                 </div>
                 <Nav>
-                    <NavLink exact className="black-nav-link nav-link" activeClassName="black-active-nav-link" to="/">HOME</NavLink>
-                    <NavLink className="black-nav-link nav-link" activeClassName="black-active-nav-link" to="/shop">SHOP</NavLink>
-                    <NavLink className="black-nav-link nav-link" activeClassName="black-active-nav-link" to="/profile">MY ACCOUNT</NavLink>
+                    <NavLink exact className="dark-nav-link nav-link" activeClassName="dark-active-nav-link" to="/">HOME</NavLink>
                 </Nav>
             </div>
-
-        </>
+        </div>
     );
 }
 

@@ -4,8 +4,9 @@ package com.atlantbh.auction.model;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
- * Role enum that marks roles that can be assigned to the users..
- * TODO - Implementation & security not finished.
+ * Enum we'll be using for adding roles to users.
+ * ADMIN- A user that has the most authority when it comes to the application. Can manipulate other users, products and so on.
+ * USER - Basic user that has the ability to check out products, buy and sell them.
  *
  * @author Harun Hasic
  */

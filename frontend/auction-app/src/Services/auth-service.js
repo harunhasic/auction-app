@@ -1,19 +1,19 @@
 import BaseService from './BaseService'
-import { setSession } from './CommonService';
+import { setSession, removeSession } from '../utils/LocalStorageUtils';
 
 export default class AuthService extends BaseService {
 
   login(params) {
     return this.authorizedApi({
       method: 'POST',
-      url: '/users/login',
+      url: '/api/users/login',
       data: params
     })
       .then(response => {
         if (response.data.accessToken) {
-          localStorage.setItem('user', JSON.stringify(response.data));
+          
         }
-        setSession(response.data.person, response.data.token);
+        setSession(JSON.stringify(response.data), response.data.token);
         return response.data;
       });
   }
@@ -25,12 +25,23 @@ export default class AuthService extends BaseService {
   register(params) {
     return this.baseApi({
       method: 'POST',
-      url: '/users/register',
+      url: '/api/users/register',
       data: params
     });
   }
 
-  getCurrentUser() {
-    return JSON.parse(localStorage.getItem('user'));;
+  getUser() {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
+};
+
+  authHeader() {
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (user && user.accessToken) {
+      return { Authorization: 'Bearer ' + user.accessToken };
+    } else {
+      return {};
+    }
   }
 }
