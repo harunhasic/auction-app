@@ -1,0 +1,162 @@
+@import url("https://fonts.googleapis.com/css?family=Lato");
+$purple-color: #8367d8;
+$font-stack: "Lato", sans-serif;
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #252525;
+  height: 40px;
+  color: white;
+  font-size: 14px;
+  letter-spacing: 0.49px;
+  padding-right: 11.1%;
+  padding-left: 11.1%;
+  font-family: $font-stack;
+}
+.header-text {
+  font-family: "Lato";
+  font-weight: bold;
+  font-size: 0.6em;
+  text-decoration: none;
+  color: #ffffff;
+  letter-spacing: 0.49px;
+}
+
+.header-or {
+  font-family: "Lato";
+  font-weight: bold;
+  font-size: 14px;
+  color: #9b9b9b;
+  letter-spacing: 0.49px;
+  margin: 0 0.8em 0 0.8em;
+}
+
+.header-title {
+  font-family: "Lato";
+  font-weight: lighter;
+  font-size: 1em;
+  color: #8367d8bb;
+  letter-spacing: 0.84px;
+}
+
+.login-acccount {
+  padding-right: 4em;
+}
+
+.have-account {
+  font-size: 1em;
+  color: #9b9b9b;
+  letter-spacing: 0.63px;
+  margin-bottom: 4em;
+}
+
+.login-word {
+  text-decoration: none;
+  color: #8367d8;
+  letter-spacing: 0.63px;
+}
+.header-text {
+  text-decoration: none;
+  color: #f1f1f1;
+  font-size: 14px;
+}
+.social-link {
+  padding-right: 10px;
+}
+.header-logout {
+  text-decoration: none;
+  color: #9b9b9b;
+  font-size: 14px;
+}
+.lower-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  letter-spacing: 0.56px;
+  padding-right: 11.1%;
+  padding-left: 11.1%;
+  min-height: 80px;
+  flex-wrap: wrap;
+}
+
+.lower-header-brand {
+  font-size: 24px;
+  letter-spacing: 0.84px;
+  font-weight: lighter;
+  color: $purple-color;
+}
+
+.lower-header-brand:hover {
+  color: $purple-color;
+}
+
+.lower-header-search {
+  min-width: 50%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.lower-header-search-icon {
+  position: absolute;
+  right: 8px;
+  font-size: 36px;
+  top: 9px;
+  cursor: pointer;
+}
+a:hover {
+  text-decoration: none;
+}
+
+.dark-nav-link {
+  color: #252525;
+}
+
+.dark-nav-link:hover {
+  color: $purple-color;
+}
+
+.dark-active-nav-link {
+  color: $purple-color;
+  font-weight: bold;
+}
+
+.hello-user {
+  margin-right: 30px;
+}
+.auction-fill {
+  color: #c4bfd6;
+  margin-right: 5;
+}
+
+.welcome-msg {
+  font-size: 16px;
+}
+
+.name-msg {
+  margin-left: 5px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.dropdown-arrow {
+  background-color: #252525;
+  border: none;
+  margin-left: -15px;
+
+  &:hover {
+    background-color: transparent !important;
+  }
+
+  &:active {
+    background-color: transparent !important;
+  }
+
+  &:focus {
+    box-shadow: none !important;
+    background-color: transparent !important;
+  }
+}
