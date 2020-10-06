@@ -12,7 +12,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Component that generates the tokens used for user authentication.
+ *
+ * @author Harun Hasic
+ */
 @Component
 public class JwtTokenProvider {
 

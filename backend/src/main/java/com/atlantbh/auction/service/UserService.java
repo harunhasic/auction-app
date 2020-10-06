@@ -20,7 +20,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 
@@ -29,7 +28,6 @@ import java.util.Optional;
  *
  * @author Harun Hasic
  */
-
 @Service
 public class UserService extends BaseService<User, Long, UserRepository> implements UserDetailsService {
 

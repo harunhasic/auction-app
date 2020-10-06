@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 
 /**
- * repository for the User entity..
+ * Repository that handles the User model database interaction.
  *
  * @author Harun Hasic
  */

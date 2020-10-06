@@ -29,7 +29,11 @@ import java.util.Arrays;
 import static com.atlantbh.auction.model.Role.ADMIN;
 import static com.atlantbh.auction.model.Role.USER;
 
-
+/**
+ * Security configuration of the web application.
+ *
+ * @author Harun Hasic
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)

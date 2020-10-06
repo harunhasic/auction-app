@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Harun Hasic
  */
-
 public class BaseService<M extends BaseModel<M, I>, I, R extends BaseRepository<M, I>> {
 
     @Autowired

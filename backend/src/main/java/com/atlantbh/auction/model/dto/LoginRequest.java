@@ -1,8 +1,10 @@
 package com.atlantbh.auction.model.dto;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+/**
+ * Class used for handling user log in.
+ *
+ * @author Harun Hasic
+ */
 import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {

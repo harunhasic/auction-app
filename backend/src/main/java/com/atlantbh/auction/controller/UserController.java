@@ -31,7 +31,7 @@ public class UserController extends BaseController<User, Long, UserService> {
 
     @PostMapping("/login")
     public ResponseEntity authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result) throws ServiceException {
-        Optional<ResponseEntity<?>> errorMap = MapValidationErrors.CheckForErrors(result);
+        Optional<ResponseEntity<?>> errorMap = MapValidationErrors.checkForErrors(result);
         try {
             if (errorMap != null) {
                 return errorMap.isPresent()

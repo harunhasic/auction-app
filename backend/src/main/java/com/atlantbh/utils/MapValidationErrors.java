@@ -2,7 +2,6 @@ package com.atlantbh.utils;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
@@ -10,13 +9,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Class that checks if the user validation on the  controller level has any errors, and maps them if they are present.
+ *
+ * @author Harun Hasic
+ */
 public final class MapValidationErrors {
 
     private MapValidationErrors() {
 
-    };
+    }
 
-    public static Optional<ResponseEntity<?>> CheckForErrors(BindingResult result) {
+    public static Optional<ResponseEntity<?>> checkForErrors(BindingResult result) {
 
         if (result.hasErrors()) {
             Map<String, String> errorMap = new HashMap<>();

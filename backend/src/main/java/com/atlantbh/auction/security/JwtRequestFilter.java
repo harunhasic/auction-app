@@ -17,8 +17,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Optional;
 
-
+/**
+ * Class that implements the filter used for the validation of the token.
+ *
+ * @author Harun Hasic
+ */
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
@@ -40,17 +45,19 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         try {
 
-            String jwt = getJWTFromRequest(httpServletRequest);
+            Optional<String> jwt = getJWTFromRequest(httpServletRequest);
 
-            if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-                Long userId = tokenProvider.getUserIdFromJWT(jwt);
-                User userDetails = userService.loadUserById(userId);
+            if (jwt.isPresent()) {
+                if (StringUtils.hasText(jwt.get()) && tokenProvider.validateToken(jwt.get())) {
+                    Long userId = tokenProvider.getUserIdFromJWT(jwt.get());
+                    User userDetails = userService.loadUserById(userId);
 
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, Collections.emptyList());
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                            userDetails, null, Collections.emptyList());
 
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
             }
 
         } catch (Exception ex) {
@@ -60,13 +67,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
-    private String getJWTFromRequest(HttpServletRequest request) {
+    private Optional<String> getJWTFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader(header);
 
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(tokenPrefix)) {
-            return bearerToken.substring(7);
+            return Optional.of(bearerToken.substring(7));
         }
-
-        return null;
+        return Optional.empty();
     }
 }

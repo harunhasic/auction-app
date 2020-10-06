@@ -1,5 +1,10 @@
 package com.atlantbh.auction.model.dto;
 
+/**
+ * Response that sends the token if the validation is successful.
+ *
+ * @author Harun Hasic
+ */
 public class JWTLoginSucessResponse {
 
     private boolean success;
