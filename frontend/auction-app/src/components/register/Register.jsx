@@ -148,7 +148,6 @@ export default class Register extends Component {
                     className="form-control"
                     value={this.state.password}
                     onChange={(e) => this.onChangePassword(e)}
-                    validation={this.isRequired}
                   />
                 </div>
                 <div className="form-group">
@@ -180,7 +179,7 @@ export default class Register extends Component {
           <div className="already-registered">
             Already have an account?
               <Link className="purple-nav-link nav-link" to="/login">
-                Login
+              Login
               </Link>
           </div>
         </Form>

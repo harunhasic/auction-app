@@ -15,6 +15,11 @@ export function getUserId() {
     return user ? JSON.parse(user).id : null;
 };
 
+export function getUser() {
+    const user = localStorage.getItem('auctionapp-user');
+    return user ? JSON.parse(user) : null;
+};
+
 export function saveUser(user) {
     localStorage.setItem('auctionapp-user', JSON.stringify(user));
 }

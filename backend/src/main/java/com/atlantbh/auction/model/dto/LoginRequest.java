@@ -1,6 +1,8 @@
 package com.atlantbh.auction.model.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
@@ -8,6 +10,7 @@ public class LoginRequest {
     @NotBlank(message = "Email cannot be empty")
     private String email;
     @NotBlank(message = "Password cannot be empty")
+
     private String password;
 
     public String getEmail() {

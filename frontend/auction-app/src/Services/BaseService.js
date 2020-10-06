@@ -4,7 +4,7 @@ import authHeader from './auth-service';
 
 
 export default class BaseService {
-   
+
 
     baseApi(params) {
         return axios.create({

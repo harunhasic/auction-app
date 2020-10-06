@@ -1,4 +1,4 @@
-package com.atlantbh.auction.service;
+package com.atlantbh.utils;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +10,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-@Service
-public class MapValidationErrorService {
+public final class MapValidationErrors {
 
-    public Optional<ResponseEntity<?>> MapValidationService(BindingResult result) {
+    private MapValidationErrors() {
+
+    };
+
+    public static Optional<ResponseEntity<?>> CheckForErrors(BindingResult result) {
 
         if (result.hasErrors()) {
             Map<String, String> errorMap = new HashMap<>();

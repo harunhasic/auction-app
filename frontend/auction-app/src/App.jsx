@@ -57,13 +57,13 @@ const App = () => {
       <Router>
         <Header loggedInState={loggedInState} />
 
-        <div style={alertVisible && breadcrumbTitle === null ? { marginTop: 40, marginBottom: '-1rem' } : null}>
+        <div className={alertVisible && breadcrumbTitle === null ? 'conditional' : null}>
           <Alert dismissible onClose={() => setAlertVisible(false)} transition={false} show={alertVisible} variant={variant}>
             {message}
           </Alert>
         </div>
         <div className="route-container">
-          <Routes changeLoggedInState={changeLoggedInState} setBreadcrumb={setBreadcrumb} showMessage={showMessage} removeBreadcrumb={deleteBreadcrumb} />
+          <Routes changeLoggedInState={changeLoggedInState} showMessage={showMessage} setBreadcrumb={setBreadcrumb} removeBreadcrumb={deleteBreadcrumb} />
         </div>
       </Router>
     </div>

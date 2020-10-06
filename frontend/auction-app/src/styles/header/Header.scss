@@ -146,8 +146,17 @@ a:hover {
   background-color: #252525;
   border: none;
   margin-left: -15px;
-}
-.dropdown-arrow:hover, .dropdown-arrow:active {
-  background-color: transparent;
-}
 
+  &:hover {
+    background-color: transparent !important;
+  }
+
+  &:active {
+    background-color: transparent !important;
+  }
+
+  &:focus {
+    box-shadow: none !important;
+    background-color: transparent !important;
+  }
+}

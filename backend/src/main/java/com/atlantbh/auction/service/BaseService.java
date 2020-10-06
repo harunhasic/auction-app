@@ -17,11 +17,11 @@ public class BaseService<M extends BaseModel<M, I>, I, R extends BaseRepository<
     @Autowired
     protected R repository;
 
-    public M getById(I requestId) throws ServiceException {
+    public M get(I requestId) throws ServiceException {
         try {
             return repository.get(requestId);
         } catch (RepositoryException e) {
-            throw new ServiceException("There was an error while accessing this id" + requestId, e);
+            throw new ServiceException("There was an error while accessing this id " + requestId, e);
         }
 
     }
@@ -36,20 +36,20 @@ public class BaseService<M extends BaseModel<M, I>, I, R extends BaseRepository<
 
     public M update(I id, M entity) throws ServiceException {
         try {
-            M toUpdate = repository.get(id);
+            M toUpdate = get(id);
             entity.update(toUpdate);
             repository.update(toUpdate);
             return toUpdate;
         } catch (RepositoryException e) {
-            throw new ServiceException("There was an error while updating the user with this id" + entity.getId(), e);
+            throw new ServiceException("There was an error while updating the user with this id " + entity.getId(), e);
         }
     }
 
-    public void deleteById(I id) throws ServiceException {
+    public void delete(I id) throws ServiceException {
         try {
             repository.deleteById(id);
         } catch (RepositoryException e) {
-            throw new ServiceException("There was an error while trying to delete an user with this id" + id, e);
+            throw new ServiceException("There was an error while trying to delete an user with this id " + id, e);
         }
     }
 

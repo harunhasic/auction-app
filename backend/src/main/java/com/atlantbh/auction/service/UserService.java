@@ -34,9 +34,6 @@ import java.util.Optional;
 public class UserService extends BaseService<User, Long, UserRepository> implements UserDetailsService {
 
     @Autowired
-    protected UserRepository userRepository;
-
-    @Autowired
     private JwtTokenProvider tokenProvider;
 
     @Autowired
@@ -55,8 +52,8 @@ public class UserService extends BaseService<User, Long, UserRepository> impleme
                 String message = "A user with this email " + entity.getEmail() + " is already registered";
                 throw new ServiceException(message);
             }
-            User user = new User(entity.getFirstName(), entity.getLastName(), entity.getEmail(), new BCryptPasswordEncoder().encode(entity.getPassword()));
-            return userRepository.save(user);
+            entity.setPassword(new BCryptPasswordEncoder().encode(entity.getPassword()));
+            return repository.save(entity);
         } catch (RepositoryException e) {
             throw new ServiceException("There was an issue with the registration of this user", e);
         }
@@ -85,17 +82,16 @@ public class UserService extends BaseService<User, Long, UserRepository> impleme
 
     private boolean userExists(String email) throws ServiceException {
         try {
-            repository.findByEmail(email);
-
+            Optional<User> user = repository.findByEmail(email);
+            return user.isPresent();
         } catch (RepositoryException e) {
-            throw new ServiceException("There was an issue with finding this email", e);
+            throw new ServiceException("User with provided email = " + email + " could not be found.");
         }
-        return true;
     }
 
     public User findByEmail(String email) throws ServiceException {
         try {
-            Optional<User> user = userRepository.findByEmail(email);
+            Optional<User> user = repository.findByEmail(email);
             if (user.isPresent()) {
                 return user.get();
             } else {
@@ -109,17 +105,18 @@ public class UserService extends BaseService<User, Long, UserRepository> impleme
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
-            User user = userRepository.findByEmail(username).get();
+            User user = repository.findByEmail(username).get();
             return user;
         } catch (RepositoryException e) {
             throw new UsernameNotFoundException("This email was not found!" + username);
         }
     }
 
-    @Transactional
-    public User loadUserById(Long id) throws RepositoryException {
+    public User loadUserById(Long id) throws ServiceException, RepositoryException {
         User user = repository.get(id);
-        if (user == null) new RepositoryException("User not found");
+        if (user == null) {
+            throw new ServiceException("User with id " + id + "is not found");
+        }
         return user;
     }
 }

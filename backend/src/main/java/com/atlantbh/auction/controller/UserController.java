@@ -4,10 +4,10 @@ import com.atlantbh.auction.exceptions.RepositoryException;
 import com.atlantbh.auction.exceptions.ServiceException;
 import com.atlantbh.auction.model.User;
 import com.atlantbh.auction.model.dto.LoginRequest;
+import com.atlantbh.auction.model.dto.LoginResponse;
 import com.atlantbh.auction.model.dto.RegisterRequest;
-import com.atlantbh.auction.service.MapValidationErrorService;
 import com.atlantbh.auction.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.atlantbh.utils.MapValidationErrors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -28,12 +28,10 @@ import java.util.Optional;
 @RequestMapping(value = "/api/users")
 public class UserController extends BaseController<User, Long, UserService> {
 
-    @Autowired
-    private MapValidationErrorService mapValidationErrorService;
 
     @PostMapping("/login")
     public ResponseEntity authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result) throws ServiceException {
-        Optional<ResponseEntity<?>> errorMap = mapValidationErrorService.MapValidationService(result);
+        Optional<ResponseEntity<?>> errorMap = MapValidationErrors.CheckForErrors(result);
         try {
             if (errorMap != null) {
                 return errorMap.isPresent()
@@ -43,7 +41,7 @@ public class UserController extends BaseController<User, Long, UserService> {
         } catch (RepositoryException e) {
             throw new ServiceException("There was issues with authenticating this user");
         }
-        return ResponseEntity.ok(loginRequest);
+        return ResponseEntity.ok(new LoginResponse(loginRequest.getEmail()));
     }
 
     @PostMapping

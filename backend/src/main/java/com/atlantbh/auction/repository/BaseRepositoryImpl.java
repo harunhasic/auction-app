@@ -70,7 +70,7 @@ public class BaseRepositoryImpl<M extends BaseModel<M, I>, I> implements BaseRep
     @Transactional
     public void delete(M obj) throws RepositoryException {
         try {
-            getSession().remove(getSession().contains(obj) ? obj : getSession().merge(obj));
+            getSession().delete(obj);
         } catch (Exception e) {
             throw new RepositoryException("There was a problem with the deletion of this user", e);
         }
@@ -82,7 +82,7 @@ public class BaseRepositoryImpl<M extends BaseModel<M, I>, I> implements BaseRep
         try {
             return entityManager.find(getParameterType(), id);
         } catch (Exception e) {
-            throw new RepositoryException("There was an error while returning this user" + id, e);
+            throw new RepositoryException("There was an error while returning this user " + id, e);
         }
     }
 
@@ -91,7 +91,6 @@ public class BaseRepositoryImpl<M extends BaseModel<M, I>, I> implements BaseRep
     public M findById(I id) {
         return entityManager.find(getParameterType(), id);
     }
-
 }
 
 

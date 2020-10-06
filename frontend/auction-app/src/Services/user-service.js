@@ -9,5 +9,4 @@ export default class UserService extends BaseService {
       url: '/api/users/' + email
     });
   }
-
 }

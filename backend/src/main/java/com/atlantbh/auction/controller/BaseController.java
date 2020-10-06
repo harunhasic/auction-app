@@ -5,6 +5,7 @@ import com.atlantbh.auction.exceptions.ServiceException;
 import com.atlantbh.auction.model.BaseModel;
 import com.atlantbh.auction.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,7 +38,7 @@ public abstract class BaseController<M extends BaseModel<M, I>, I, S extends Bas
 
     public ResponseEntity get(@PathVariable("id") I id) {
         try {
-            return ResponseEntity.ok(service.getById(id));
+            return ResponseEntity.ok(service.get(id));
         } catch (ServiceException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -46,10 +47,10 @@ public abstract class BaseController<M extends BaseModel<M, I>, I, S extends Bas
     @Transactional
     public ResponseEntity delete(@PathVariable I id) {
         try {
-            service.deleteById(id);
-            return ResponseEntity.ok(id);
+            service.delete(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (ServiceException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.noContent().build();
         }
     }
 

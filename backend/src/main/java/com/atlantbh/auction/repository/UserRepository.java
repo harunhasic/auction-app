@@ -35,7 +35,7 @@ public class UserRepository extends BaseRepositoryImpl<User, Long> {
             } else
                 return Optional.empty();
         } catch (Exception e) {
-            throw new RepositoryException("The user with this " + email + "could not be found", e);
+            return Optional.empty();
         }
     }
 }

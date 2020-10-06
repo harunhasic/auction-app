@@ -10,16 +10,9 @@ export default class AuthService extends BaseService {
       data: params
     })
       .then(response => {
-        if (response.data.accessToken) {
-          
-        }
         setSession(JSON.stringify(response.data), response.data.token);
         return response.data;
       });
-  }
-
-  logout() {
-    localStorage.removeItem('user');
   }
 
   register(params) {
@@ -29,11 +22,6 @@ export default class AuthService extends BaseService {
       data: params
     });
   }
-
-  getUser() {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
-};
 
   authHeader() {
     const user = JSON.parse(localStorage.getItem('user'));
