@@ -12,10 +12,18 @@ export default class BaseService {
         })(params);
     }
 
+    getApi() {
+        return axios.get({
+            baseUrl: process.env.REACT_APP_FRONTEND_ENDPOINT
+        });
+    }
+
     authorizedApi(params) {
         return axios.create({
             baseURL: process.env.REACT_APP_FRONTEND_ENDPOINT,
             headers: new authHeader()
         })(params);
     }
+
+    
 }

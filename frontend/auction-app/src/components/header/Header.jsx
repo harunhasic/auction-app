@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SiFacebook, SiTwitter, SiInstagram } from 'react-icons/si';
+import { GrFormSearch } from "react-icons/gr";
 import { Link, NavLink } from 'react-router-dom';
 import '../../styles/header/Header.scss';
 import { FormControl, Nav, Navbar, Dropdown } from 'react-bootstrap';
@@ -26,6 +27,7 @@ const Header = ({ loggedInState }) => {
         if (loggedInState !== null)
             setLoggedIn(!isLoggedIn);
     }, [loggedInState]);
+
 
     return (
         <div>
@@ -71,16 +73,20 @@ const Header = ({ loggedInState }) => {
                         )}
                 </Nav>
             </div>
+        
             <div className="lower-header-container">
                 <Link className="col-md-4 lower-header-brand" to="/">
                     <RiAuctionFill className="auction-fill" />
                     AUCTION
                 </Link>
                 <div className="col-md-4">
-
+                <FormControl size="xl-18" type="text" placeholder="Try enter: Shoes" />
+                    <GrFormSearch className="lower-header-search-icon" />
                 </div>
                 <Nav>
                     <NavLink exact className="dark-nav-link nav-link" activeClassName="dark-active-nav-link" to="/">HOME</NavLink>
+                    <NavLink className="dark-nav-link nav-link" activeClassName="dark-active-nav-link" to="/shop">SHOP</NavLink>
+                    <NavLink className="dark-nav-link nav-link" activeClassName="dark-active-nav-link" to="/profile">MY ACCOUNT</NavLink>
                 </Nav>
             </div>
         </div>

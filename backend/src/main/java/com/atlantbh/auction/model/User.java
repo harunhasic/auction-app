@@ -57,6 +57,17 @@ public class User extends BaseModel<User, Long> implements UserDetails {
         this.password = registerRequest.getPassword();
     }
 
+    public User(String firstName, String lastName, String email, String gender, Date birthDate, String phoneNumber, String password, String profilePhotoUrl) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.gender = gender;
+        this. birthDate = birthDate;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.profilePhotoUrl = profilePhotoUrl;
+    }
+
     @NotBlank(message = "User first name is required!")
     @Column(name = "first_name")
     public String getFirstName() {
@@ -172,6 +183,14 @@ public class User extends BaseModel<User, Long> implements UserDetails {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Override

@@ -134,3 +134,30 @@
   margin-top: 40;
   margin-bottom: "-1rem";
 }
+.white-nav-link {
+  color: white;
+}
+
+.white-nav-link:hover {
+  color: lightgray;
+}
+
+.purple-nav-link {
+  color: #8367D8;
+}
+
+.purple-nav-link:hover {
+  color: #573BAC;
+}
+.dark-nav-link {
+  color: #252525;
+}
+
+.dark-nav-link:hover {
+  color: #8367D8;
+}
+
+.dark-active-nav-link {
+  color: #8367D8;
+  font-weight: bold;
+}

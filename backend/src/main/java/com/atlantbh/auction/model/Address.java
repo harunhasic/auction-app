@@ -22,7 +22,7 @@ public class Address extends BaseModel<Address, Long> {
     public Address() {
     }
 
-    public Address(String street, String city, String state, String country, String zipCode) {
+    public Address(String street, String city, String country, String zipCode) {
         this.street = street;
         this.city = city;
         this.country = country;

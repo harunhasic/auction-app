@@ -36,7 +36,7 @@ class Login extends Component {
   }
 
   toProfile() {
-    this.props.history.push('/profile');
+    this.props.history.push('/');
   }
 
   onChangePassword(e) {

@@ -2,12 +2,17 @@ package com.atlantbh.auction.repository;
 
 import com.atlantbh.auction.exceptions.RepositoryException;
 import com.atlantbh.auction.model.BaseModel;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.springframework.data.mapping.AccessOptions;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.lang.reflect.ParameterizedType;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Implementation of the base repository interface. It is used
@@ -27,7 +32,7 @@ public class BaseRepositoryImpl<M extends BaseModel<M, I>, I> implements BaseRep
         return (Class<M>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
-    private Session getSession() {
+    public Session getSession() {
         return entityManager.unwrap(Session.class);
     }
 
@@ -91,6 +96,24 @@ public class BaseRepositoryImpl<M extends BaseModel<M, I>, I> implements BaseRep
     public M findById(I id) {
         return entityManager.find(getParameterType(), id);
     }
+
+
+    @Transactional(rollbackFor = RepositoryException.class)
+    public List<M> saveAll(List<M> entities) throws RepositoryException {
+        try {
+            entities.forEach(entity->{
+                entityManager.persist(entity);
+            });
+            return entities;
+        } catch (Exception e) {
+            throw new RepositoryException("The object could not be saved.", e);
+        }
+    }
+
+    public Criteria getBaseCriteria() {
+        return getSession().createCriteria(getParameterType());
+    }
 }
+
 
 

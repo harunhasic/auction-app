@@ -4,11 +4,14 @@ import com.atlantbh.auction.exceptions.RepositoryException;
 import com.atlantbh.auction.model.User;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -29,13 +32,20 @@ public class UserRepository extends BaseRepositoryImpl<User, Long> {
             Predicate predicateForEmail = cb.equal(resource.get("email"), email);
             q.where(predicateForEmail);
 
-            User result = entityManager.createQuery(q).getSingleResult();
-            if (result != null) {
-                return Optional.of(result);
+            User user = entityManager.createQuery(q).getSingleResult();
+            if (user != null) {
+                return Optional.of(user);
             } else
                 return Optional.empty();
         } catch (Exception e) {
             return Optional.empty();
         }
     }
+
+    @Transactional
+    public List<User> findAll() {
+        Query query = entityManager.createQuery("SELECT u FROM User u");
+        return query.getResultList();
+    }
 }
+
