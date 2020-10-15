@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import '../../styles/product/ProductDetails.scss';
 
-const ProductInfo = ({ product, bid, wishlist, bids, minPrice, ownProduct, active, wished }) => {
+const ProductInfo = ({ product, minPrice, ownProduct, active, wished }) => {
 
     const [loading, setLoading] = useState(false);
 
@@ -34,7 +34,7 @@ const ProductInfo = ({ product, bid, wishlist, bids, minPrice, ownProduct, activ
                 <h1>
                     {product.name}
                 </h1>
-                <div style={{ marginTop: 10 }} className="featured-product-price">
+                <div className="featured-product-price">
                     Start from ${product.startPrice}
                 </div>
             </div>
@@ -58,43 +58,37 @@ const ProductInfo = ({ product, bid, wishlist, bids, minPrice, ownProduct, activ
                 >
                     <Button
                         disabled={ownProduct || !active || loading || isNaN()}
-                        style={{ width: 192, padding: 0 }}
+                        className = "button-bid"
                         size="xxl"
                         variant="transparent-black-shadow"
 
                     >
                         PLACE BID
-                        <IoIosArrowForward style={{ fontSize: 24 }} />
+                        <IoIosArrowForward className="arrow" />
                     </Button>
                 </OverlayTrigger>
             </div>
-            <div style={{ color: '#9B9B9B' }}>
+            <div className="highest-bid">
                 Highest bid: {' '}
-                <span style={{ color: '#8367D8', fontWeight: 'bold' }}>
-                    ${bids[0] === undefined ? 0 : bids[0].price}
+                <span className="span-bid">
+                   
                 </span>
                 <br />
-                No bids: {bids.length}
+                No bids: 
                 <br />
                 {getTimeInfo()}
             </div>
             <div>
                 <Button
                     className="wishlist-button"
-                    style={wished ? { borderColor: '#8367D8' } : null}
+                    className={wished ? "wished" : null}
                     variant="transparent-gray"
                 >
-                    Wishlist
-                    {wished ? (
-                        <RiHeartFill style={{ fontSize: 22, marginLeft: 5, color: '#8367D8' }} />
-                    ) : (
-                            <RiHeartFill style={{ fontSize: 22, marginLeft: 5, color: '#ECECEC' }} />
-                        )}
                 </Button>
-                <div className="font-18" style={{ marginTop: 15 }}>
+                <div className="details-18">
                     Details
                     <div className="gray-line" />
-                    <div className="font-15">
+                    <div className="details-15">
                         {product.description}
                     </div>
                 </div>

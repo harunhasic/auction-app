@@ -4,7 +4,7 @@ import { getUserId } from '../../utils/LocalStorageUtils';
 import { getProduct, getRelatedProducts } from '../../server/product';
 import { productUrl } from '../../utils/RedirectUrls';
 import ProductPhotos from '../product/ProductImages';
-import ProductInfo from '../product/ProductInfo';
+import ProductInfo from '../product/ProductDetails';
 import moment from 'moment';
 
 import '../../styles/product/Product.scss';

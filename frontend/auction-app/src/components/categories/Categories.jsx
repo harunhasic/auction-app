@@ -24,6 +24,7 @@ const AllCategories = ({ setBreadcrumb }) => {
         fethCategories();
     }, [])
 
+    
     console.log(subCategories);
     return (
         <div className="container-fluid">
