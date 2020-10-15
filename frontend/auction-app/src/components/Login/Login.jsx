@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import EmailField from '../core/EmailInput'
 import { withRouter } from 'react-router-dom'
 import '../../styles/login/Login.scss';
-import AuthService from '../../services/auth-service';
-import UserService from '../../services/user-service';
+import AuthService from '../../Services/auth-service';
+import UserService from '../../Services/user-service';
 import Form from 'react-validation/build/form';
 import CheckButton from 'react-validation/build/button';
 import PasswordField from '../core/PasswordField';
