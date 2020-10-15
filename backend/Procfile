@@ -1,4 +1,4 @@
 web java -Dserver.port=$PORT $JAVA_OPTS -jar target/auction-0.0.1-SNAPSHOT.jar
--Dspring.datasource.url=postgres://ewebalqktycjte:637dc631e8ee88b90930bda2d9ca0064e717e46e8032c7f566280d49287f19d6@ec2-52-21-247-176.compute-1.amazonaws.com:5432/d3ph6gr2pgo6ud
+-Dspring.datasource.url=jdbc:postgresql://ewebalqktycjte:637dc631e8ee88b90930bda2d9ca0064e717e46e8032c7f566280d49287f19d6@ec2-52-21-247-176.compute-1.amazonaws.com:5432/d3ph6gr2pgo6ud
 -Dspring.datasource.username=ewebalqktycjte
 -Dspring.datasource.password=637dc631e8ee88b90930bda2d9ca0064e717e46e8032c7f566280d49287f19d6
