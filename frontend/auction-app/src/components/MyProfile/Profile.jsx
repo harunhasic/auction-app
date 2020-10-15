@@ -4,12 +4,12 @@ import AuthService from '../../services/auth-service';
 export default class Profile extends Component {
   constructor(props) {
     super(props);
-
+    this.authService = new AuthService();
     this.state = {
       currentUser: this.authService.getCurrentUser()
     };
 
-    this.authService = new AuthService();
+  
   }
 
   render() {
