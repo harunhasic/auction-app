@@ -82,31 +82,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/index.html", "/*.js", "/*.css", "/");
     }
 
-    @Override
-    @Bean
-    protected UserDetailsService userDetailsService() {
-        UserDetails traderUser = User.builder()
-                .username("user")
-                .password(new BCryptPasswordEncoder().encode("password"))
-                .roles(USER.name())
-                .build();
-
-        UserDetails adminUser = User.builder()
-                .username("admin")
-                .password(new BCryptPasswordEncoder().encode("password123"))
-                .roles(ADMIN.name())
-                .build();
-
-        return new InMemoryUserDetailsManager(
-                traderUser,
-                adminUser
-        );
-    }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000, https://auction-app-2020-frontend.herokuapp.com"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://auction-app-2020-frontend.herokuapp.com"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
