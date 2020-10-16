@@ -1,6 +1,10 @@
 # auction-app
 Auctioning Spring &amp; React Web app
 
+
+Local application configuration
+
+
 In order to run the app locally, a user has to have Node, Postgres and Java 11 installed. To download them, please visit the following links:
 
 Node -> https://nodejs.org/en/download/
@@ -23,6 +27,8 @@ In order to run the frontend of the application, the user should enter the front
 If the application starts, the user should create an .env file in the application root folder and add the following parameter REACT_APP_BACKEND_ENDPOINT = https://localhost:8080. 
 
 This way, the user will make sure that the application frontend is connected with the backend. For successful usage of the application, the user should run the backend application and then the frontend application. This way, he will make sure that the backend APIs are live and that the frontend part can use those APIs in order to represent real data from the database. 
+
+
 
 
 
