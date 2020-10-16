@@ -148,6 +148,7 @@ Inside of static.json, please add:
 Create an .env file and add the following lines: 
 
 REACT_APP_BACKEND_ENDPOINT = https://auction-app-2020.herokuapp.com
+
 REACT_APP_BACKEND_ENDPOINT_DEV = http://localhost:8080
 
 Save all the new changes.
