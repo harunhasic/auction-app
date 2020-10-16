@@ -44,7 +44,7 @@ In order to deploy the application  to Heroku, the user should follow the follow
 
 After succesful login, please type 'heroku create'.
 
-4.After the creation of the application, the application will have some default name. If you wish to change the name to something that makes sense, please type 
+4.After the creation of the application, heroku will generate some default name. If you wish to change the name to something that makes sense, please type 
 
 heroku app:rename ENTERNEWNAME. 
 
@@ -60,7 +60,7 @@ java.runtime.version=8
 
 7. After that, please set the git remote to the application. Do that as following - heroku git:remote -a Your-app-name .
 
-8. Now, enter the following git command  - git subtree push --prefix backend heroku master
+8. Now, git add . and git commit the changes and enter the following git command  - git subtree push --prefix backend heroku master
 
 9. If the push does not build the app, please double check if You specified the Procfile and system.properties correctly.
 
@@ -95,6 +95,71 @@ With this, the backend deployment of the application should be finished.
 
 
 FRONTEND HEROKU DEPLOYMENT
+
+1. If you already registered an account and logged in to heroku with the CLI, please skip this step. If You didn't, please scroll up and check the first 2 steps of backend deployment in this document.
+
+2. Enter the frontend folder of the application and start the command prompt. Inside, type 'heroku create'.
+
+3. After the creation of the application, heroku will generate some default name. If you wish to change the name to something that makes sense, please type 
+
+heroku app:rename ENTERFRONTENDAPPNAME. 
+
+4. Now, open the frontend application with VSCode or your preffered code editor. In the root folder of the application, please add the following 2 files.
+
+Add file called 'server.js'. Inside of this file, please add the following content
+
+var express = require('express');
+var app = express();
+app.use(express.static(__dirname + '/'));
+app.listen(process.env.PORT || 8080);
+
+
+Save the changes. Now, add the next file called 'static.json'.
+Inside of static.json, please add: 
+
+{
+    "root": "build/",
+    "routes": {
+      "/**": "index.html"
+    },
+    "https_only": true,
+    "proxies": {
+      "/api/": {
+        "origin": "${API_URL}"
+      }
+    }
+  }
+  
+
+Create an .env file and add the following lines: 
+
+REACT_APP_BACKEND_ENDPOINT = https://auction-app-2020.herokuapp.com
+REACT_APP_BACKEND_ENDPOINT_DEV = http://localhost:8080
+
+Save all the new changes.
+
+
+5. Close the IDE for now, and leave the frontend folder. Go to the main folder of the application that contains both backend and frontend folder. 
+
+Here, please type heroku git:remote -a Your-frontend-app-name.
+
+6. Now, in the cmd, run the following command - VERY IMPORTANT:  
+
+heroku buildpacks:add -a YOUR-APP-NAME mars/create-react-app
+
+7. Now, git add . and git commit the changes and enter the following git command 
+
+git subtree push --prefix frontend heroku master
+
+8. If there are errors, please double check the procfile, server.js and app.json.
+
+ Also, make sure to add the buildpack.
+ 
+ 
+ If You have any issues with the local or heroku deployment, please, do contact me.
+
+
+
 
 
 
