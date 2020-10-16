@@ -4,7 +4,9 @@ Auctioning Spring &amp; React Web app
 In order to run the app locally, a user has to have Node, Postgres and Java 11 installed. To download them, please visit the following links:
 
 Node -> https://nodejs.org/en/download/
+
 Postgres -> https://www.postgresql.org/download/
+
 Java JDK 11 -> https://www.oracle.com/java/technologies/javase-jdk11-downloads.html
 
 
