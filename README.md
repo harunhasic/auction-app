@@ -109,8 +109,11 @@ heroku app:rename ENTERFRONTENDAPPNAME.
 Add file called 'server.js'. Inside of this file, please add the following content
 
 var express = require('express');
+
 var app = express();
+
 app.use(express.static(__dirname + '/'));
+
 app.listen(process.env.PORT || 8080);
 
 
@@ -118,16 +121,27 @@ Save the changes. Now, add the next file called 'static.json'.
 Inside of static.json, please add: 
 
 {
+
     "root": "build/",
+    
     "routes": {
+    
       "/**": "index.html"
+      
     },
+    
     "https_only": true,
+    
     "proxies": {
+    
       "/api/": {
+      
         "origin": "${API_URL}"
+        
       }
+      
     }
+    
   }
   
 
