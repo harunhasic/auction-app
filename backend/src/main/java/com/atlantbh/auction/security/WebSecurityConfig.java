@@ -69,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .csrf()
-                .disable()        // allow users not accessing with a web browser
+                .disable()
                 .authorizeRequests()
                 .anyRequest().permitAll().and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
