@@ -14,13 +14,13 @@ public class Photo extends BaseModel<Photo, Long> {
 
 
     @Column(nullable = false)
-    private boolean featured = false;
+    private Boolean featured = false;
 
     public Photo() {
 
     }
 
-    public Photo(String photoUrl, boolean featured) {
+    public Photo(String photoUrl, Boolean featured) {
         this.photoUrl = photoUrl;
         this.featured = featured;
     }
