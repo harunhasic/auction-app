@@ -158,7 +158,9 @@ Save all the new changes.
 
 Here, please type heroku git:remote -a Your-frontend-app-name.
 
-6. Now, in the cmd, run the following command - VERY IMPORTANT:  
+6. Now, in the cmd, run the following commands - VERY IMPORTANT:  
+
+heroku config:set API_URL="https://auction-app-2020.herokuapp.com/" --app your-app name
 
 heroku buildpacks:add -a YOUR-APP-NAME mars/create-react-app
 
