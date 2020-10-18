@@ -14,13 +14,15 @@ export const privacy = "/shop/privacy";
 
 
 export const productUrl = (product) => {
-    return `/product/${(product.categoryName)}/${(product.subcategoryName)}/${product.id}`;
+    return `/shop/${formatLink(product.category.name)}/${formatLink(product.subcategory.name)}/${product.id}`;
 }
 
 export const categoryUrl = (category) => {
-    return `/categories/${(category.name)}`;
+    return `/shop/${formatLink(category.name)}`;
 }
 
 export const subcategoryUrl = (subcategory) => {
-    return `/subcategories/${(subcategory.categoryName)}/${(subcategory.name)}`;
+    return `/shop/${formatLink(subcategory.category.name)}/${(subcategory.name)}`;
 }
+
+export const formatLink = (name) => name.split(' ').join('_').toLowerCase();

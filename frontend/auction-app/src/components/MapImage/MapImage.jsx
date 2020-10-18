@@ -19,9 +19,9 @@ const MapImage = ({ data, size, url }) => {
                 src={imageSrc}
                 onClick={() => history.push(url)}
             />
-            <h3>
-                {data.name}
-            </h3>
+            <div className="prop-name">
+                {data.name} Collection
+            </div>
              Starts from ${data.startPrice}
         </div>
     );

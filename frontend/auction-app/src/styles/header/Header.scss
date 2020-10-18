@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Lato");
 $purple-color: #8367d8;
 $font-stack: "Lato", sans-serif;
+$font-light: "Lato-light", sans-serif;
 
 .header-container {
   display: flex;
@@ -13,10 +14,9 @@ $font-stack: "Lato", sans-serif;
   letter-spacing: 0.49px;
   padding-right: 11.1%;
   padding-left: 11.1%;
-  font-family: $font-stack;
 }
 .header-text {
-  font-family: "Lato";
+  font-family: $font-stack;
   font-weight: bold;
   font-size: 0.6em;
   text-decoration: none;
@@ -25,7 +25,7 @@ $font-stack: "Lato", sans-serif;
 }
 
 .header-or {
-  font-family: "Lato";
+  font-family: $font-stack;
   font-weight: bold;
   font-size: 14px;
   color: #9b9b9b;
@@ -34,7 +34,7 @@ $font-stack: "Lato", sans-serif;
 }
 
 .header-title {
-  font-family: "Lato";
+  font-family: $font-stack;
   font-weight: lighter;
   font-size: 1em;
   color: #8367d8bb;
@@ -80,6 +80,9 @@ $font-stack: "Lato", sans-serif;
   padding-left: 11.1%;
   min-height: 80px;
   flex-wrap: wrap;
+  color:#252525;
+  font-family: $font-stack;
+  font-weight: lighter;
 }
 
 .lower-header-brand {
@@ -87,6 +90,7 @@ $font-stack: "Lato", sans-serif;
   letter-spacing: 0.84px;
   font-weight: lighter;
   color: $purple-color;
+  padding-right:250px;
 }
 
 .lower-header-brand:hover {

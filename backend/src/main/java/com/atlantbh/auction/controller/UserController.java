@@ -7,7 +7,7 @@ import com.atlantbh.auction.model.dto.LoginRequest;
 import com.atlantbh.auction.model.dto.LoginResponse;
 import com.atlantbh.auction.model.dto.RegisterRequest;
 import com.atlantbh.auction.service.UserService;
-import com.atlantbh.utils.MapValidationErrors;
+import com.atlantbh.auction.utils.MapValidationErrors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;

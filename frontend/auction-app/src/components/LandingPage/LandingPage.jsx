@@ -75,22 +75,22 @@ const LandingPage = ({ deleteBreadcrumb }) => {
       </div>
 
       <div className="featured-container">
-        <h2>
+        <h2 className="featured-heading">
           Featured Collections
       	</h2>
         <div className="line" />
         <div className="featured-items-container">
           {randomSubcategories.map(subcategory => (
             <MapImage key={subcategory.id} data={subcategory} size="xxl" url={subcategoryUrl(subcategory)} />
-          ))}
+          ))} 
         </div>
       </div>
 
       <div className="featured-container">
-        <h2>
+        <h2 className="featured-heading">
           Featured Products
       	</h2>
-        <div className="gray-line" />
+        <div className="line" />
         <div className="featured-items-container">
           {featuredProducts.slice(1).map(product => (
             <MapImage key={product.id} data={product} size="xl" url={productUrl(product)} />

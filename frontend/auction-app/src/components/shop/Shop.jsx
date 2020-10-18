@@ -6,7 +6,7 @@ const Shop = ({ setBreadcrumb }) => {
 
     return (
         <div className="shop-container">
-            Web page in development.
+            <h3>Web page in development.</h3>
         </div>
     );
 }

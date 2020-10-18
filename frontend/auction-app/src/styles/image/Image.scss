@@ -1,7 +1,12 @@
+@import url("https://fonts.googleapis.com/css?family=Lato");
+$purple-color: #8367d8;
+$font-stack: "Lato", sans-serif;
+
+
 .featured-item-container {
     display: flex;
     flex-direction: column;
-    margin-bottom: 30px;
+    margin-bottom: 100px;
     text-align: left;
 }
 
@@ -27,6 +32,15 @@
 .featured-item-image-xxl:hover, .featured-item-image-xl:hover, .featured-item-image-lg:hover {
     scale: 1.02;
     transition: all 0.1s;
+}
+
+.prop-name {
+    font-family: $font-stack;
+    font-weight: bold;
+    font-size: 24px;
+    color: #252525;
+    letter-spacing: 0.84px;
+    margin-top:10px;
 }
 
 @media (max-width: 575px) {

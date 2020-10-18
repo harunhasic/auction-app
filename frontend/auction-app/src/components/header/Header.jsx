@@ -75,7 +75,7 @@ const Header = ({ loggedInState }) => {
             </div>
         
             <div className="lower-header-container">
-                <Link className="col-md-4 lower-header-brand" to="/">
+                <Link className="col-md-3 lower-header-brand" to="/">
                     <RiAuctionFill className="auction-fill" />
                     AUCTION
                 </Link>
