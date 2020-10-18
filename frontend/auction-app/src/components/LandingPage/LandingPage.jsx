@@ -9,6 +9,7 @@ import { categoryUrl, allCategoryUrl, subcategoryUrl, productUrl } from "../../u
 
 import '../../styles/landingPage/Landing.scss';
 import MapImage from '../MapImage/MapImage';
+import MapSubCategory from '../MapImage/MapSubcategory'
 
 const LandingPage = ({ deleteBreadcrumb }) => {
   const history = useHistory();
@@ -81,7 +82,7 @@ const LandingPage = ({ deleteBreadcrumb }) => {
         <div className="line" />
         <div className="featured-items-container">
           {randomSubcategories.map(subcategory => (
-            <MapImage key={subcategory.id} data={subcategory} size="xxl" url={subcategoryUrl(subcategory)} />
+            <MapSubCategory key={subcategory.id} data={subcategory} size="xxl" url={subcategoryUrl(subcategory)} />
           ))} 
         </div>
       </div>

@@ -36,7 +36,7 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (userRepository.findAll() != null && addressRepository.findAll() != null && productRepository.findAll() != null) {
+        if (userRepository.findAll() == null && addressRepository.findAll() == null && productRepository.findAll() == null) {
 
             List<Product> listOfProducts = new ArrayList<>();
             Set<Category> setOfCategories = new HashSet<>();

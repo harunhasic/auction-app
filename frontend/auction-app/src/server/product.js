@@ -3,23 +3,23 @@ import { defaultHeader, getParams } from './common';
 import { getUserId } from '../utils/LocalStorageUtils'
 
 export const getProduct = async (productId, userId) => {
-    return (await axios.get(`${process.env.REACT_APP_BACKEND_ENDPOINT_DEV}/products/?product_id=${productId}&user_id=${userId}`)).data;
+    return (await axios.get(`${process.env.REACT_APP_BACKEND_ENDPOINT}/products/?product_id=${productId}&user_id=${userId}`)).data;
 };
 
 export async function getRandomFeaturedProducts() {
-    return (await axios.get(process.env.REACT_APP_BACKEND_ENDPOINT_DEV + '/products/random/featured')).data;
+    return (await axios.get(process.env.REACT_APP_BACKEND_ENDPOINT + '/products/random/featured')).data;
 };
 
 export async function getNewProducts() {
-    return (await axios.get(process.env.REACT_APP_BACKEND_ENDPOINT_DEV + '/products/new')).data;
+    return (await axios.get(process.env.REACT_APP_BACKEND_ENDPOINT + '/products/new')).data;
 };
 
 export async function getLastProducts() {
-    return (await axios.get(process.env.REACT_APP_BACKEND_ENDPOINT_DEV + '/products/last')).data;
+    return (await axios.get(process.env.REACT_APP_BACKEND_ENDPOINT + '/products/last')).data;
 };
 
 export async function getRelatedProducts(id) {
-    return (await axios.get(process.env.REACT_APP_BACKEND_ENDPOINT_DEV + '/products/related/?id=' + id)).data;
+    return (await axios.get(process.env.REACT_APP_BACKEND_ENDPOINT + '/products/related/?id=' + id)).data;
 };
 
 export async function searchProducts(query, category, subcategory, page, sort) {
@@ -28,5 +28,5 @@ export async function searchProducts(query, category, subcategory, page, sort) {
         headers = getParams({ query, category, subcategory, page, sort });
     else
         headers = { ...defaultHeader(), ...getParams({ query, category, subcategory, page, sort }) };
-    return (await axios.get(process.env.REACT_APP_BACKEND_ENDPOINT_DEV + '/products/search', headers)).data;
+    return (await axios.get(process.env.REACT_APP_BACKEND_ENDPOINT + '/products/search', headers)).data;
 };

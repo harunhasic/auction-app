@@ -51,7 +51,7 @@ public class Product extends BaseModel<Product, Long> {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     private Set<Photo> photos;
-    
+
     @Column(name = "featured")
     private Boolean featured = false;
 
