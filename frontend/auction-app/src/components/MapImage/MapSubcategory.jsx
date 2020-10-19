@@ -11,7 +11,7 @@ const MapSubCategory = ({ data, size, url }) => {
     if (data.photoUrl) {
         imageSrc = data.photoUrl;
     }
-    
+
     return (
         <div className="featured-item-container">
             <Image

@@ -11,7 +11,7 @@ const MapImage = ({ data, size, url }) => {
     if (data.photos && data.photos.length) {
         imageSrc = data.photos[0].photoUrl;
     }
-    
+
     return (
         <div className="featured-item-container">
             <Image

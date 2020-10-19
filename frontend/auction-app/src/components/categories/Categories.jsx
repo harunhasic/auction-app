@@ -21,7 +21,7 @@ const AllCategories = ({ setBreadcrumb }) => {
                 setBreadcrumb("ALL CATEGORIES", [{ text: "HOME", href: { home } }, { text: "ALL CATEGORIES" }]);
                 await categoryService.getCategories().then(response => {
                     setCategories(response.data);
-                  })
+                })
                 await subCategoryService.getAllSubCategories().then(response => {
                     setSubCategories(response.data);
                 })
@@ -30,7 +30,7 @@ const AllCategories = ({ setBreadcrumb }) => {
         fethCategories();
     }, [])
 
-    
+
     console.log(subCategories);
     return (
         <div className="container-fluid">
@@ -40,12 +40,12 @@ const AllCategories = ({ setBreadcrumb }) => {
                     <div className="row">
                         <div className="col-md">
                             <h2>{categories[8].name}</h2>
-                                <h5>Wedding</h5>
-                                <h5>Clothes</h5>
-                                <h5>Coats</h5>
-                                <h5>Vintage</h5>
-                                <h5>Retro</h5>
-                                <h5>Modern</h5>
+                            <h5>Wedding</h5>
+                            <h5>Clothes</h5>
+                            <h5>Coats</h5>
+                            <h5>Vintage</h5>
+                            <h5>Retro</h5>
+                            <h5>Modern</h5>
                         </div>
                         <div className="col-md">
                             <h2>{categories[3].name}</h2>
@@ -72,7 +72,7 @@ const AllCategories = ({ setBreadcrumb }) => {
                             <h5>Hiking shoes</h5>
                             <h5>Winter boots</h5>
                             <h5>Classy shoes</h5>
-                            <h5>Summer shoes</h5>                           
+                            <h5>Summer shoes</h5>
                         </div>
                     </div>
                     <div className="row">
@@ -83,7 +83,7 @@ const AllCategories = ({ setBreadcrumb }) => {
                             <h5>Tank tops</h5>
                             <h5>Gym accessories</h5>
                             <h5>Hijabi sportwear</h5>
-                            <h5>Women clothes</h5>                         
+                            <h5>Women clothes</h5>
                         </div>
                         <div className="col-md">
                             <h2>{categories[6].name}</h2>

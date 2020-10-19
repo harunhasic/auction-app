@@ -1,9 +1,9 @@
 import BaseService from './BaseService'
- 
+
 
 export default class CategoryService extends BaseService {
 
-     getCategories() {
+    getCategories() {
         return this.baseApi({
             method: 'GET',
             url: '/categories'

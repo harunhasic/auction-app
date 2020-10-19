@@ -1,9 +1,9 @@
 import BaseService from './BaseService'
- 
+
 
 export default class ProductService extends BaseService {
 
-     getRandomProducts() {
+    getRandomProducts() {
         return this.baseApi({
             method: 'GET',
             url: '/products/random/featured'
@@ -16,7 +16,7 @@ export default class ProductService extends BaseService {
             url: '/products/new'
         });
     }
-    
+
     getTopRatedProducts() {
         return this.baseApi({
             method: 'GET',

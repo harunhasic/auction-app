@@ -8,7 +8,6 @@ import LandingPage from '../LandingPage/LandingPage';
 import Categories from '../categories/Categories';
 import NotFound from '../notFound/NotFound';
 import Shop from '../shop/Shop';
-import Product from '../productPage/Product'
 import Profile from '../MyProfile/Profile'
 
 const UserRoutes = (props) => {
@@ -16,7 +15,6 @@ const UserRoutes = (props) => {
         <Switch>
             <Route exact path="/" render={() => <LandingPage {...props} />} />
             <Route path="/all" render={() => <Categories {...props} />} />
-            <Route path="/product" render={() => <Product {...props} />} />
             <Route path="/shop*" render={() => <Shop {...props} />} />
             <GuestRoutes path="/login" {...props} component={Login} />
             <GuestRoutes path="/register" {...props} component={Register} />
