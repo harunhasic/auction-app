@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CategoryService extends BaseService<Category, Long , CategoryRepository> {
+public class CategoryService extends BaseService<Category, Long, CategoryRepository> {
 
     public List<Category> findCategories() {
         return repository.findAll();

@@ -38,6 +38,15 @@ public class ProductController extends BaseController<Product, Long, ProductServ
         }
     }
 
+    @GetMapping("/top")
+    public ResponseEntity getTopRated() {
+        try {
+            return ResponseEntity.ok(service.getTopRatedProducts());
+        } catch (ServiceException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @GetMapping
     public ResponseEntity getProduct(@RequestParam(name = "product_id") Long productId,
                                      @RequestParam(name = "user_id", defaultValue = "") Long userId) {

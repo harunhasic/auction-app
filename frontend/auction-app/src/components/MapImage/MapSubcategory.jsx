@@ -22,7 +22,7 @@ const MapSubCategory = ({ data, size, url }) => {
             <div className="prop-name">
                 {data.name} Collection
             </div>
-             Starts from ${data.startPrice}
+             Starts from $59.99
         </div>
     );
 }

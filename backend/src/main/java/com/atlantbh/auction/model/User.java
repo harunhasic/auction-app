@@ -62,7 +62,7 @@ public class User extends BaseModel<User, Long> implements UserDetails {
         this.lastName = lastName;
         this.email = email;
         this.gender = gender;
-        this. birthDate = birthDate;
+        this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.profilePhotoUrl = profilePhotoUrl;

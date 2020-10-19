@@ -1,41 +1,59 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Image, ListGroup } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import { getRandomFeaturedProducts, getNewProducts, getLastProducts } from '../../server/product';
-import { getRandomSubcategories } from '../../server/subcategory';
-import { getCategories } from '../../server/category';
+import ProductService from '../../Services/product-service';
+import CategoryService from '../../Services/category-service';
 import { IoIosArrowForward } from "react-icons/io";
-import { categoryUrl, allCategoryUrl, subcategoryUrl, productUrl } from "../../utils/RedirectUrls";
-
+import { categoryUrl, allCategoryUrl, subcategoryUrl, productUrl } from '../../utils/RedirectUrls';
 import '../../styles/landingPage/Landing.scss';
 import MapImage from '../MapImage/MapImage';
 import MapSubCategory from '../MapImage/MapSubcategory'
+import SubCategoryService from '../../Services/subcategory-service';
+
+const productService = new ProductService();
+const categoryService = new CategoryService();
+const subCategoryService = new SubCategoryService();
 
 const LandingPage = ({ deleteBreadcrumb }) => {
   const history = useHistory();
 
   const [categories, setCategories] = useState([]);
   const [randomSubcategories, setRandomSubcategories] = useState([]);
-  const [newAndLastProducts, setNewAndLastProducts] = useState([]);
+  const [newProducts, setNewProducts] = useState([]);
+  const [lastProducts, setLastProducts] = useState([]);
+  const [topRatedProducts, setTopRatedProducts] = useState([]);
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [activePage, setActivePage] = useState(0);
+
 
   useEffect(() => {
     deleteBreadcrumb();
     async function fetchData() {
       try {
-        setCategories(await getCategories());
-        setFeaturedProducts(await getRandomFeaturedProducts());
-        setRandomSubcategories(await getRandomSubcategories());
-        const newProducts = await getNewProducts();
-        const lastProducts = await getLastProducts();
-        setNewAndLastProducts([newProducts, lastProducts]);
+        await categoryService.getCategories().then(response => {
+          setCategories(response.data);
+        })
+        await productService.getRandomProducts().then(response => {
+          setFeaturedProducts(response.data);
+        })
+        await subCategoryService.getRandomSubCategories().then(response => {
+          setRandomSubcategories(response.data);
+        })
+        await productService.getNewProducts().then(response => {
+          setNewProducts(response.data);
+        })
+        await productService.getLastProducts().then(response => {
+          setLastProducts(response.data);
+        })
+        await productService.getTopRatedProducts().then(response => {
+          setTopRatedProducts(response.data);
+        })
       } catch (e) { }
     }
     fetchData();
   }, [deleteBreadcrumb])
-  
-  
+
+  console.log(newProducts);
 
   return (
     <>
@@ -83,7 +101,7 @@ const LandingPage = ({ deleteBreadcrumb }) => {
         <div className="featured-items-container">
           {randomSubcategories.map(subcategory => (
             <MapSubCategory key={subcategory.id} data={subcategory} size="xxl" url={subcategoryUrl(subcategory)} />
-          ))} 
+          ))}
         </div>
       </div>
 
@@ -101,18 +119,35 @@ const LandingPage = ({ deleteBreadcrumb }) => {
 
       <div className="featured-container">
         <div className="tabs-container">
-          <div style={activePage === 0 ? { borderBottom: '4px solid #8367D8' } : null} className="custom-tab" onClick={() => setActivePage(0)}>
+          <div className={activePage === 0 ? "custom-tab" : null}  onClick={() => setActivePage(0)}>
             New Arrivals
           </div>
-          <div style={activePage === 1 ? { borderBottom: '4px solid #8367D8' } : null} className="custom-tab" onClick={() => setActivePage(1)}>
+          <div className="space"></div>
+          <div className={activePage === 1 ? "custom-tab" : null}  onClick={() => setActivePage(1)}>
             Top Rated
+          </div>
+          <div className="space"></div>
+          <div className={activePage === 2 ? "custom-tab" : null}  onClick={() => setActivePage(2)}>
+            Last chance
           </div>
         </div>
         <div className="line" />
         <div className="featured-items-container">
-          {newAndLastProducts.length !== 0 ? newAndLastProducts[activePage].map(product => (
-            <MapImage key={product.id} data={product} size="lg" url={productUrl(product)} />
-          )) : null}
+          {
+            activePage === 0 ? (
+              newProducts.map(product => (
+                <MapImage key={product.id} data={product} size="xxl" url={productUrl(product)} />
+              ))
+            ) :  activePage === 1 ?  (
+              topRatedProducts.map(product => (
+                <MapImage key={product.id} data={product} size="xxl" url={productUrl(product)} />
+              ))
+              )
+              :
+              lastProducts.map(product => (
+                <MapImage key={product.id} data={product} size="xxl" url={productUrl(product)} />
+              ))
+          }
         </div>
       </div>
     </>

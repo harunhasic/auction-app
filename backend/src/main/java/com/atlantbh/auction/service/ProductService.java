@@ -45,6 +45,14 @@ public class ProductService extends BaseService<Product, Long, ProductRepository
         }
     }
 
+    public List<Product> getTopRatedProducts() throws ServiceException {
+        try {
+            return repository.getTopRated();
+        } catch (RepositoryException e) {
+            throw new ServiceException("There was an issue with returning the top rated products", e);
+        }
+    }
+
     public ProductDto getProduct(Long productId, Long userId) throws ServiceException {
         try {
             List<Product> product = repository.getProduct(productId, userId);

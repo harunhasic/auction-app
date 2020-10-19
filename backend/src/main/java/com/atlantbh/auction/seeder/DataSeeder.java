@@ -36,7 +36,7 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (userRepository.findAll() == null && addressRepository.findAll() == null && productRepository.findAll() == null) {
+        if (userRepository.findAll() != null && addressRepository.findAll() != null && productRepository.findAll() != null) {
 
             List<Product> listOfProducts = new ArrayList<>();
             Set<Category> setOfCategories = new HashSet<>();
@@ -440,6 +440,61 @@ public class DataSeeder implements CommandLineRunner {
             listOfProducts.add(new Product("The Lord of the Rings", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero.", 60.00, new Date(), new Date("2020/11/20"), true, false, "061123456", 60.00, listOfUsers.get(1), lotr));
             listOfProducts.add(new Product("Hyperion", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ut consequat nulla. Duis nec fermentum erat, et varius augue. Vivamus sed tempor libero.", 60.00, new Date(), new Date("2020/11/20"), true, false, "061123456", 60.00, listOfUsers.get(0), hyperion));
 
+            Rating bestRating = new Rating();
+            bestRating.setRating(5);
+            Rating veryGood = new Rating();
+            veryGood.setRating(4);
+            Rating good = new Rating();
+            good.setRating(3);
+            Rating bad = new Rating();
+            bad.setRating(2);
+            Rating veryBad = new Rating();
+            veryBad.setRating(1);
+
+            listOfProducts.get(0).setRating(bestRating);
+            listOfProducts.get(1).setRating(veryGood);
+            listOfProducts.get(2).setRating(good);
+            listOfProducts.get(3).setRating(bad);
+            listOfProducts.get(4).setRating(bestRating);
+            listOfProducts.get(5).setRating(veryGood);
+            listOfProducts.get(6).setRating(good);
+            listOfProducts.get(7).setRating(bad);
+            listOfProducts.get(8).setRating(bestRating);
+            listOfProducts.get(9).setRating(veryGood);
+            listOfProducts.get(10).setRating(good);
+            listOfProducts.get(11).setRating(bad);
+            listOfProducts.get(12).setRating(bestRating);
+            listOfProducts.get(13).setRating(veryGood);
+            listOfProducts.get(14).setRating(good);
+            listOfProducts.get(15).setRating(bad);
+            listOfProducts.get(16).setRating(bestRating);
+            listOfProducts.get(17).setRating(veryGood);
+            listOfProducts.get(18).setRating(good);
+            listOfProducts.get(19).setRating(bad);
+            listOfProducts.get(20).setRating(bestRating);
+            listOfProducts.get(21).setRating(veryGood);
+            listOfProducts.get(22).setRating(good);
+            listOfProducts.get(23).setRating(bad);
+            listOfProducts.get(24).setRating(bestRating);
+            listOfProducts.get(25).setRating(veryGood);
+            listOfProducts.get(26).setRating(good);
+            listOfProducts.get(27).setRating(bad);
+            listOfProducts.get(28).setRating(bestRating);
+            listOfProducts.get(29).setRating(veryGood);
+            listOfProducts.get(30).setRating(good);
+            listOfProducts.get(31).setRating(bad);
+            listOfProducts.get(32).setRating(bestRating);
+            listOfProducts.get(33).setRating(veryGood);
+            listOfProducts.get(34).setRating(good);
+            listOfProducts.get(35).setRating(bad);
+            listOfProducts.get(36).setRating(bestRating);
+            listOfProducts.get(37).setRating(veryGood);
+            listOfProducts.get(38).setRating(good);
+            listOfProducts.get(39).setRating(bad);
+            listOfProducts.get(40).setRating(bestRating);
+            listOfProducts.get(41).setRating(veryGood);
+            listOfProducts.get(42).setRating(good);
+            listOfProducts.get(43).setRating(bad);
 
             listOfProducts.get(0).setCategory(shoes);
             listOfProducts.get(0).setSubcategory(subcategory11);

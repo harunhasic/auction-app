@@ -80,8 +80,7 @@ const Header = ({ loggedInState }) => {
                     AUCTION
                 </Link>
                 <div className="col-md-4">
-                <FormControl size="xl-18" type="text" placeholder="Try enter: Shoes" />
-                    <GrFormSearch className="lower-header-search-icon" />
+              
                 </div>
                 <Nav>
                     <NavLink exact className="dark-nav-link nav-link" activeClassName="dark-active-nav-link" to="/">HOME</NavLink>

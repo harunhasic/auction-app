@@ -3,7 +3,6 @@ package com.atlantbh.auction.service;
 import com.atlantbh.auction.exceptions.RepositoryException;
 import com.atlantbh.auction.exceptions.ServiceException;
 import com.atlantbh.auction.model.SubCategory;
-import com.atlantbh.auction.model.dto.SubCategoryDto;
 import com.atlantbh.auction.repository.SubCategoryRepository;
 import org.springframework.stereotype.Service;
 

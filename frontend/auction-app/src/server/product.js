@@ -2,7 +2,7 @@ import axios from 'axios';
 import { defaultHeader, getParams } from './common';
 import { getUserId } from '../utils/LocalStorageUtils'
 
-export const getProduct = async (productId, userId) => {
+export async function getProduct(productId, userId) {
     return (await axios.get(`${process.env.REACT_APP_BACKEND_ENDPOINT}/products/?product_id=${productId}&user_id=${userId}`)).data;
 };
 
@@ -14,7 +14,7 @@ export async function getNewProducts() {
     return (await axios.get(process.env.REACT_APP_BACKEND_ENDPOINT + '/products/new')).data;
 };
 
-export async function getLastProducts() {
+ export async function getLastProducts() {
     return (await axios.get(process.env.REACT_APP_BACKEND_ENDPOINT + '/products/last')).data;
 };
 

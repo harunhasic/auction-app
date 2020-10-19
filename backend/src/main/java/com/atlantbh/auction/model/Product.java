@@ -71,6 +71,13 @@ public class Product extends BaseModel<Product, Long> {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private SubCategory subCategory;
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "rating_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Rating rating;
+
+
+
     public Product() {
 
     }
@@ -100,6 +107,14 @@ public class Product extends BaseModel<Product, Long> {
         this.highestBid = highestBid;
         this.user = user;
         this.photos = photos;
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
     }
 
     @NotBlank(message = "Name cannot be blank")

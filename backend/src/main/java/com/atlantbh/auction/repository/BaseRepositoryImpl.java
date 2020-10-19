@@ -4,14 +4,11 @@ import com.atlantbh.auction.exceptions.RepositoryException;
 import com.atlantbh.auction.model.BaseModel;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.springframework.data.mapping.AccessOptions;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.lang.reflect.ParameterizedType;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -101,7 +98,7 @@ public class BaseRepositoryImpl<M extends BaseModel<M, I>, I> implements BaseRep
     @Transactional(rollbackFor = RepositoryException.class)
     public List<M> saveAll(List<M> entities) throws RepositoryException {
         try {
-            entities.forEach(entity->{
+            entities.forEach(entity -> {
                 entityManager.persist(entity);
             });
             return entities;

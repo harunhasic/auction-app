@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
 import javax.transaction.Transactional;
-import java.util.Date;
 import java.util.List;
 
 
@@ -31,11 +30,10 @@ public class ProductRepository extends BaseRepositoryImpl<Product, Long> {
 
     public List<Product> getNewProducts() throws RepositoryException {
         try {
-            Date minDate = new Date("09/10/2020");
-            List<Product> newProducts = getBaseCriteria()
-                    .add(Restrictions.ge("startDate", minDate))
-                    .setMaxResults(10)
-                    .list();
+            Criteria criteria = getBaseCriteria();
+            criteria.addOrder(Order.desc("startDate"));
+            criteria.setMaxResults(12);
+            List<Product> newProducts = criteria.list();
             return newProducts;
         } catch (Exception e) {
             throw new RepositoryException("There was an issue with returning the new products", e);
@@ -56,12 +54,24 @@ public class ProductRepository extends BaseRepositoryImpl<Product, Long> {
     public List<Product> getLastProducts() throws RepositoryException {
         try {
             Criteria criteria = getBaseCriteria();
-            criteria.addOrder(Order.asc("endDate"));
-            criteria.setMaxResults(10);
+            criteria.addOrder(Order.desc("endDate"));
+            criteria.setMaxResults(12);
             List<Product> lastProducts = criteria.list();
             return lastProducts;
         } catch (Exception e) {
-            throw new RepositoryException("There was an issue with returning the last products", e);
+            throw new RepositoryException("There was an issue with returning the last chance products", e);
+        }
+    }
+
+    public List<Product> getTopRated() throws RepositoryException {
+        try {
+            Criteria criteria = getBaseCriteria();
+            criteria.addOrder(Order.asc("rating"));
+            criteria.setMaxResults(12);
+            List<Product> bestRated = criteria.list();
+            return bestRated;
+        } catch (Exception e) {
+            throw new RepositoryException("There was an issue with returning the top rated products", e);
         }
     }
 
