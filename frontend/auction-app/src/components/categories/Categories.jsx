@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { home } from '../../utils/RedirectUrls';
-import { getCategories } from '../../server/category';
-import { getAllSubCategories } from '../../server/subcategory';
-
+import CategoryService from '../../Services/category-service'
+import SubCategoryService from '../../Services/subcategory-service'
 import '../../styles/categories/AllCategories.scss';
+
+const categoryService = new CategoryService();
+const subCategoryService = new SubCategoryService();
 
 const AllCategories = ({ setBreadcrumb }) => {
     const history = useHistory();
@@ -17,8 +19,12 @@ const AllCategories = ({ setBreadcrumb }) => {
         async function fethCategories() {
             try {
                 setBreadcrumb("ALL CATEGORIES", [{ text: "HOME", href: { home } }, { text: "ALL CATEGORIES" }]);
-                setCategories(await getCategories());
-                setSubCategories(await getAllSubCategories());
+                await categoryService.getCategories().then(response => {
+                    setCategories(response.data);
+                  })
+                await subCategoryService.getAllSubCategories().then(response => {
+                    setSubCategories(response.data);
+                })
             } catch (e) { }
         }
         fethCategories();

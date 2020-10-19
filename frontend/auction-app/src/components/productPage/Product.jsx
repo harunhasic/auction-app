@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { getUserId } from '../../utils/LocalStorageUtils';
-import { getProduct, getRelatedProducts } from '../../server/product';
+import ProductService from '../../Services/product-service'
 import { productUrl } from '../../utils/RedirectUrls';
 import ProductPhotos from '../product/ProductImages';
 import ProductInfo from '../product/ProductDetails';
@@ -10,8 +10,11 @@ import moment from 'moment';
 import '../../styles/product/Product.scss';
 import MapImage from '../MapImage/MapImage';
 
+
+const productService = new ProductService();
+
 const ItemPage = ({ match, setBreadcrumb, showMessage }) => {
-    const personId = getUserId();
+    const userId = getUserId();
 
     const [product, setProduct] = useState(null);
     const [relatedProducts, setRelatedProducts] = useState([]);
@@ -24,12 +27,17 @@ const ItemPage = ({ match, setBreadcrumb, showMessage }) => {
         const fetchData = async () => {
             const productId = match.params.id;
             try {
-                const data = await getProduct(productId, personId);
+                const data = await  await productService.getProduct(productId, userId).then(response => {
+                    setProduct(response.data);
+                  })
+                  
                 setActive(moment().isBetween(moment(data.startDate), moment(data.endDate), null, "[)"));
-                setOwnProduct(data.personId === personId);
+                setOwnProduct(data.personId === userId);
                 setProduct(data);
-                if (personId === null) {
-                    setRelatedProducts(await getRelatedProducts(productId));
+                if (userId === null) {
+                    setRelatedProducts(await productService.getRelatedProducts(productId).then(response => {
+                        setRelatedProducts(response.data);
+                    }));
                 }
                 setMinPrice(data.startPrice);
             } catch (e) { }
@@ -63,7 +71,7 @@ const ItemPage = ({ match, setBreadcrumb, showMessage }) => {
                     />
                 </div>
             ) : null}
-            {personId === null && product !== null ? (
+            {userId === null && product !== null ? (
                 <div style={{ marginTop: 150 }} className="featured-container">
                     <h2>
                         Related products
