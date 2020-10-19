@@ -119,15 +119,15 @@ const LandingPage = ({ deleteBreadcrumb }) => {
 
       <div className="featured-container">
         <div className="tabs-container">
-          <div className={activePage === 0 ? "custom-tab" : null}  onClick={() => setActivePage(0)}>
+          <div className={activePage === 0 ? "custom-tab" : null} onClick={() => setActivePage(0)}>
             New Arrivals
           </div>
           <div className="space"></div>
-          <div className={activePage === 1 ? "custom-tab" : null}  onClick={() => setActivePage(1)}>
+          <div className={activePage === 1 ? "custom-tab" : null} onClick={() => setActivePage(1)}>
             Top Rated
           </div>
           <div className="space"></div>
-          <div className={activePage === 2 ? "custom-tab" : null}  onClick={() => setActivePage(2)}>
+          <div className={activePage === 2 ? "custom-tab" : null} onClick={() => setActivePage(2)}>
             Last chance
           </div>
         </div>
@@ -138,15 +138,14 @@ const LandingPage = ({ deleteBreadcrumb }) => {
               newProducts.map(product => (
                 <MapImage key={product.id} data={product} size="xxl" url={productUrl(product)} />
               ))
-            ) :  activePage === 1 ?  (
+            ) : activePage === 1 ? (
               topRatedProducts.map(product => (
                 <MapImage key={product.id} data={product} size="xxl" url={productUrl(product)} />
               ))
-              )
-              :
-              lastProducts.map(product => (
-                <MapImage key={product.id} data={product} size="xxl" url={productUrl(product)} />
-              ))
+            ) :
+                lastProducts.map(product => (
+                  <MapImage key={product.id} data={product} size="xxl" url={productUrl(product)} />
+                ))
           }
         </div>
       </div>
