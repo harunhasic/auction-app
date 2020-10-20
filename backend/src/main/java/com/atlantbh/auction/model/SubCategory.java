@@ -1,16 +1,15 @@
 package com.atlantbh.auction.model;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "subcategory")
 public class SubCategory extends BaseModel<SubCategory, Long> {
 
+    @Column(name = "name")
     private String name;
+    @Column(name = "photo_url")
     private String photoUrl;
 
     @ManyToOne

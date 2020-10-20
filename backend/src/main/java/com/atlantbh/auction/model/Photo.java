@@ -4,15 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 
 @Entity
 @Table(name = "photo")
 public class Photo extends BaseModel<Photo, Long> {
 
+    @Column(name = "photo_url")
     private String photoUrl;
-
-
     @Column(nullable = false)
     private Boolean featured = false;
 

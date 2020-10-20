@@ -23,20 +23,30 @@ import java.util.List;
 @Table(name = "auction_users")
 public class User extends BaseModel<User, Long> implements UserDetails {
 
+    @Column(name = "roles")
     @ElementCollection(fetch = FetchType.EAGER)
     List<Role> roles;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "email")
     private String email;
+    @Column(name = "password")
     private String password;
+    @Column(name = "phone_number")
     private String phoneNumber;
+    @Column(name = "gender")
     private String gender;
+    @Column(name = "birth_date")
     private Date birthDate;
+    @Column(name = "profile_photo_url")
     private String profilePhotoUrl;
 
     @OneToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.MERGE)
     @JoinColumn(name = "address_id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @Column(name = "address_id")
     private Address address;
 
     public User() {

@@ -3,7 +3,6 @@ package com.atlantbh.auction.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -31,21 +30,25 @@ import java.util.Set;
                 }))
 public class Product extends BaseModel<Product, Long> {
 
+    @Column(name = "name")
     private String name;
-    @Column(length = 4000, columnDefinition = "text")
+    @Column(length = 4000, columnDefinition = "text", name = "description")
     private String description;
-    @Column(name ="start_price")
+    @Column(name = "start_price")
     private double startPrice;
     @Column(name = "start_date")
     private Date startDate;
     @Column(name = "end_date")
     private Date endDate;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "shipping")
     private Boolean shipping = false;
 
+    @Column(name = "phone")
     private String phone;
+    @Column(name = "highest_bid")
     private double highestBid;
+    @Column(name = "number_of_bids")
     private int numberOfBids;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -55,6 +58,7 @@ public class Product extends BaseModel<Product, Long> {
     @Column(name = "featured")
     private Boolean featured = false;
 
+    @Column(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -75,7 +79,6 @@ public class Product extends BaseModel<Product, Long> {
     @JoinColumn(name = "rating_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Rating rating;
-
 
 
     public Product() {
@@ -217,11 +220,12 @@ public class Product extends BaseModel<Product, Long> {
         this.user = user;
     }
 
-    public void setCategory(Category category) {
-        this.category=category;
-    }
     public Category getCategory() {
         return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public SubCategory getSubcategory() {

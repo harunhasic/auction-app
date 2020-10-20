@@ -8,7 +8,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import Categories from '../categories/Categories';
 import NotFound from '../notFound/NotFound';
 import Shop from '../shop/Shop';
-import Profile from '../MyProfile/Profile'
+import Profile from '../MyProfile/Profile';
 
 
 const UserRoutes = (props) => {

@@ -75,6 +75,18 @@ public class ProductRepository extends BaseRepositoryImpl<Product, Long> {
         }
     }
 
+    public List<Product> getProduct(@Param("product_id") Long productId, @Param("user_id") Long userId) throws RepositoryException {
+        try {
+            Criteria criteria = getBaseCriteria().createAlias("user", "u");
+            criteria.add(Restrictions.eq("u.id", userId));
+            List<Product> getProduct = criteria.list();
+            return getProduct;
+
+        } catch (Exception e) {
+            throw new RepositoryException("There was an issue with returning the product", e);
+        }
+    }
+
     @Transactional
     public List<Product> findAll() {
         Query query = entityManager.createQuery("SELECT p FROM Product p");
