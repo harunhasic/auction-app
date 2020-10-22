@@ -46,8 +46,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
-    @Value("${CLIENT_URL}")
-    private String client;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -66,16 +64,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .cors().and()
-                .csrf().disable()
-                .httpBasic()
+                .cors()
                 .and()
+                .csrf()
+                .disable()
                 .authorizeRequests()
-                .antMatchers("/", "/index", "/css/*", "/js/*").permitAll()
-                .antMatchers("/api/users/**").permitAll()
-                // all other requests need to be authenticated
-                .anyRequest().authenticated().and().headers().and().
-                exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+                .anyRequest().permitAll().and()
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // Add a filter to validate the tokens with every request
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
@@ -87,31 +82,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/index.html", "/*.js", "/*.css", "/");
     }
 
-    @Override
-    @Bean
-    protected UserDetailsService userDetailsService() {
-        UserDetails traderUser = User.builder()
-                .username("user")
-                .password(new BCryptPasswordEncoder().encode("password"))
-                .roles(USER.name())
-                .build();
-
-        UserDetails adminUser = User.builder()
-                .username("admin")
-                .password(new BCryptPasswordEncoder().encode("password123"))
-                .roles(ADMIN.name())
-                .build();
-
-        return new InMemoryUserDetailsManager(
-                traderUser,
-                adminUser
-        );
-    }
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(client));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://auction-app-2020-frontend.herokuapp.com"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

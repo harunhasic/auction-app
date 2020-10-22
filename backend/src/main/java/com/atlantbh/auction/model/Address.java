@@ -14,15 +14,19 @@ import javax.persistence.*;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Address extends BaseModel<Address, Long> {
 
+    @Column(name = "street")
     private String street;
+    @Column(name = "city")
     private String city;
+    @Column(name = "zip_code")
     private String zipCode;
+    @Column(name = "country")
     private String country;
 
     public Address() {
     }
 
-    public Address(String street, String city, String state, String country, String zipCode) {
+    public Address(String street, String city, String country, String zipCode) {
         this.street = street;
         this.city = city;
         this.country = country;

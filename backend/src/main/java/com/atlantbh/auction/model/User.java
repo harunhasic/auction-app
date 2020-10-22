@@ -23,20 +23,30 @@ import java.util.List;
 @Table(name = "auction_users")
 public class User extends BaseModel<User, Long> implements UserDetails {
 
+    @Column(name = "roles")
     @ElementCollection(fetch = FetchType.EAGER)
     List<Role> roles;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "email")
     private String email;
+    @Column(name = "password")
     private String password;
+    @Column(name = "phone_number")
     private String phoneNumber;
+    @Column(name = "gender")
     private String gender;
+    @Column(name = "birth_date")
     private Date birthDate;
+    @Column(name = "profile_photo_url")
     private String profilePhotoUrl;
 
     @OneToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.MERGE)
     @JoinColumn(name = "address_id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @Column(name = "address_id")
     private Address address;
 
     public User() {
@@ -55,6 +65,17 @@ public class User extends BaseModel<User, Long> implements UserDetails {
         this.lastName = registerRequest.getLastName();
         this.email = registerRequest.getEmail();
         this.password = registerRequest.getPassword();
+    }
+
+    public User(String firstName, String lastName, String email, String gender, Date birthDate, String phoneNumber, String password, String profilePhotoUrl) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.profilePhotoUrl = profilePhotoUrl;
     }
 
     @NotBlank(message = "User first name is required!")
@@ -172,6 +193,14 @@ public class User extends BaseModel<User, Long> implements UserDetails {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Override
