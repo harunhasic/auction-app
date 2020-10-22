@@ -23,6 +23,7 @@ public class Address extends BaseModel<Address, Long> {
     @Column(name = "country")
     private String country;
 
+
     public Address() {
     }
 

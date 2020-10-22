@@ -46,7 +46,6 @@ public class User extends BaseModel<User, Long> implements UserDetails {
     @OneToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.MERGE)
     @JoinColumn(name = "address_id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @Column(name = "address_id")
     private Address address;
 
     public User() {

@@ -24,10 +24,10 @@ export default class ProductService extends BaseService {
         });
     }
 
-    getProduct(productId, userId) {
+    getProduct(productId) {
         return this.baseApi({
             method: 'GET',
-            url: `/products/?product_id=${productId}&user_id=${userId}`
+            url: `/products/${productId}`
         });
     }
     getLastProducts() {
@@ -37,10 +37,10 @@ export default class ProductService extends BaseService {
         });
     }
 
-    getRelatedProducts(id) {
+    getRelatedProducts(productId) {
         return this.baseApi({
             method: 'GET',
-            url: '/products/related/?id=' + id
+            url: `/products/related/${productId}`
         });
     }
 }
