@@ -10,11 +10,11 @@ const ProductPhoto = ({ photos }) => {
     const [showFullscreen, setShowFullscreen] = useState(false);
     const [showFullscreenIcon, setShowFullscreenIcon] = useState(false);
 
-    const imagePath = photos[activePhoto] !== undefined ? photos[activePhoto].photoUrl : "/images/placeholder-image-gray.png";
+    const path = photos[activePhoto] !== undefined ? photos[activePhoto].photoUrl : "undefined";
     return (
         <div className="images-container">
             <Modal size="xl" centered show={showFullscreen} onHide={() => setShowFullscreen(false)}>
-                <Image onClick={() => setShowFullscreen(false)} width="100%" src={imagePath} />
+                <Image onClick={() => setShowFullscreen(false)} width="100%" src={path} />
             </Modal>
             <Image
                 onClick={() => setShowFullscreen(true)}
@@ -29,8 +29,7 @@ const ProductPhoto = ({ photos }) => {
             <AiOutlineFullscreen
                 onMouseEnter={() => setShowFullscreenIcon(true)}
                 onMouseLeave={() => setShowFullscreenIcon(false)}
-                style={!showFullscreenIcon ? { display: 'none' } : null}
-                className="fullscreen-icon"
+                className={!showFullscreenIcon ? "fullscreen-icon-none" : "fullscreen-icon"}
                 onClick={() => setShowFullscreen(true)}
             />
             {photos.map((photo, i) => (
@@ -39,7 +38,6 @@ const ProductPhoto = ({ photos }) => {
                     key={photo.id}
                     src={photo.photoUrl}
                     className="product-image-small"
-                    style={activePhoto === i ? { border: '2px solid #8367D8' } : { opacity: 0.7 }}
                 />
             ))}
         </div>
