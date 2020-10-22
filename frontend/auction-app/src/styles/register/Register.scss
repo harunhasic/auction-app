@@ -1,0 +1,103 @@
+@import url("https://fonts.googleapis.com/css?family=Lato");
+$purple-color: #8367d8;
+$font-stack: "Lato-Regular", sans-serif;
+
+.register-container {
+  border: 1px solid #d8d8d8;
+  max-width: 700px;
+  margin: 0 auto;
+  font-family: $font-stack;
+}
+
+.register-form {
+  padding: 6.5%;
+}
+
+.register-form > * {
+  margin-bottom: 30px;
+}
+
+.register-title {
+  padding: 1.5% 0;
+  text-align: center;
+  background: #fafafa;
+  font-weight: bold;
+  font-size: 24px;
+  letter-spacing: 0.85px;
+}
+
+.btn-register {
+  width: 603px;
+  height: 57px;
+  border: 3px solid $purple-color;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 76px;
+  box-shadow: 3px 3px 0 0 rgba(131, 103, 216, 0.31);
+  width: 100%;
+  min-width: 50px;
+  max-width: 603px;
+}
+
+.already-registered {
+  font-size: 18;
+  color: #9b9b9b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  height: 54px;
+  margin-top: 10px;
+  border: 1px solid #d8d8d8;
+  background-color: #fcfcfc;
+}
+
+.purple-nav-link {
+  color: $purple-color;
+  text-decoration: none;
+}
+
+.purple-nav-link:hover {
+  color: #573bac;
+}
+
+.form-control {
+  border: 1px solid #e3e3e3;
+  box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 0.11);
+  border-radius: 0;
+  color: #9b9b9b;
+  height: 54px;
+  letter-spacing: 0.56px;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.form-group,
+.custom-control {
+  text-align: left;
+}
+
+.form-label,
+.font-18,
+.custom-control-label {
+  font-size: 18px;
+  letter-spacing: 0.63px;
+}
+
+.font-15 {
+  font-size: 15px;
+  letter-spacing: 0.53px;
+}
+
+.form-row {
+  justify-content: space-between;
+}
+
+.check-button {
+  display:none;
+}

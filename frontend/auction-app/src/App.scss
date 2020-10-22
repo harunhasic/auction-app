@@ -1,0 +1,136 @@
+.app-container {
+  color: #252525;
+  font-size: 16px;
+  letter-spacing: 0.56px;
+  text-align: center;
+  position: relative;
+  min-height: 100vh;
+}
+
+.route-container {
+  padding: 0 11.1% calc(11.1% + 356px) 11.1%;
+}
+
+@media (max-width: 575px) {
+  .route-container {
+    padding-bottom: calc(11.1% + 466px);
+  }
+}
+
+.form-control {
+  border: 1px solid #e3e3e3;
+  box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 0.11);
+  border-radius: 0;
+  color: #9b9b9b;
+}
+
+.form-control-xl-16 {
+  height: 54px;
+  font-size: 16px;
+  letter-spacing: 0.56px;
+}
+
+.form-control-xl-18 {
+  height: 54px;
+  font-size: 18px;
+  letter-spacing: 0.63px;
+}
+
+.form-control-gray {
+  background: #fcfcfc;
+  border: 1px solid #d8d8d8;
+}
+
+.form-group,
+.custom-control {
+  text-align: left;
+}
+
+.form-label,
+.font-18,
+.custom-control-label {
+  font-size: 18px;
+  letter-spacing: 0.63px;
+}
+
+.font-15 {
+  font-size: 15px;
+  letter-spacing: 0.53px;
+}
+
+.form-row {
+  justify-content: space-between;
+}
+
+.alert {
+  border: none;
+  text-align: left;
+  padding-left: 11.1%;
+  border-radius: 0;
+  margin-top: -40px;
+  font-size: 18px;
+  letter-spacing: 0.63px;
+}
+
+.alert-warning {
+  background: #f6f2e5;
+  color: #ab944e;
+}
+
+.alert-success {
+  background: #f0f3ee;
+  font-weight: bold;
+  color: #417505;
+}
+
+/* bracdcrumb */
+
+.breadcrumb {
+  height: 60px;
+  align-items: center;
+  border-radius: 0;
+  position: relative;
+  margin-bottom: 40px;
+  background: #fafafa;
+  padding-left: 11%;
+  padding-right: 11%;
+  text-align: right;
+  justify-content: end;
+}
+
+.breadcrumb-title {
+  position: absolute;
+  left: 11%;
+  font-size: 18px;
+  letter-spacing: 0.63px;
+}
+
+@media (max-width: 765px) {
+  .breadcrumb-title {
+    margin: 0 auto;
+    width: max-content;
+    top: 0;
+    right: 0;
+    left: 0;
+  }
+
+  .breadcrumb {
+    align-items: flex-end;
+    padding-left: 1%;
+    padding-right: 1%;
+  }
+
+  .error-msg {
+    color: red;
+  }
+}
+
+.true-visible {
+  margin-top: 40;
+  margin-bottom: "-1rem";
+}
+
+.conditional {
+  margin-top: 40;
+  margin-bottom: "-1rem";
+}
