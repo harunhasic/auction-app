@@ -10,10 +10,11 @@ import java.util.List;
 @Table(name = "photo")
 public class Photo extends BaseModel<Photo, Long> {
 
+    @Column(name = "photo_url")
     private String photoUrl;
 
 
-    @Column(nullable = false)
+    @Column(nullable = false,name = "featured")
     private Boolean featured = false;
 
     public Photo() {

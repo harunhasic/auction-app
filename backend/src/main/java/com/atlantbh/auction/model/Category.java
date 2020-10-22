@@ -1,6 +1,7 @@
 package com.atlantbh.auction.model;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -8,6 +9,7 @@ import javax.persistence.Table;
 @Table(name = "category")
 public class Category extends BaseModel<Category, Long> {
 
+    @Column(name = "name")
     private String name;
 
     public Category() {

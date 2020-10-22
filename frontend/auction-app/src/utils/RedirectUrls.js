@@ -5,7 +5,7 @@ export const registerUrl = "/register";
 export const myAccountUrl = "/my_account";
 export const forgotPasswordUrl = "/forgot_password";
 
-export const allCategoryUrl = "/all";
+export const allCategoryUrl = "/categories";
 
 export const shopUrl = "/shop";
 export const about = "/shop/about";
@@ -14,15 +14,15 @@ export const privacy = "/shop/privacy";
 
 export const formatLink = (name) => name.split(' ').join('_').toLowerCase();
 
-export const productUrl = (product) => {
+export function productUrl(product) {
     return `/${formatLink(product.category.name)}/${formatLink(product.subcategory.name)}/${product.id}`;
 }
 
-export const categoryUrl = (category) => {
+export function categoryUrl(category) {
     return `/${formatLink(category.name)}`;
 }
 
-export const subcategoryUrl = (subcategory) => {
+export function subcategoryUrl(subcategory) {
     return `/${formatLink(subcategory.category.name)}/${(subcategory.name)}`;
 }
 

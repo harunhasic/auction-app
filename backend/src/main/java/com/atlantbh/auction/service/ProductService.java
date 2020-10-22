@@ -3,7 +3,6 @@ package com.atlantbh.auction.service;
 import com.atlantbh.auction.exceptions.RepositoryException;
 import com.atlantbh.auction.exceptions.ServiceException;
 import com.atlantbh.auction.model.Product;
-import com.atlantbh.auction.model.dto.ProductDto;
 import com.atlantbh.auction.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -36,9 +35,10 @@ public class ProductService extends BaseService<Product, Long, ProductRepository
         }
     }
 
-    public List<Product> getRelatedProducts(Long productId, Long subcategoryId) throws ServiceException {
+    public List<Product> getRelatedProducts(Long productId) throws ServiceException {
         try {
-            List<Product> products = repository.getRelatedProducts(productId, subcategoryId);
+            Product product = repository.findById(productId);
+            List<Product> products = repository.getRelatedProducts(productId, product.getSubcategory().getId());
             return products;
         } catch (RepositoryException e) {
             throw new ServiceException("There was an issue with returning the related products", e);
@@ -53,23 +53,12 @@ public class ProductService extends BaseService<Product, Long, ProductRepository
         }
     }
 
-    public ProductDto getProduct(Long productId, Long userId) throws ServiceException {
+    public Product getProduct(Long productId) throws ServiceException {
         try {
-            List<Product> product = repository.getProduct(productId, userId);
-            ProductDto productDto = new ProductDto(
-                    product.get(0).getId(),
-                    product.get(0).getName(),
-                    product.get(0).getDescription(),
-                    product.get(0).getStartPrice(),
-                    product.get(0).getSubcategory(),
-                    product.get(0).getStartDate(),
-                    product.get(0).getEndDate(),
-                    product.get(0).getPhotos(),
-                    product.get(0).getUser()
-            );
-            return productDto;
+            Product product = repository.getProduct(productId);
+            return product;
         } catch (RepositoryException e) {
-            throw new ServiceException("There was an issue with returning the prodcut", e);
+            throw new ServiceException("There was an issue with returning the product", e);
         }
     }
 }

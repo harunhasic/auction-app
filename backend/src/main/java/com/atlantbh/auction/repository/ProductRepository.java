@@ -5,7 +5,6 @@ import com.atlantbh.auction.model.Product;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
@@ -44,6 +43,7 @@ public class ProductRepository extends BaseRepositoryImpl<Product, Long> {
         try {
             Criteria criteria = getBaseCriteria().createAlias("subCategory", "s");
             criteria.add(Restrictions.eq("s.id", subcategoryId));
+            criteria.add(Restrictions.ne("id", productId));
             List<Product> relatedProducts = criteria.list();
             return relatedProducts;
         } catch (Exception e) {
@@ -72,6 +72,15 @@ public class ProductRepository extends BaseRepositoryImpl<Product, Long> {
             return bestRated;
         } catch (Exception e) {
             throw new RepositoryException("There was an issue with returning the top rated products", e);
+        }
+    }
+
+    public Product getProduct(Long productId) throws RepositoryException {
+        try {
+            Product theProduct = entityManager.find(Product.class, productId);
+            return theProduct;
+        } catch (Exception e) {
+            throw new RepositoryException("There was an issue with returning the product", e);
         }
     }
 

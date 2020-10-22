@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Link } from "react-router-dom"
+import ScrollToTop from 'react-router-scroll-top'
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Alert, Breadcrumb } from 'react-bootstrap';
@@ -56,15 +57,16 @@ const App = () => {
   return (
     <div className="app-container">
       <Router>
+      <ScrollToTop>
         <Header loggedInState={loggedInState} />
-        <Breadcrumb style={breadcrumbTitle === null ? { display: 'none' } : null}>
+        <Breadcrumb className={breadcrumbTitle === null ? "breadcrumb-class" : null}>
           <div className="breadcrumb-title">
             {breadcrumbTitle}
           </div>
           {breadcrumbItems.map((item, i, { length }) => (
             <Breadcrumb.Item active key={item.text}>
               {length - 1 === i ? (
-                <div style={{ color: '#252525' }}>
+                <div className = "item-text">
                   {item.text}
                 </div>
               ) : (
@@ -75,7 +77,7 @@ const App = () => {
             </Breadcrumb.Item>
           ))}
         </Breadcrumb>
-        <div style={alertVisible && breadcrumbTitle === null ? { marginTop: 40, marginBottom: '-1rem' } : null}>
+        <div className={alertVisible && breadcrumbTitle === null ? "alert-div" : null}>
           <Alert dismissible onClose={() => setAlertVisible(false)} transition={false} show={alertVisible} variant={variant}>
             {message}
           </Alert>
@@ -84,6 +86,7 @@ const App = () => {
           <Routes changeLoggedInState={changeLoggedInState} setBreadcrumb={setBreadcrumb} showMessage={showMessage} deleteBreadcrumb={deleteBreadcrumb} />
         </div>
         <Footer />
+        </ScrollToTop>
       </Router>
     </div>
   );

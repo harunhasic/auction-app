@@ -19,6 +19,4 @@ export default class BaseService {
             headers: new authHeader()
         })(params);
     }
-
-    
 }
