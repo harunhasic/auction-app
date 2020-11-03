@@ -34,9 +34,11 @@ const AllCategories = ({ setBreadcrumb }) => {
         <div className="container-fluid">
             {categories.length !== 0 ?
                 <div className="row">
-                    {categories.map(category => (
+                    {
+                     categories.map(category => (
                         <CategoriesList key={category.id} category={category} />
-                    ))}
+                     ))
+                    }
                 </div> : <ErrorComponent></ErrorComponent>}
         </div>
     );
