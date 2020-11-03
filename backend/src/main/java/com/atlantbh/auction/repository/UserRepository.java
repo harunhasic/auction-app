@@ -2,6 +2,7 @@ package com.atlantbh.auction.repository;
 
 import com.atlantbh.auction.exceptions.RepositoryException;
 import com.atlantbh.auction.model.User;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -29,13 +30,21 @@ public class UserRepository extends BaseRepositoryImpl<User, Long> {
             Predicate predicateForEmail = cb.equal(resource.get("email"), email);
             q.where(predicateForEmail);
 
-            User result = entityManager.createQuery(q).getSingleResult();
-            if (result != null) {
-                return Optional.of(result);
+            User user = entityManager.createQuery(q).getSingleResult();
+            if (user != null) {
+                return Optional.of(user);
             } else
                 return Optional.empty();
         } catch (Exception e) {
             return Optional.empty();
         }
     }
+
+    @Transactional
+    public User findByFirstName(String name) {
+        return (User) getBaseCriteria()
+                .add(Restrictions.eq("firstName", name))
+                .uniqueResult();
+    }
 }
+

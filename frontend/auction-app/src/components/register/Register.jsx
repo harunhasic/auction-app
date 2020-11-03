@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../../styles/register/Register.scss'
-import AuthService from '../../services/auth-service'
+import AuthService from '../../Services/auth-service'
 import Form from 'react-validation/build/form';
 import CheckButton from 'react-validation/build/button';
 import EmailField from '../core/EmailInput';

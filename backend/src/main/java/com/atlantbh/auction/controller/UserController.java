@@ -7,7 +7,8 @@ import com.atlantbh.auction.model.dto.LoginRequest;
 import com.atlantbh.auction.model.dto.LoginResponse;
 import com.atlantbh.auction.model.dto.RegisterRequest;
 import com.atlantbh.auction.service.UserService;
-import com.atlantbh.utils.MapValidationErrors;
+import com.atlantbh.auction.utils.MapValidationErrors;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -23,12 +24,13 @@ import java.util.Optional;
  *
  * @author Harun Hasic
  */
+@ApiOperation(value = "/api/users", tags = "User entity controller")
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/api/users")
 public class UserController extends BaseController<User, Long, UserService> {
 
-
+    @ApiOperation(value = "Authorize log in from users")
     @PostMapping("/login")
     public ResponseEntity authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result) throws ServiceException {
         Optional<ResponseEntity<?>> errorMap = MapValidationErrors.checkForErrors(result);
@@ -44,6 +46,7 @@ public class UserController extends BaseController<User, Long, UserService> {
         return ResponseEntity.ok(new LoginResponse(loginRequest.getEmail()));
     }
 
+    @ApiOperation(value = "Register new users")
     @PostMapping
     @RequestMapping("/register")
     public ResponseEntity registerUser(@Valid @RequestBody RegisterRequest user, BindingResult bindingResult) {
@@ -59,6 +62,7 @@ public class UserController extends BaseController<User, Long, UserService> {
         }
     }
 
+    @ApiOperation(value = "Return user with the given email")
     @GetMapping
     @RequestMapping("/{email}")
     public ResponseEntity getByEmail(@PathVariable String email) {

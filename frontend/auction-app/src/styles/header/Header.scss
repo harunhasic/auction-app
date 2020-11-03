@@ -1,6 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Lato");
-$purple-color: #8367d8;
-$font-stack: "Lato", sans-serif;
+@import "../defaults/defaults";
 
 .header-container {
   display: flex;
@@ -8,24 +6,21 @@ $font-stack: "Lato", sans-serif;
   align-items: center;
   background: #252525;
   height: 40px;
-  color: white;
-  font-size: 14px;
-  letter-spacing: 0.49px;
   padding-right: 11.1%;
   padding-left: 11.1%;
-  font-family: $font-stack;
 }
+
 .header-text {
-  font-family: "Lato";
+  font-family: $font-stack;
   font-weight: bold;
-  font-size: 0.6em;
   text-decoration: none;
   color: #ffffff;
   letter-spacing: 0.49px;
+  font-size: 14px;
 }
 
 .header-or {
-  font-family: "Lato";
+  font-family: $font-stack;
   font-weight: bold;
   font-size: 14px;
   color: #9b9b9b;
@@ -34,7 +29,7 @@ $font-stack: "Lato", sans-serif;
 }
 
 .header-title {
-  font-family: "Lato";
+  font-family: $font-stack;
   font-weight: lighter;
   font-size: 1em;
   color: #8367d8bb;
@@ -57,6 +52,7 @@ $font-stack: "Lato", sans-serif;
   color: #8367d8;
   letter-spacing: 0.63px;
 }
+
 .header-text {
   text-decoration: none;
   color: #f1f1f1;
@@ -70,6 +66,7 @@ $font-stack: "Lato", sans-serif;
   color: #9b9b9b;
   font-size: 14px;
 }
+
 .lower-header-container {
   display: flex;
   justify-content: space-between;
@@ -80,6 +77,9 @@ $font-stack: "Lato", sans-serif;
   padding-left: 11.1%;
   min-height: 80px;
   flex-wrap: wrap;
+  color: #252525;
+  font-family: $font-stack;
+  font-weight: lighter;
 }
 
 .lower-header-brand {
@@ -87,6 +87,7 @@ $font-stack: "Lato", sans-serif;
   letter-spacing: 0.84px;
   font-weight: lighter;
   color: $purple-color;
+  padding-right: 250px;
 }
 
 .lower-header-brand:hover {
@@ -107,12 +108,15 @@ $font-stack: "Lato", sans-serif;
   top: 9px;
   cursor: pointer;
 }
+
 a:hover {
   text-decoration: none;
 }
 
 .dark-nav-link {
+  font-size: 16px;
   color: #252525;
+  letter-spacing: 0.56px;
 }
 
 .dark-nav-link:hover {
@@ -127,6 +131,7 @@ a:hover {
 .hello-user {
   margin-right: 30px;
 }
+
 .auction-fill {
   color: #c4bfd6;
   margin-right: 5;

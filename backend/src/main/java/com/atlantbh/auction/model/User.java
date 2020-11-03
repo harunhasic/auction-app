@@ -23,19 +23,37 @@ import java.util.List;
 @Table(name = "auction_users")
 public class User extends BaseModel<User, Long> implements UserDetails {
 
+    @Column(name = "roles")
     @ElementCollection(fetch = FetchType.EAGER)
     List<Role> roles;
+
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
+
+    @Email(message = "Valid email is required")
+    @Column(unique = true)
     private String email;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "phone_number")
     private String phoneNumber;
+
+    @Column(name = "gender")
     private String gender;
+
+    @Column(name = "birth_date")
     private Date birthDate;
+
+    @Column(name = "profile_photo_url")
     private String profilePhotoUrl;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "address_id", nullable = true)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "address_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Address address;
 
@@ -57,8 +75,27 @@ public class User extends BaseModel<User, Long> implements UserDetails {
         this.password = registerRequest.getPassword();
     }
 
+    public User(
+            String firstName,
+            String lastName,
+            String email,
+            String gender,
+            Date birthDate,
+            String phoneNumber,
+            String password,
+            String profilePhotoUrl
+    ) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.profilePhotoUrl = profilePhotoUrl;
+    }
+
     @NotBlank(message = "User first name is required!")
-    @Column(name = "first_name")
     public String getFirstName() {
         return firstName;
     }
@@ -68,7 +105,6 @@ public class User extends BaseModel<User, Long> implements UserDetails {
     }
 
     @NotBlank(message = "Users last name is required.")
-    @Column(name = "last_name")
     public String getLastName() {
         return lastName;
     }
@@ -77,9 +113,6 @@ public class User extends BaseModel<User, Long> implements UserDetails {
         this.lastName = lastName;
     }
 
-    @Email(message = "Valid email is required")
-    @Column(unique = true)
-    @NotBlank(message = "Users email is required.")
     public String getEmail() {
         return email;
     }
@@ -151,11 +184,18 @@ public class User extends BaseModel<User, Long> implements UserDetails {
     }
 
     public Date getBirthDate() {
-        return birthDate;
+        if (birthDate != null) {
+            return new Date(birthDate.getTime());
+        }
+        return null;
     }
 
     public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+        if (birthDate != null) {
+            this.birthDate = new Date(birthDate.getTime());
+        } else {
+            this.birthDate = null;
+        }
     }
 
     public String getProfilePhotoUrl() {
@@ -172,6 +212,14 @@ public class User extends BaseModel<User, Long> implements UserDetails {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     @Override

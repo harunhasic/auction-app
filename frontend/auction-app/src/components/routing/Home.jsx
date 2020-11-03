@@ -22,7 +22,7 @@ export default class Home extends Component {
       },
       error => {
         this.setState({
-          content:error.toString()       
+          content: error.toString()
         });
       }
     );

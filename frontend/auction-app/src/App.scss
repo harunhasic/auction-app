@@ -1,3 +1,5 @@
+@import "./styles/defaults/_defaults";
+
 .app-container {
   color: #252525;
   font-size: 16px;
@@ -53,6 +55,23 @@
   letter-spacing: 0.63px;
 }
 
+.item-text {
+  font-style: $font-stack;
+  font-size: 16px;
+  color: #252525;
+  letter-spacing: 0.56px;
+  margin-left: 10px;
+}
+
+.breadcrumb-hidden {
+  display: none;
+}
+
+.alert-div {
+  margin-top: 40xp;
+  margin-bottom: -1rem;
+}
+
 .font-15 {
   font-size: 15px;
   letter-spacing: 0.53px;
@@ -60,6 +79,11 @@
 
 .form-row {
   justify-content: space-between;
+}
+
+.alert-div {
+  margin-top: 40xp;
+  margin-bottom: -1rem;
 }
 
 .alert {
@@ -72,37 +96,29 @@
   letter-spacing: 0.63px;
 }
 
-.alert-warning {
-  background: #f6f2e5;
-  color: #ab944e;
-}
-
-.alert-success {
-  background: #f0f3ee;
-  font-weight: bold;
-  color: #417505;
-}
-
 /* bracdcrumb */
 
 .breadcrumb {
   height: 60px;
+  padding-left: 11%;
+  padding-right: 11%;
+  text-align: right;
   align-items: center;
   border-radius: 0;
   position: relative;
   margin-bottom: 40px;
   background: #fafafa;
-  padding-left: 11%;
-  padding-right: 11%;
-  text-align: right;
   justify-content: end;
+  margin-right: 30px;
+  padding-left: 100px;
 }
 
 .breadcrumb-title {
-  position: absolute;
+  padding-left: 245px;
   left: 11%;
   font-size: 18px;
-  letter-spacing: 0.63px;
+  letter-spacing: 0.64px;
+  margin-right: 10px;
 }
 
 @media (max-width: 765px) {
@@ -133,4 +149,37 @@
 .conditional {
   margin-top: 40;
   margin-bottom: "-1rem";
+}
+
+.white-nav-link {
+  color: #ffffff;
+
+  &:hover {
+    color: #d8d8d8;
+  }
+}
+
+.purple-nav-link {
+  color: $purple-color;
+}
+
+.purple-nav-link:hover {
+  color: #573bac;
+}
+.dark-nav-link-crumb {
+  font-style: $font-light;
+  font-size: 16px;
+  color: #252525;
+  letter-spacing: 0.56px;
+  margin-left: 1255px;
+  margin-right: -5px;
+}
+
+.dark-nav-link-crumb:hover {
+  color: $purple-color;
+}
+
+.dark-active-nav-link {
+  color: $purple-color;
+  font-weight: bold;
 }

@@ -2,12 +2,14 @@ package com.atlantbh.auction.repository;
 
 import com.atlantbh.auction.exceptions.RepositoryException;
 import com.atlantbh.auction.model.BaseModel;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 /**
  * Implementation of the base repository interface. It is used
@@ -27,8 +29,12 @@ public class BaseRepositoryImpl<M extends BaseModel<M, I>, I> implements BaseRep
         return (Class<M>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
-    private Session getSession() {
+    public Session getSession() {
         return entityManager.unwrap(Session.class);
+    }
+
+    public Criteria getBaseCriteria() {
+        return getSession().createCriteria(getParameterType());
     }
 
     @Override
@@ -82,7 +88,7 @@ public class BaseRepositoryImpl<M extends BaseModel<M, I>, I> implements BaseRep
         try {
             return entityManager.find(getParameterType(), id);
         } catch (Exception e) {
-            throw new RepositoryException("There was an error while returning this user " + id, e);
+            throw new RepositoryException("There was an error while returning the entity with this id " + id, e);
         }
     }
 
@@ -91,6 +97,21 @@ public class BaseRepositoryImpl<M extends BaseModel<M, I>, I> implements BaseRep
     public M findById(I id) {
         return entityManager.find(getParameterType(), id);
     }
+
+    //TODO - Delete this method when there is no use for it.
+    @Transactional(rollbackFor = RepositoryException.class)
+    public List<M> saveAll(List<M> entities) throws RepositoryException {
+        try {
+            entities.forEach(entity -> {
+                getSession().persist(entity);
+                getSession().flush();
+            });
+            return entities;
+        } catch (Exception e) {
+            throw new RepositoryException("The object could not be saved.", e);
+        }
+    }
 }
+
 
 
