@@ -293,7 +293,7 @@ public class DataSeeder implements CommandLineRunner {
         listOfUsers.get(1).setAddress(listOfAddresses.get(1));
         listOfUsers.get(2).setAddress(listOfAddresses.get(2));
         listOfUsers.get(3).setAddress(listOfAddresses.get(3));
-        if (userRepository.findByName(listOfUsers.get(0).getFirstName()) == null) {
+        if (userRepository.findByFirstName(listOfUsers.get(0).getFirstName()) == null) {
             userRepository.saveAll(listOfUsers);
         } else LOGGER.log(Level.WARNING, "Users are already seeded.");
 

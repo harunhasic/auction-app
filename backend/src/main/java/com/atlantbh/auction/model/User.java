@@ -52,7 +52,7 @@ public class User extends BaseModel<User, Long> implements UserDetails {
     @Column(name = "profile_photo_url")
     private String profilePhotoUrl;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = true, cascade = CascadeType.MERGE)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "address_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Address address;

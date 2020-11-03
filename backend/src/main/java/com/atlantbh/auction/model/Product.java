@@ -54,7 +54,7 @@ public class Product extends BaseModel<Product, Long> {
     @Column(name = "featured")
     private boolean featured = false;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;

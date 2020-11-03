@@ -45,7 +45,7 @@ public class BaseRepositoryImpl<M extends BaseModel<M, I>, I> implements BaseRep
             entityManager.flush();
             return entity;
         } catch (Exception e) {
-            throw new RepositoryException("The object could n[ot be saved.", e);
+            throw new RepositoryException("The object could not be saved.", e);
         }
     }
 
@@ -98,6 +98,7 @@ public class BaseRepositoryImpl<M extends BaseModel<M, I>, I> implements BaseRep
         return entityManager.find(getParameterType(), id);
     }
 
+    //TODO - Delete this method when there is no use for it.
     @Transactional(rollbackFor = RepositoryException.class)
     public List<M> saveAll(List<M> entities) throws RepositoryException {
         try {
