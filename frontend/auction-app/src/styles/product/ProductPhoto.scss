@@ -1,5 +1,4 @@
-$purple-color: #8367d8;
-
+@import "../defaults/defaults";
 
 .images-container {
     display: flex;
@@ -14,12 +13,13 @@ $purple-color: #8367d8;
     cursor: pointer;
     width: 110px;
     height: 110px;
-    
-    &:hover  {
+
+    &:hover {
         scale: 1.02;
         transition: all 0.1s;
         opacity: 0.7;
     }
+
     &:active {
         border: 2px solid $purple-color;
     }
@@ -29,10 +29,11 @@ $purple-color: #8367d8;
     object-fit: contain;
     cursor: pointer;
     height: auto;
+    width: 100%;
 }
 
 .fullscreen-icon-none {
-    display:none;
+    display: none;
 }
 
 .fullscreen-icon {
@@ -43,6 +44,10 @@ $purple-color: #8367d8;
     filter: drop-shadow(2px 2px 2px black);
     cursor: pointer;
     transition: all 0.1s;
+}
+
+.image-width-100 {
+    width: 100%;
 }
 
 .fullscreen-icon:hover {

@@ -1,6 +1,8 @@
 package com.atlantbh.auction.repository;
 
 import com.atlantbh.auction.model.Address;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Query;
@@ -11,8 +13,9 @@ import java.util.List;
 public class AddressRepository extends BaseRepositoryImpl<Address, Long> {
 
     @Transactional
-    public List<Address> findAll() {
-        Query query = entityManager.createQuery("SELECT a FROM Address a");
-        return query.getResultList();
+    public Address findByStreet(String street) {
+        return (Address) getBaseCriteria()
+                .add(Restrictions.eq("street", street))
+                .uniqueResult();
     }
 }

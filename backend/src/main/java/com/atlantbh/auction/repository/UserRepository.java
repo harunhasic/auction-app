@@ -42,9 +42,23 @@ public class UserRepository extends BaseRepositoryImpl<User, Long> {
     }
 
     @Transactional
-    public List<User> findAll() {
-        Query query = entityManager.createQuery("SELECT u FROM User u");
-        return query.getResultList();
+    public Optional<User> findByName(String name) throws RepositoryException {
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<User> q = cb.createQuery(User.class);
+            Root<User> resource = q.from(User.class);
+            q.select(resource);
+            Predicate predicateForEmail = cb.equal(resource.get("firstName"), name);
+            q.where(predicateForEmail);
+
+            User user = entityManager.createQuery(q).getSingleResult();
+            if (user != null) {
+                return Optional.of(user);
+            } else
+                return Optional.empty();
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 }
 

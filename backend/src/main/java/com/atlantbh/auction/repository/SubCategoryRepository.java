@@ -5,30 +5,36 @@ import com.atlantbh.auction.model.SubCategory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
 public class SubCategoryRepository extends BaseRepositoryImpl<SubCategory, Long> {
 
-    public List<SubCategory> getRandomSubcategories() throws RepositoryException {
+    public List<SubCategory> getRandomSubcategories(int n) throws RepositoryException {
         try {
-            List<SubCategory> randomSubcategories = getBaseCriteria()
+            return getBaseCriteria()
                     .add(Restrictions.sqlRestriction("1=1 order by RANDOM()"))
-                    .setMaxResults(3)
+                    .setMaxResults(n)
                     .list();
-            return randomSubcategories;
         } catch (Exception e) {
-            throw new RepositoryException("There was issues", e);
+            throw new RepositoryException("There was issues with returning the random subcategories", e);
         }
     }
 
     public List<SubCategory> getSubcategories() throws RepositoryException {
         try {
-            List<SubCategory> getSubcategories = getBaseCriteria()
+            return getBaseCriteria()
                     .list();
-            return getSubcategories;
         } catch (Exception e) {
             throw new RepositoryException("There was an issue with returning all subcategories");
         }
+    }
+
+    @Transactional
+    public SubCategory findByName(String name) {
+        return (SubCategory) getBaseCriteria()
+                .add(Restrictions.eq("name", name))
+                .uniqueResult();
     }
 }

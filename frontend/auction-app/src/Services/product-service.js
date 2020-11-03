@@ -1,26 +1,25 @@
 import BaseService from './BaseService'
 
-
 export default class ProductService extends BaseService {
 
-    getRandomProducts() {
+    getRandomProducts(n) {
         return this.baseApi({
             method: 'GET',
-            url: '/products/random/featured'
+            url: `/products/random/featured/${n}`
         });
     }
 
-    getNewProducts() {
+    getNewProducts(n) {
         return this.baseApi({
             method: 'GET',
-            url: '/products/new'
+            url: `/products/new/${n}`
         });
     }
 
-    getTopRatedProducts() {
+    getTopRatedProducts(n) {
         return this.baseApi({
             method: 'GET',
-            url: '/products/top'
+            url: `/products/top/${n}`
         });
     }
 
@@ -30,17 +29,18 @@ export default class ProductService extends BaseService {
             url: `/products/${productId}`
         });
     }
-    getLastProducts() {
+
+    getLastProducts(n) {
         return this.baseApi({
             method: 'GET',
-            url: '/products/last'
+            url: `/products/last/${n}`
         });
     }
 
-    getRelatedProducts(productId) {
+    getRelatedProducts(productId, n) {
         return this.baseApi({
             method: 'GET',
-            url: `/products/related/${productId}`
+            url: `/products/related/${productId}/${n}`
         });
     }
 }

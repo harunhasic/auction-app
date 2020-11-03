@@ -37,6 +37,10 @@ public abstract class BaseController<M extends BaseModel<M, I>, I, S extends Bas
 
     public ResponseEntity get(@PathVariable("id") I id) {
         try {
+            M model = service.get(id);
+            if (model == null) {
+                return ResponseEntity.notFound().build();
+            }
             return ResponseEntity.ok(service.get(id));
         } catch (ServiceException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

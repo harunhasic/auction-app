@@ -1,6 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Lato");
-$purple-color: #8367d8;
-$font-stack: "Lato-Regular", sans-serif;
+@import "../defaults/defaults";
 
 .landing-page-container {
     min-height: 563px;
@@ -87,7 +85,9 @@ $font-stack: "Lato-Regular", sans-serif;
 }
 
 .arrow-forward {
-    font-size: 24px;
+    font-size: 1.1em;
+    color: #252525;
+    padding-left: 0.4em;
 }
 
 .categories-link {
@@ -108,15 +108,18 @@ $font-stack: "Lato-Regular", sans-serif;
 }
 
 .landing-button {
+    font-style: $font-stack;
     width: 192px;
     height: 54px;
-    color: black;
+    color: #252525;
+    letter-spacing: 0.63px;
     background-color: #fff;
     border: 4px solid $purple-color;
     font-weight: bold;
     font-size: 18px;
     margin-top: 20px;
     box-shadow: 3px 3px 0 0 rgba(131, 103, 216, 0.31);
+
     &:hover {
         background-color: white;
         color: black;
@@ -127,6 +130,7 @@ $font-stack: "Lato-Regular", sans-serif;
 .featured-heading {
     padding-right: 1330px;
 }
+
 .custom-tab {
     margin-bottom: -14px;
     position: relative;
@@ -140,6 +144,7 @@ $font-stack: "Lato-Regular", sans-serif;
 .space {
     margin: 20px;
 }
+
 .page-active {
     border-bottom: 4px solid #8367d8;
 }

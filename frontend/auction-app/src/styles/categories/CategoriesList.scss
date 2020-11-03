@@ -1,0 +1,23 @@
+@import "../defaults/defaults";
+
+.categories-list-container {
+    width: auto;
+    height: auto;
+    padding: 100px;
+    font-style: $font-stack;
+    text-align: center;
+}
+
+.category-name {
+    font-weight: bold;
+    font-size: 24px;
+    color: #252525;
+    letter-spacing: 0.84px;
+    float: left;
+}
+
+.subcategory-name {
+    font-size: 18px;
+    font-weight: normal;
+    margin-top: 5px;
+}

@@ -1,6 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Lato");
-$purple-color: #8367d8;
-$font-stack: "Lato-Regular", sans-serif;
+@import "../defaults/defaults";
 
 .footer-container {
     background: #252525;
@@ -16,7 +14,7 @@ $font-stack: "Lato-Regular", sans-serif;
     padding-top: 3%;
     padding-bottom: 4%;
     width: 100%;
-    margin-bottom:-160px;
+    margin-bottom: -160px;
     text-align: left;
     flex-wrap: wrap;
 }
@@ -32,11 +30,11 @@ $font-stack: "Lato-Regular", sans-serif;
     flex-direction: column;
 }
 
-.footer-content>* {
+.footer-content > * {
     margin: 5px 0;
 }
 .footer-email {
-    background: #3B3B3B;
+    background: #3b3b3b;
     border: none;
     margin-right: 8px;
     width: 275px;
@@ -51,7 +49,7 @@ $font-stack: "Lato-Regular", sans-serif;
 .footer-button {
     width: 116px;
     height: 54px;
-    color:white;
+    color: white;
     background-color: #252525;
     border: 4px solid $purple-color;
     font-weight: bold;
@@ -59,8 +57,7 @@ $font-stack: "Lato-Regular", sans-serif;
     &:hover {
         background-color: transparent;
         border-color: white;
-      }
-    
+    }
 }
 
 .footer-arrow {
@@ -70,18 +67,19 @@ $font-stack: "Lato-Regular", sans-serif;
     font-size: 25px;
     display: flex;
 }
-  
-  .social-link {
+
+.social-link {
     color: #919191;
     display: flex;
     align-items: center;
     margin-left: 5px;
     margin-right: 5px;
-  }
-  
-  .social-link:hover {
+}
+
+.social-link:hover {
     color: white;
-  }
+}
+
 @media (max-width: 575px) {
     .footer-container {
         justify-content: space-between;

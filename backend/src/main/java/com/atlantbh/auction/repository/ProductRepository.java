@@ -7,7 +7,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -15,78 +14,66 @@ import java.util.List;
 @Repository
 public class ProductRepository extends BaseRepositoryImpl<Product, Long> {
 
-    public List<Product> getRandomFeaturedProducts() throws RepositoryException {
+    public List<Product> getRandomFeaturedProducts(int n) throws RepositoryException {
         try {
-            List<Product> randomProducts = getBaseCriteria()
+            return getBaseCriteria()
                     .add(Restrictions.sqlRestriction("1=1 order by RANDOM()"))
-                    .setMaxResults(5)
+                    .setMaxResults(n)
                     .list();
-            return randomProducts;
         } catch (Exception e) {
-            throw new RepositoryException("There was issues", e);
+            throw new RepositoryException("There was issues with returning the random product", e);
         }
     }
 
-    public List<Product> getNewProducts() throws RepositoryException {
+    public List<Product> getNewProducts(int n) throws RepositoryException {
         try {
-            Criteria criteria = getBaseCriteria();
-            criteria.addOrder(Order.desc("startDate"));
-            criteria.setMaxResults(12);
-            List<Product> newProducts = criteria.list();
-            return newProducts;
+            return getBaseCriteria()
+                    .addOrder(Order.desc("startDate"))
+                    .setMaxResults(n)
+                    .list();
         } catch (Exception e) {
             throw new RepositoryException("There was an issue with returning the new products", e);
         }
     }
 
-    public List<Product> getRelatedProducts(Long productId, Long subcategoryId) throws RepositoryException {
+    public List<Product> getRelatedProducts(Long productId, Long subcategoryId, int n) throws RepositoryException {
         try {
             Criteria criteria = getBaseCriteria().createAlias("subCategory", "s");
             criteria.add(Restrictions.eq("s.id", subcategoryId));
             criteria.add(Restrictions.ne("id", productId));
-            List<Product> relatedProducts = criteria.list();
-            return relatedProducts;
+            criteria.setMaxResults(n);
+            return criteria.list();
         } catch (Exception e) {
-            throw new RepositoryException("There was an issue with returning the related products", e);
+            throw new RepositoryException("There was an issue with returning the related products for this product id and subcategory id" + productId + " " + subcategoryId, e);
         }
     }
 
-    public List<Product> getLastProducts() throws RepositoryException {
+    public List<Product> getLastProducts(int n) throws RepositoryException {
         try {
-            Criteria criteria = getBaseCriteria();
-            criteria.addOrder(Order.desc("endDate"));
-            criteria.setMaxResults(12);
-            List<Product> lastProducts = criteria.list();
-            return lastProducts;
+            return getBaseCriteria()
+                    .addOrder(Order.desc("endDate"))
+                    .setMaxResults(n)
+                    .list();
         } catch (Exception e) {
             throw new RepositoryException("There was an issue with returning the last chance products", e);
         }
     }
 
-    public List<Product> getTopRated() throws RepositoryException {
+    public List<Product> getTopRated(int n) throws RepositoryException {
         try {
-            Criteria criteria = getBaseCriteria();
-            criteria.addOrder(Order.asc("rating"));
-            criteria.setMaxResults(12);
-            List<Product> bestRated = criteria.list();
-            return bestRated;
+            return getBaseCriteria()
+                    .addOrder(Order.asc("rating"))
+                    .setMaxResults(n)
+                    .list();
         } catch (Exception e) {
             throw new RepositoryException("There was an issue with returning the top rated products", e);
         }
     }
 
-    public Product getProduct(Long productId) throws RepositoryException {
-        try {
-            Product theProduct = entityManager.find(Product.class, productId);
-            return theProduct;
-        } catch (Exception e) {
-            throw new RepositoryException("There was an issue with returning the product", e);
-        }
-    }
-
     @Transactional
-    public List<Product> findAll() {
-        Query query = entityManager.createQuery("SELECT p FROM Product p");
-        return query.getResultList();
+    public Product findByName(String name) {
+        return (Product) getBaseCriteria()
+                .add(Restrictions.eq("name", name))
+                .uniqueResult();
     }
 }

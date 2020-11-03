@@ -1,12 +1,11 @@
 import BaseService from './BaseService'
  
-
 export default class SubCategoryService extends BaseService {
 
-     getRandomSubCategories() {
+     getRandomSubCategories(n) {
         return this.baseApi({
             method: 'GET',
-            url: '/subcategories/random'
+            url: `/subcategories/random/${n}`
         });
     }
 
@@ -17,4 +16,10 @@ export default class SubCategoryService extends BaseService {
         })
     }
 
+    getSubcategoriesByCategoryId(id) {
+        return this.baseApi({
+            method: 'GET',
+            url: `/subcategories/${id}`
+        });
+    }
 }

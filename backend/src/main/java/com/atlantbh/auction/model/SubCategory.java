@@ -1,5 +1,8 @@
 package com.atlantbh.auction.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.NotImplementedException;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
@@ -9,12 +12,12 @@ public class SubCategory extends BaseModel<SubCategory, Long> {
 
     @Column(name = "name")
     private String name;
+
     @Column(name = "photo_url")
     private String photoUrl;
 
-
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Category category;
 
     public SubCategory() {
@@ -53,11 +56,12 @@ public class SubCategory extends BaseModel<SubCategory, Long> {
 
     @Override
     public void update(SubCategory obj) {
-
+        name = obj.name;
+        photoUrl = obj.photoUrl;
     }
 
     @Override
-    public SubCategory duplicate(SubCategory obj) {
-        return null;
+    public SubCategory duplicate(SubCategory obj) throws NotImplementedException {
+        throw new NotImplementedException("The duplicate method is not implemented for SubCategory model");
     }
 }

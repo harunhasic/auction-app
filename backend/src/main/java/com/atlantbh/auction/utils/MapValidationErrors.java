@@ -21,7 +21,6 @@ public final class MapValidationErrors {
     }
 
     public static Optional<ResponseEntity<?>> checkForErrors(BindingResult result) {
-
         if (result.hasErrors()) {
             Map<String, String> errorMap = new HashMap<>();
             for (FieldError error : result.getFieldErrors()) {

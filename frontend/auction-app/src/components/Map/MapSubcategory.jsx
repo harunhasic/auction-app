@@ -1,15 +1,16 @@
 import React from 'react';
 import { Image } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import { isEmpty } from '../../utils/array';
 
 import '../../styles/image/Image.scss';
 
-const MapImage = ({ data, size, url }) => {
+const SubCategoryCard = ({ data, size, url }) => {
     const history = useHistory();
 
     let imageSrc = null;
-    if (data.photos && data.photos.length) {
-        imageSrc = data.photos[0].photoUrl;
+    if (!isEmpty(data.photoUrl)) {
+        imageSrc = data.photoUrl;
     }
 
     return (
@@ -19,12 +20,11 @@ const MapImage = ({ data, size, url }) => {
                 src={imageSrc}
                 onClick={() => history.push(url)}
             />
-            <div className="prop-name">
+            <div className="property-name">
                 {data.name} Collection
             </div>
-             Starts from ${data.startPrice}
         </div>
     );
 }
 
-export default MapImage;
+export default SubCategoryCard;

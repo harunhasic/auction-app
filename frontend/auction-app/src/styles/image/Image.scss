@@ -1,7 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Lato");
-$purple-color: #8367d8;
-$font-stack: "Lato", sans-serif;
-
+@import "../defaults/defaults";
 
 .featured-item-container {
     display: flex;
@@ -10,7 +7,9 @@ $font-stack: "Lato", sans-serif;
     text-align: left;
 }
 
-.featured-item-image-xxl, .featured-item-image-xl, .featured-item-image-lg {
+.featured-item-image-xxl,
+.featured-item-image-xl,
+.featured-item-image-lg {
     cursor: pointer;
 }
 
@@ -29,18 +28,21 @@ $font-stack: "Lato", sans-serif;
     height: 14.4vw;
 }
 
-.featured-item-image-xxl:hover, .featured-item-image-xl:hover, .featured-item-image-lg:hover {
+.featured-item-image-xxl:hover,
+.featured-item-image-xl:hover,
+.featured-item-image-lg:hover {
     scale: 1.02;
     transition: all 0.1s;
 }
 
-.prop-name {
+.property-name {
     font-family: $font-stack;
     font-weight: bold;
     font-size: 24px;
     color: #252525;
     letter-spacing: 0.84px;
-    margin-top:10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
 }
 
 @media (max-width: 575px) {
@@ -53,9 +55,11 @@ $font-stack: "Lato", sans-serif;
         display: block;
         padding-top: 100%;
     }
-    .featured-item-image-xxl, .featured-item-image-xl, .featured-item-image-lg {
+    .featured-item-image-xxl,
+    .featured-item-image-xl,
+    .featured-item-image-lg {
         position: absolute;
         width: 100%;
-        height: 82%
+        height: 82%;
     }
 }

@@ -7,6 +7,7 @@ import com.atlantbh.auction.service.SubCategoryService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,10 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class SubCategoryController extends BaseController<SubCategory, Long, SubCategoryService> {
 
     @ApiOperation(value = "Return random subcategories")
-    @GetMapping("/random")
-    public ResponseEntity getRandomSubcategories() {
+    @GetMapping("/random/{n}")
+    public ResponseEntity getRandomSubcategories(@PathVariable int n) {
         try {
-            return ResponseEntity.ok(service.getRandomSubcategories());
+            return ResponseEntity.ok(service.getRandomSubcategories(n));
         } catch (ServiceException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

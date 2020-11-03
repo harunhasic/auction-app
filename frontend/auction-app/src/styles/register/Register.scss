@@ -1,6 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Lato");
-$purple-color: #8367d8;
-$font-stack: "Lato-Regular", sans-serif;
+@import "../defaults/defaults";
 
 .register-container {
   border: 1px solid #d8d8d8;
@@ -99,5 +97,5 @@ $font-stack: "Lato-Regular", sans-serif;
 }
 
 .check-button {
-  display:none;
+  display: none;
 }

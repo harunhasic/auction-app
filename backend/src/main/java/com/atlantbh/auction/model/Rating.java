@@ -1,5 +1,7 @@
 package com.atlantbh.auction.model;
 
+import org.apache.commons.lang3.NotImplementedException;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -9,11 +11,13 @@ import javax.validation.constraints.Min;
 public class Rating extends BaseModel<Rating, Long> {
 
     @Column(name = "rating")
-    @Min(1)
-    @Max(5)
-    private Integer rating;
+    @Min(value = 1, message = "The minimum rating is 1")
+    @Max(value = 5, message = "The maximum rating is 5")
+    private int rating;
+
     @Column(name = "comment")
     private String comment;
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", updatable = false)
     private User user;
@@ -27,21 +31,22 @@ public class Rating extends BaseModel<Rating, Long> {
         this.user = user;
     }
 
-    public Integer getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
     @Override
-    public void update(Rating obj) {
-
+    public void update(Rating model) {
+        rating = model.rating;
+        comment = model.comment;
     }
 
     @Override
-    public Rating duplicate(Rating obj) {
-        return null;
+    public Rating duplicate(Rating obj) throws NotImplementedException {
+        throw new NotImplementedException("The duplicate method is not implemented for the Rating model");
     }
 }

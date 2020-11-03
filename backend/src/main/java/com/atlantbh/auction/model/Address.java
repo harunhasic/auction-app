@@ -16,13 +16,15 @@ public class Address extends BaseModel<Address, Long> {
 
     @Column(name = "street")
     private String street;
+
     @Column(name = "city")
     private String city;
+
     @Column(name = "zip_code")
     private String zipCode;
+
     @Column(name = "country")
     private String country;
-
 
     public Address() {
     }

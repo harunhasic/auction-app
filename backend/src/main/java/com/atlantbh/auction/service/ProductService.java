@@ -11,43 +11,42 @@ import java.util.List;
 @Service
 public class ProductService extends BaseService<Product, Long, ProductRepository> {
 
-    public List<Product> getFeaturedRandomProducts() throws ServiceException {
+    public List<Product> getFeaturedRandomProducts(int n) throws ServiceException {
         try {
-            return repository.getRandomFeaturedProducts();
+            return repository.getRandomFeaturedProducts(n);
         } catch (RepositoryException e) {
             throw new ServiceException("There was an issue with returning the featured products", e);
         }
     }
 
-    public List<Product> getNewProducts() throws ServiceException {
+    public List<Product> getNewProducts(int n) throws ServiceException {
         try {
-            return repository.getNewProducts();
+            return repository.getNewProducts(n);
         } catch (RepositoryException e) {
             throw new ServiceException("There was an issue with returning the new products", e);
         }
     }
 
-    public List<Product> getLastProducts() throws ServiceException {
+    public List<Product> getLastProducts(int n) throws ServiceException {
         try {
-            return repository.getLastProducts();
+            return repository.getLastProducts(n);
         } catch (RepositoryException e) {
             throw new ServiceException("There was an issue with returning the new products", e);
         }
     }
 
-    public List<Product> getRelatedProducts(Long productId) throws ServiceException {
+    public List<Product> getRelatedProducts(Long productId, int n) throws ServiceException {
         try {
             Product product = repository.findById(productId);
-            List<Product> products = repository.getRelatedProducts(productId, product.getSubcategory().getId());
-            return products;
+            return repository.getRelatedProducts(productId, product.getSubcategory().getId(), n);
         } catch (RepositoryException e) {
             throw new ServiceException("There was an issue with returning the related products", e);
         }
     }
 
-    public List<Product> getTopRatedProducts() throws ServiceException {
+    public List<Product> getTopRatedProducts(int n) throws ServiceException {
         try {
-            return repository.getTopRated();
+            return repository.getTopRated(n);
         } catch (RepositoryException e) {
             throw new ServiceException("There was an issue with returning the top rated products", e);
         }
@@ -55,8 +54,7 @@ public class ProductService extends BaseService<Product, Long, ProductRepository
 
     public Product getProduct(Long productId) throws ServiceException {
         try {
-            Product product = repository.getProduct(productId);
-            return product;
+            return repository.get(productId);
         } catch (RepositoryException e) {
             throw new ServiceException("There was an issue with returning the product", e);
         }

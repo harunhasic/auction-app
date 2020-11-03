@@ -1,17 +1,16 @@
-@import url("https://fonts.googleapis.com/css?family=Lato");
-$purple-color: #8367d8;
-$font-stack: "Lato-Regular", sans-serif;
+@import "../defaults/defaults";
 
 .product-info {
     flex-direction: column;
     text-align: left;
     justify-content: space-around;
-    margin-top:-100px;
-    display: flex;   
+    margin-top: -100px;
+    display: flex;
 }
+
 .place-bid {
     display: flex;
-    margin-top:-150px;
+    margin-top: -150px;
     flex-wrap: wrap;
 }
 
@@ -59,7 +58,7 @@ $font-stack: "Lato-Regular", sans-serif;
 }
 
 .highest-bid {
-    margin-top:-30px;
+    margin-top: -30px;
     color: #9b9b9b;
 }
 
@@ -68,11 +67,11 @@ $font-stack: "Lato-Regular", sans-serif;
     font-weight: bold;
 }
 
-.details-18 {
-    margin-top:-110px;
+.product-details-heading {
+    margin-top: -110px;
     font-size: 18px;
 }
 
-.details-15 {
+.product-details {
     font-size: 15px;
 }

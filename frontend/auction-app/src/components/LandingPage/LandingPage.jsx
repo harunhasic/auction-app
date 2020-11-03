@@ -6,13 +6,20 @@ import CategoryService from '../../Services/category-service';
 import { IoIosArrowForward } from "react-icons/io";
 import { categoryUrl, allCategoryUrl, subcategoryUrl, productUrl } from '../../utils/RedirectUrls';
 import '../../styles/landingPage/Landing.scss';
-import MapImage from '../MapImage/MapImage';
-import MapSubCategory from '../MapImage/MapSubcategory'
+import ProductCard from '../Map/ProductCard';
+import SubCategoryCard from '../Map/MapSubcategory'
 import SubCategoryService from '../../Services/subcategory-service';
+import ErrorComponent from '../notFound/ErrorComponent';
 
 const productService = new ProductService();
 const categoryService = new CategoryService();
 const subCategoryService = new SubCategoryService();
+
+const getCategoryBySubcategory = (categories, subcategory) => {
+  return categories.find(category => {
+    return category.subcategories.find(s => s.id === subcategory.id);
+  });
+}
 
 const LandingPage = ({ deleteBreadcrumb }) => {
   const history = useHistory();
@@ -24,73 +31,83 @@ const LandingPage = ({ deleteBreadcrumb }) => {
   const [topRatedProducts, setTopRatedProducts] = useState([]);
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [activePage, setActivePage] = useState(0);
-
+  const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     deleteBreadcrumb();
     async function fetchData() {
+      const amount = 8;
+      const featuredAmount = 5;
+      const subcategoriesAmount = 4;
       try {
         await categoryService.getCategories().then(response => {
           setCategories(response.data);
         })
-        await productService.getRandomProducts().then(response => {
+        await productService.getRandomProducts(featuredAmount).then(response => {
           setFeaturedProducts(response.data);
         })
-        await subCategoryService.getRandomSubCategories().then(response => {
+        await subCategoryService.getRandomSubCategories(subcategoriesAmount).then(response => {
           setRandomSubcategories(response.data);
         })
-        await productService.getNewProducts().then(response => {
+        await productService.getNewProducts(amount).then(response => {
           setNewProducts(response.data);
         })
-        await productService.getLastProducts().then(response => {
+        await productService.getLastProducts(amount).then(response => {
           setLastProducts(response.data);
         })
-        await productService.getTopRatedProducts().then(response => {
+        await productService.getTopRatedProducts(amount).then(response => {
           setTopRatedProducts(response.data);
         })
-      } catch (e) { }
+      } catch (error) {
+        setHasError(true);
+        setErrorMessage(error.toString())
+      }
     }
     fetchData();
   }, [deleteBreadcrumb])
 
-  console.log(newProducts);
+  const productInFocus = featuredProducts[0];
 
   return (
-    <>
+    <React.Fragment>
       <div className="landing-page-container">
         <ListGroup variant="categories">
           <ListGroup.Item className="categories-link" action onClick={() => history.push(allCategoryUrl)}>CATEGORIES</ListGroup.Item>
-          {categories.map(category => (
-            <ListGroup.Item key={category.name} action onClick={() => history.push(categoryUrl(category))}>{category.name}</ListGroup.Item>
-          ))}
+          {
+            categories.map(category => (
+              <ListGroup.Item key={category.name} action onClick={() => history.push(categoryUrl(category))}>{category.name}</ListGroup.Item>
+            ))
+          }
           <ListGroup.Item>All Categories</ListGroup.Item>
         </ListGroup>
+        {
+          !hasError && featuredProducts.length !== 0 ?
+            <div className="featured-main-container">
+              <div className="featured-product-container">
+                <h1>
+                  {productInFocus.name}
+                </h1>
 
-        {featuredProducts.length !== 0 ?
-          <div className="featured-main-container">
-            <div className="featured-product-container">
-              <h1>
-                {featuredProducts[0].name}
-              </h1>
+                <div className="featured-product-price">
+                  Start from - ${productInFocus.startPrice}
+                </div>
 
-              <div className="featured-product-price">
-                Start from - ${featuredProducts[0].startPrice}
+                <div className="featured-product-description">
+                  {productInFocus.description}
+                </div>
+
+                <Button
+                  className="landing-button"
+                  onClick={() => history.push(productUrl(productInFocus, getCategoryBySubcategory(categories, productInFocus.subcategory)))}
+                >
+                  BID NOW
+                <span className="arrow-forward">&#10095;</span>
+                </Button>
               </div>
-
-              <div className="featured-product-description">
-                {featuredProducts[0].description}
-              </div>
-
-              <Button
-                className="landing-button"
-                onClick={() => history.push(productUrl(featuredProducts[0]))}
-              >
-                BID NOW
-                <IoIosArrowForward className="arrow-forward" />
-              </Button>
-            </div>
-            <Image className="featured-product-image" src={featuredProducts[0].photos[0].photoUrl} />
-          </div> : null}
+              <Image className="featured-product-image" src={productInFocus.photos[0].photoUrl} />
+            </div> : <ErrorComponent message={errorMessage}></ErrorComponent>
+        }
       </div>
 
       <div className="featured-container">
@@ -99,9 +116,15 @@ const LandingPage = ({ deleteBreadcrumb }) => {
       	</h2>
         <div className="line" />
         <div className="featured-items-container">
-          {randomSubcategories.map(subcategory => (
-            <MapSubCategory key={subcategory.id} data={subcategory} size="xxl" url={subcategoryUrl(subcategory)} />
-          ))}
+          {
+            randomSubcategories.map(subcategory => (
+              <SubCategoryCard
+                key={subcategory.id} data={subcategory}
+                size="xxl"
+                url={subcategoryUrl(subcategory)}
+              />
+            ))
+          }
         </div>
       </div>
 
@@ -111,9 +134,11 @@ const LandingPage = ({ deleteBreadcrumb }) => {
       	</h2>
         <div className="line" />
         <div className="featured-items-container">
-          {featuredProducts.slice(1).map(product => (
-            <MapImage key={product.id} data={product} size="xl" url={productUrl(product)} />
-          ))}
+          {
+            featuredProducts.slice(1).map(product => (
+              <ProductCard key={product.id} data={product} size="xl" url={productUrl(product, getCategoryBySubcategory(categories, product.subcategory))} />
+            ))
+          }
         </div>
       </div>
 
@@ -136,20 +161,20 @@ const LandingPage = ({ deleteBreadcrumb }) => {
           {
             activePage === 0 ? (
               newProducts.map(product => (
-                <MapImage key={product.id} data={product} size="xxl" url={productUrl(product)} />
+                <ProductCard key={product.id} data={product} size="xxl" url={productUrl(product, getCategoryBySubcategory(categories, product.subcategory))} />
               ))
             ) : activePage === 1 ? (
               topRatedProducts.map(product => (
-                <MapImage key={product.id} data={product} size="xxl" url={productUrl(product)} />
+                <ProductCard key={product.id} data={product} size="xxl" url={productUrl(product, getCategoryBySubcategory(categories, product.subcategory))} />
               ))
             ) :
-                lastProducts.map(product => (
-                  <MapImage key={product.id} data={product} size="xxl" url={productUrl(product)} />
-                ))
+              lastProducts.map(product => (
+                <ProductCard key={product.id} data={product} size="xxl" url={productUrl(product, getCategoryBySubcategory(categories, product.subcategory))} />
+              ))
           }
         </div>
       </div>
-    </>
+    </React.Fragment>
   );
 }
 

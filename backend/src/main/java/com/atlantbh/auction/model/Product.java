@@ -1,11 +1,11 @@
 package com.atlantbh.auction.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.Set;
 
@@ -21,9 +21,6 @@ import java.util.Set;
                         @FieldResult(name = "description", column = "description"),
                         @FieldResult(name = "endDate", column = "end_date"),
                         @FieldResult(name = "startDate", column = "start_date"),
-                        @FieldResult(name = "numberOfBids", column = "number_of_bids"),
-                        @FieldResult(name = "highestBid", column = "highest_bid"),
-                        @FieldResult(name = "phone", column = "phone"),
                         @FieldResult(name = "shipping", column = "shipping"),
                         @FieldResult(name = "startPrice", column = "start_price"),
                         @FieldResult(name = "featured", column = "featured")
@@ -32,72 +29,79 @@ public class Product extends BaseModel<Product, Long> {
 
     @Column(name = "name")
     private String name;
+
     @Column(length = 4000, columnDefinition = "text")
+    @Size(min = 20, max = 4000)
     private String description;
+
     @Column(name = "start_price")
+    @Min(value = 0)
     private double startPrice;
+
     @Column(name = "start_date")
     private Date startDate;
+
     @Column(name = "end_date")
     private Date endDate;
 
     @Column(nullable = false, name = "shipping")
-    private Boolean shipping = false;
-
-    @Column(name = "phone")
-    private String phone;
-    @Column(name = "highest_bid")
-    private double highestBid;
-    @Column(name = "number_of_bids")
-    private int numberOfBids;
+    private boolean shipping = false;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     private Set<Photo> photos;
 
     @Column(name = "featured")
-    private Boolean featured = false;
+    private boolean featured = false;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnoreProperties({"password", "firstName", "lastName", "gender", "birthDate", "phoneNumber", "address"})
+    @JsonIgnore
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Category category;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subcategory_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private SubCategory subCategory;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "rating_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Rating rating;
-
+    private Set<Rating> rating;
 
     public Product() {
 
     }
 
-    public Product(String name, String description, Double startPrice, Date startDate, Date endDate, boolean shipping, String phone, Double highestBid, User user, SubCategory subCategory) {
+    public Product(
+            String name,
+            String description,
+            Double startPrice,
+            Date startDate,
+            Date endDate,
+            boolean shipping,
+            User user,
+            SubCategory subCategory
+    ) {
         this.name = name;
         this.description = description;
         this.startPrice = startPrice;
         this.startDate = startDate;
         this.endDate = endDate;
         this.shipping = shipping;
-        this.phone = phone;
-        this.highestBid = highestBid;
         this.user = user;
         this.subCategory = subCategory;
     }
 
-    public Product(String name, String description, double startPrice, Date startDate, Date endDate, boolean featured, boolean shipping, String phone, double highestBid, User user, Set<Photo> photos) {
+    public Product(
+            String name,
+            String description,
+            double startPrice,
+            Date startDate,
+            Date endDate,
+            boolean featured,
+            boolean shipping,
+            User user,
+            Set<Photo> photos
+    ) {
         this.name = name;
         this.description = description;
         this.startPrice = startPrice;
@@ -105,17 +109,15 @@ public class Product extends BaseModel<Product, Long> {
         this.endDate = endDate;
         this.featured = featured;
         this.shipping = shipping;
-        this.phone = phone;
-        this.highestBid = highestBid;
         this.user = user;
         this.photos = photos;
     }
 
-    public Rating getRating() {
+    public Set<Rating> getRating() {
         return rating;
     }
 
-    public void setRating(Rating rating) {
+    public void setRating(Set<Rating> rating) {
         this.rating = rating;
     }
 
@@ -146,26 +148,40 @@ public class Product extends BaseModel<Product, Long> {
     }
 
     public Date getStartDate() {
-        return startDate;
+        if (startDate != null) {
+            return new Date(startDate.getTime());
+        }
+        return null;
     }
 
     public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+        if (startDate != null) {
+            this.startDate = new Date(startDate.getTime());
+        } else {
+            this.startDate = null;
+        }
     }
 
     public Date getEndDate() {
-        return endDate;
+        if (endDate != null) {
+            return new Date(endDate.getTime());
+        }
+        return null;
     }
 
     public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+        if (endDate != null) {
+            this.endDate = new Date(endDate.getTime());
+        } else {
+            this.endDate = null;
+        }
     }
 
-    public Boolean getShipping() {
+    public boolean getShipping() {
         return shipping;
     }
 
-    public void setShipping(Boolean shipping) {
+    public void setShipping(boolean shipping) {
         this.shipping = shipping;
     }
 
@@ -177,39 +193,13 @@ public class Product extends BaseModel<Product, Long> {
         this.photos = photos;
     }
 
-
-    public Boolean getFeatured() {
+    public boolean getFeatured() {
         return featured;
     }
 
-    public void setFeatured(Boolean featured) {
+    public void setFeatured(boolean featured) {
         this.featured = featured;
     }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public double getHighestBid() {
-        return highestBid;
-    }
-
-    public void setHighestBid(double highestBid) {
-        this.highestBid = highestBid;
-    }
-
-    public int getNumberOfBids() {
-        return numberOfBids;
-    }
-
-    public void setNumberOfBids(int numberOfBids) {
-        this.numberOfBids = numberOfBids;
-    }
-
 
     public User getUser() {
         return user;
@@ -217,14 +207,6 @@ public class Product extends BaseModel<Product, Long> {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     public SubCategory getSubcategory() {
@@ -239,14 +221,30 @@ public class Product extends BaseModel<Product, Long> {
         return subCategory;
     }
 
-
     @Override
-    public void update(Product obj) {
-
+    public void update(Product model) {
+        name = model.name;
+        description = model.description;
+        photos = model.photos;
+        subCategory = model.subCategory;
+        shipping = model.shipping;
+        featured = model.featured;
+        startDate = model.startDate;
+        endDate = model.endDate;
+        startPrice = model.startPrice;
+        user = model.user;
+        rating = model.rating;
     }
 
     @Override
-    public Product duplicate(Product obj) {
-        return null;
+    public Product duplicate(Product model) {
+        Product theDuplicate = new Product();
+        theDuplicate.name = model.name;
+        theDuplicate.description = model.name;
+        theDuplicate.startPrice = model.startPrice;
+        theDuplicate.photos = model.photos;
+        theDuplicate.startDate = model.startDate;
+        theDuplicate.endDate = model.endDate;
+        return theDuplicate;
     }
 }

@@ -30,7 +30,6 @@ import java.util.Optional;
 @RequestMapping(value = "/api/users")
 public class UserController extends BaseController<User, Long, UserService> {
 
-
     @ApiOperation(value = "Authorize log in from users")
     @PostMapping("/login")
     public ResponseEntity authenticateUser(@Valid @RequestBody LoginRequest loginRequest, BindingResult result) throws ServiceException {

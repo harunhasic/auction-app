@@ -11,9 +11,9 @@ import java.util.List;
 @Service
 public class SubCategoryService extends BaseService<SubCategory, Long, SubCategoryRepository> {
 
-    public List<SubCategory> getRandomSubcategories() throws ServiceException {
+    public List<SubCategory> getRandomSubcategories(int n) throws ServiceException {
         try {
-            return repository.getRandomSubcategories();
+            return repository.getRandomSubcategories(n);
         } catch (RepositoryException e) {
             throw new ServiceException("There was an issue with returning the random subcategories", e);
         }

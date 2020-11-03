@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import { SiFacebook, SiTwitter, SiInstagram } from "react-icons/si";
 import { IoIosArrowForward } from "react-icons/io";
 import { Button, Form } from 'react-bootstrap';
-
-
 import '../../styles/footer/Footer.scss';
 
 const Footer = () => {
