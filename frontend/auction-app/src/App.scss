@@ -104,9 +104,10 @@
   text-align: right;
   align-items: center;
   position: relative;
-  background: #fafafa;
+  background: #fafafa !important;
   justify-content: end;
   width: auto;
+  padding-right:200px;
 }
 
 .breadcrumb-title {
@@ -135,16 +136,6 @@
   .error-msg {
     color: red;
   }
-}
-
-.true-visible {
-  margin-top: 40;
-  margin-bottom: "-1rem";
-}
-
-.conditional {
-  margin-top: 40;
-  margin-bottom: "-1rem";
 }
 
 .white-nav-link {
