@@ -31,7 +31,7 @@ const AllCategories = ({ setBreadcrumb }) => {
     }, [])
 
     return (
-        <div className="container-fluid">
+        <React.Fragment>
             {categories.length !== 0 ?
                 <div className="row">
                     {
@@ -40,7 +40,7 @@ const AllCategories = ({ setBreadcrumb }) => {
                      ))
                     }
                 </div> : <ErrorComponent></ErrorComponent>}
-        </div>
+        </React.Fragment>
     );
 }
 

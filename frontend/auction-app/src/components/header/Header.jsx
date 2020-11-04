@@ -9,7 +9,6 @@ import { RiAuctionFill } from 'react-icons/ri';
 
 export const getUserName = () => {
     const user = localStorage.getItem('auctionapp-user');
-    console.log(user);
     return user ? JSON.parse(user).firstName : null;
 }
 

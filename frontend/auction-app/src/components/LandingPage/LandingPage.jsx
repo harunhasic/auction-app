@@ -168,9 +168,9 @@ const LandingPage = ({ deleteBreadcrumb }) => {
                 <ProductCard key={product.id} data={product} size="xxl" url={productUrl(product, getCategoryBySubcategory(categories, product.subcategory))} />
               ))
             ) :
-              lastProducts.map(product => (
-                <ProductCard key={product.id} data={product} size="xxl" url={productUrl(product, getCategoryBySubcategory(categories, product.subcategory))} />
-              ))
+                lastProducts.map(product => (
+                  <ProductCard key={product.id} data={product} size="xxl" url={productUrl(product, getCategoryBySubcategory(categories, product.subcategory))} />
+                ))
           }
         </div>
       </div>

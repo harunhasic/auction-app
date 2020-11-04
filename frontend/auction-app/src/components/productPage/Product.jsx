@@ -39,7 +39,6 @@ const ProductPage = ({ match, setBreadcrumb }) => {
                     setMinPrice(product.startPrice);
                     await categoryService.getBySubcategoryId(product.subcategory.id).then(response => {
                         setCategory(response.data);
-                        console.log(category);
                     })
                 })
                 await productService.getRelatedProducts(productId, amount).then(response => {

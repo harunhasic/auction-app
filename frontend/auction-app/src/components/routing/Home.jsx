@@ -15,7 +15,6 @@ export default class Home extends Component {
   componentDidMount() {
     this.userService.getPublicContent().then(
       response => {
-        console.log(response.data);
         this.setState({
           content: response.data
         });

@@ -13,7 +13,7 @@ const ProductDetails = ({ product, active }) => {
         const now = new Date();
         const difference = productEndDate.getTime() - now.getTime();
         const leftTime = convertMS(difference);
-        
+
         if (moment().isBefore(productStarts))
             return (
                 <React.Fragment>
@@ -53,7 +53,6 @@ const ProductDetails = ({ product, active }) => {
                         Enter ${product.startPrice} or more
                     </div>
                 </div>
-                <OverlayTrigger placement="right">
                     <Button
                         className = "button-bid"
                         size="xxl"
@@ -62,7 +61,6 @@ const ProductDetails = ({ product, active }) => {
                         PLACE BID
                         <IoIosArrowForward className="arrow" />
                     </Button>
-                </OverlayTrigger>
             </div>
             <div className="highest-bid">
                 Highest bid: {product.highestBid}
