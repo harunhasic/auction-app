@@ -6,6 +6,7 @@ import '../../styles/header/Header.scss';
 import { FormControl, Nav, Navbar, Dropdown } from 'react-bootstrap';
 import { isTokenValid, removeSession } from '../../utils/LocalStorageUtils'
 import { RiAuctionFill } from 'react-icons/ri';
+import { useHistory } from "react-router";
 
 export const getUserName = () => {
     const user = localStorage.getItem('auctionapp-user');
@@ -15,11 +16,17 @@ export const getUserName = () => {
 
 const Header = ({ loggedInState }) => {
 
+    const history = useHistory();
     const [isLoggedIn, setLoggedIn] = useState(isTokenValid());
+ 
+    const toHome = () => {
+       history.push('/');   
+    }   
 
     const handleLogout = () => {
         setLoggedIn(false);
         removeSession();
+        toHome();
     };
 
     useEffect(() => {

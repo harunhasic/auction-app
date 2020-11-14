@@ -4,7 +4,7 @@ import { setSession, removeSession } from '../utils/LocalStorageUtils';
 export default class AuthService extends BaseService {
 
   login(params) {
-    return this.authorizedApi({
+    return this.baseApi({
       method: 'POST',
       url: '/api/users/login',
       data: params
@@ -24,8 +24,7 @@ export default class AuthService extends BaseService {
   }
 
   authHeader() {
-    const user = JSON.parse(localStorage.getItem('user'));
-
+    const user = JSON.parse(localStorage.getItem('auctionapp-user'));
     if (user && user.accessToken) {
       return { Authorization: 'Bearer ' + user.accessToken };
     } else {

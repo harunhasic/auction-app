@@ -12,7 +12,6 @@ import com.atlantbh.auction.model.BaseModel;
  * @param <I> represents models id
  * @author Harun Hasic
  */
-
 public interface BaseRepository<M extends BaseModel<M, I>, I> {
 
     M save(M entity) throws RepositoryException;

@@ -19,7 +19,6 @@ import java.util.List;
  * @param <I> represents models id
  * @author Harun Hasic
  */
-
 public class BaseRepositoryImpl<M extends BaseModel<M, I>, I> implements BaseRepository<M, I> {
 
     @PersistenceContext

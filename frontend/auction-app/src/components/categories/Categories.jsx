@@ -32,7 +32,7 @@ const AllCategories = ({ setBreadcrumb }) => {
 
     return (
         <React.Fragment>
-            {categories.length !== 0 ?
+            {!hasError ?
                 <div className="row">
                     {
                      categories.map(category => (

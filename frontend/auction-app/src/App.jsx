@@ -19,7 +19,7 @@ const App = () => {
 
   let keepFlag = false;
 
-  function showMessage(variant, message) {
+  function notify(variant, message) {
     setMessage(message);
     setVariant(variant);
     setAlertVisible(true);
@@ -84,7 +84,7 @@ const App = () => {
             </Alert>
           </div>
           <div className="route-container">
-            <Routes changeLoggedInState={changeLoggedInState} setBreadcrumb={setBreadcrumb} showMessage={showMessage} deleteBreadcrumb={deleteBreadcrumb} />
+            <Routes changeLoggedInState={changeLoggedInState} setBreadcrumb={setBreadcrumb} showMessage={notify} deleteBreadcrumb={deleteBreadcrumb} />
           </div>
           <Footer />
         </ScrollToTop>

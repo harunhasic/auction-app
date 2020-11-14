@@ -2,14 +2,12 @@ package com.atlantbh.auction.repository;
 
 import com.atlantbh.auction.exceptions.RepositoryException;
 import com.atlantbh.auction.model.Product;
-import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
-
 
 @Repository
 public class ProductRepository extends BaseRepositoryImpl<Product, Long> {
@@ -38,11 +36,11 @@ public class ProductRepository extends BaseRepositoryImpl<Product, Long> {
 
     public List<Product> getRelatedProducts(Long productId, Long subcategoryId, int n) throws RepositoryException {
         try {
-            Criteria criteria = getBaseCriteria().createAlias("subCategory", "s");
-            criteria.add(Restrictions.eq("s.id", subcategoryId));
-            criteria.add(Restrictions.ne("id", productId));
-            criteria.setMaxResults(n);
-            return criteria.list();
+            return getBaseCriteria().createAlias("subCategory", "s")
+                    .add(Restrictions.eq("s.id", subcategoryId))
+                    .add(Restrictions.ne("id", productId))
+                    .setMaxResults(n)
+                    .list();
         } catch (Exception e) {
             throw new RepositoryException("There was an issue with returning the related products for this product id and subcategory id" + productId + " " + subcategoryId, e);
         }

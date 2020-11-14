@@ -1,19 +1,68 @@
 import React, { useState } from 'react';
 import { Button, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { RiHeartFill } from "react-icons/ri";
+import { RiHeartFill, RiSpam2Line } from "react-icons/ri";
 import { IoIosArrowForward } from "react-icons/io";
 import moment from 'moment';
 import convertMS from '../../utils/date'
 import '../../styles/product/ProductDetails.scss';
 
-const ProductDetails = ({ product, active }) => {
-    const getTimeInfo = () => {
+const ProductDetails = ({ product, selfPosted, active, bid, bids, minPrice }) => {
+
         const productStarts = moment(product.startDate);
         const productEndDate = new Date(product.endDate);
+        const [loading, setLoading] = useState(false);
         const now = new Date();
         const difference = productEndDate.getTime() - now.getTime();
         const leftTime = convertMS(difference);
+        const [bidAmount, setBidAmount] = useState("");
+        const maximumBid = 99999.99;
 
+        const toolTip = () => {
+            let tooltipText = "";
+            switch (true) {
+                case !active:
+                    tooltipText = "Auction has not started for this product. Please, try again later.";
+                    break;
+                case selfPosted:
+                    tooltipText = "You can't bid on a product that you posted.";
+                    break;
+                case bidAmount === "":
+                    return <div />;
+                case isNaN(bidAmount):
+                    tooltipText = "Please enter a valid number ";
+                    break;
+                case bidAmount < minPrice:
+                    tooltipText = "Price cannot be less than $" + minPrice;
+                    break;
+                case bidAmount > maximumBid:
+                    tooltipText = "Price cannot be higher than $" + maximumBid;
+                    break;
+                default:
+                    return <div />;
+            }
+    
+            return (
+                <Tooltip>
+                    {tooltipText}
+                </Tooltip>
+            );
+        }
+
+        async function handleBid() {
+            setLoading(true);
+            await bid(bidAmount);
+            setBidAmount("");
+            setLoading(false);
+        }
+
+        function handleBidAmount(amount) {
+            if (isNaN(amount))
+            setBidAmount(amount);
+            setBidAmount(amount.replace(/(\.\d{2})\d+/, '$1'));
+        }
+
+        const timeInformation = () => {
+    
         if (moment().isBefore(productStarts))
             return (
                 <React.Fragment>
@@ -22,7 +71,9 @@ const ProductDetails = ({ product, active }) => {
                     Time end: {moment(product.endDate).format("D MMMM YYYY [at] HH:mm")}
                 </React.Fragment>
             );
-        const timeLeft = !active ? <h3>Auction finished</h3> : leftTime.day + " Days "  + leftTime.hour + " hours " + leftTime.minute + " minutes";
+
+        const timeLeft = !active ? <h3>Auction has finished</h3> : leftTime.day + " Days "  + leftTime.hour + " hours " + leftTime.minute + " minutes";
+
         return (
             <React.Fragment>
                 Time left: {timeLeft}
@@ -43,32 +94,51 @@ const ProductDetails = ({ product, active }) => {
             <div className="place-bid">
                 <div>
                     <Form.Control
-                        value={null}
-                        maxLength="7"
+                        value={bidAmount}
+                        disabled={selfPosted || !active || loading}
+                        maxLength="10"
                         className="form-control-gray place-bid-form"
                         size="xl-18"
                         type="text"
+                        onChange={e => handleBidAmount(e.target.value)}
+                        onKeyUp={e => e.key === 'Enter' ? handleBid() : null}
                     />
                     <div className="place-bid-label">
-                        Enter ${product.startPrice} or more
+                        Enter ${minPrice} or more
                     </div>
                 </div>
-                    <Button
-                        className = "button-bid"
+                  <OverlayTrigger
+                    placement="right"
+                    overlay={toolTip()}
+                  >
+                    <span className="tooltip-span">
+                      <Button
+                        disabled={loading || !active || selfPosted || isNaN(bidAmount) || bidAmount < minPrice || bidAmount > maximumBid}
+                        className = {loading || !active || selfPosted || isNaN(bidAmount) || bidAmount < minPrice || bidAmount > maximumBid  ? "button-disabled" : "button-bid"}
                         size="xxl"
                         variant="transparent-black-shadow"
-                    >
+                        onClick={handleBid}
+                       >
                         PLACE BID
                         <IoIosArrowForward className="arrow" />
-                    </Button>
+                      </Button>
+                      </span>
+                    </OverlayTrigger>
             </div>
             <div className="highest-bid">
-                Highest bid: {product.highestBid}
-                <span className="span-bid"/>
+            Highest bid: {''}
+                <span className="highest-bid-span">
+                    ${
+                       bids.length !== 0 ? 
+                       Math.max.apply(Math, bids.map(function(bid) { 
+                           return bid.amount; 
+                        })) : 0
+                     }
+                </span>
                 <br />
-                No bids: 
+                No bids: {bids.length}
                 <br />
-                {getTimeInfo()}
+                {timeInformation()}
             </div>
             <div>
                 <div className="product-details-heading">

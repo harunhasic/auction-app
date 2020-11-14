@@ -60,6 +60,7 @@ const LandingPage = ({ deleteBreadcrumb }) => {
           setTopRatedProducts(response.data);
         })
       } catch (error) {
+        console.log(error);
         setHasError(true);
         setErrorMessage(error.toString())
       }
@@ -82,7 +83,7 @@ const LandingPage = ({ deleteBreadcrumb }) => {
           <ListGroup.Item>All Categories</ListGroup.Item>
         </ListGroup>
         {
-          !hasError && featuredProducts.length !== 0 ?
+           productInFocus  ?
             <div className="featured-main-container">
               <div className="featured-product-container">
                 <h1>
@@ -106,7 +107,12 @@ const LandingPage = ({ deleteBreadcrumb }) => {
                 </Button>
               </div>
               <Image className="featured-product-image" src={productInFocus.photos[0].photoUrl} />
-            </div> : <ErrorComponent message={errorMessage}></ErrorComponent>
+            </div> : null 
+        }
+        {
+          hasError ? 
+          <ErrorComponent message={errorMessage}></ErrorComponent>
+          : null
         }
       </div>
 

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -22,8 +23,12 @@ public class JwtTokenProvider {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtTokenProvider.class);
 
+    private static String secret;
+
     @Value("${jwt.secret}")
-    private String secret;
+    private void setSecret(String secret) {
+        JwtTokenProvider.secret = secret;
+    }
 
     private String id = "id";
     private String username = "username";
@@ -72,7 +77,7 @@ public class JwtTokenProvider {
         return false;
     }
 
-    public Long getUserIdFromJWT(String token) {
+    public static Long getUserIdFromJWT(String token) {
         Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
         String id = (String) claims.get("id");
         return Long.parseLong(id);
