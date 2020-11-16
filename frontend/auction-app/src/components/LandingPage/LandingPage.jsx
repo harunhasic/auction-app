@@ -3,7 +3,6 @@ import { Button, Image, ListGroup } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import ProductService from '../../Services/product-service';
 import CategoryService from '../../Services/category-service';
-import { IoIosArrowForward } from "react-icons/io";
 import { categoryUrl, allCategoryUrl, subcategoryUrl, productUrl } from '../../utils/RedirectUrls';
 import '../../styles/landingPage/Landing.scss';
 import ProductCard from '../Map/ProductCard';
@@ -60,7 +59,6 @@ const LandingPage = ({ deleteBreadcrumb }) => {
           setTopRatedProducts(response.data);
         })
       } catch (error) {
-        console.log(error);
         setHasError(true);
         setErrorMessage(error.toString())
       }

@@ -2,23 +2,28 @@ import BaseService from './BaseService';
 
 export default class BidService extends BaseService {
 
-    getBids(id) {
+    getBids(productId) {
         return this.baseApi({
             method: 'GET',
-            url: `/bid/${id}`
+            url: `/bid/${productId}`
         })
-    }  
+    }
 
     addBid(params) {
-        console.log(params)
         return this.authorizedApi({
             method: 'POST',
             url: `/bid/add`,
             data: params
         })
-        .then(response => {        
-            return response.data;
-          });
-      }
-    
+            .then(response => {
+                return response.data;
+            });
+    }
+
+    getHighestBid(productId) {
+        return this.baseApi({
+            method: 'GET',
+            url: `/bid/highest/${productId}`
+        })
+    }
 }

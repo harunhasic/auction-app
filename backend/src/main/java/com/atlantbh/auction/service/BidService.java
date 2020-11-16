@@ -24,9 +24,6 @@ public class BidService extends BaseService<Bid, Long, BidRepository> {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private BidRepository bidRepository;
-
     public List<Bid> getByProductId(Long id) throws ServiceException {
         try {
             return repository.getBidsByProductId(id);
@@ -51,13 +48,15 @@ public class BidService extends BaseService<Bid, Long, BidRepository> {
         try {
             Product product = productRepository.get(bid.getProductId());
             Long userId = bid.getUserId();
-            if (userId == null)
+            if (userId == null) {
                 throw new ServiceException("Invalid token");
+            }
             User user = userRepository.findById(userId);
-            if (product.getUser().getId() == user.getId())
+            if (product.getUser().getId() == user.getId()) {
                 throw new ServiceException("Bidding cannot be done on the product that you own.");
+            }
             repository.save(new Bid(
-                            new Date(),
+                            currentDate,
                             user,
                             product,
                             bid.getPrice()
@@ -68,10 +67,18 @@ public class BidService extends BaseService<Bid, Long, BidRepository> {
         }
     }
 
+    public double getHighestBidForProduct(Long id) throws ServiceException {
+        try {
+            return repository.getMaxBidForProduct(id);
+        } catch (RepositoryException e) {
+            throw new ServiceException("There was a problem with returning the highest bid for product id " + id, e);
+        }
+    }
+
     private boolean validateBid(BidRequest bid, Date currentDate) throws ServiceException {
         try {
             Product product = productRepository.findById(bid.getProductId());
-            double highestBid = bidRepository.getBidsByProductId(product.getId()).stream().mapToDouble(theBid -> theBid.getAmount()).max().orElse(0);
+            double highestBid = repository.getMaxBidForProduct(product.getId());
 
             if (bid.getPrice() <= highestBid) {
                 return false;

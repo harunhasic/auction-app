@@ -33,6 +33,7 @@ const ProductPage = ({  match, setBreadcrumb }) => {
     const [alertVisible, setAlertVisible] = useState(false);
     const [variant, setVariant] = useState(null);
     const [message, setMessage] = useState(null);
+    const [highestBid, setHighestBid] = useState(0);
     let keepFlag = false;
 
     function notify(variant, message) {
@@ -42,7 +43,6 @@ const ProductPage = ({  match, setBreadcrumb }) => {
       keepFlag = true;
     }
   
-
     useEffect(() => {
         createBreadcrumb();
         async function fetchData() {
@@ -55,15 +55,15 @@ const ProductPage = ({  match, setBreadcrumb }) => {
                     setSelfPosted(product.user.id === userId);
                     setActive(moment().isBetween(moment(product.startDate), moment(product.endDate)));
                     setMinPrice(product.startPrice);
-                    const bids = await bidsService.getBids(productId);             
-                    const userBestBid = Math.max(...bids.data.map(bid => bid.user.id === userId ? bid.amount : 0), 0);
-                    setMinPrice(userBestBid === 0 ? product.startPrice : userBestBid + 0.01);
+                    const bids = await bidsService.getBids(productId); 
+                    const highestBid = await bidsService.getHighestBid(productId);
+                    setHighestBid(highestBid.data);         
+                    setMinPrice(highestBid.data === 0 ? product.startPrice : highestBid.data + 0.5);
                     setBids(bids.data);   
                     await categoryService.getBySubcategoryId(product.subcategory.id).then(response => {
                         setCategory(response.data);
                     })
-                })
-              
+                })  
                 await productService.getRelatedProducts(productId, amount).then(response => {
                     setRelatedProducts(response.data);
                 }) 
@@ -101,14 +101,13 @@ const ProductPage = ({  match, setBreadcrumb }) => {
             };
             await bidsService.addBid(bidRequest);
             const newBids = await bidsService.getBids(product.id);
-            console.log(newBids);
             const minPrice = Math.max(...newBids.data.map(bid => bid.user.id === userId ? bid.amount : 0), 0) + 0.01;
             setMinPrice(Math.round((minPrice + Number.EPSILON) * 100) / 100);
-            if (userId === newBids.data[0].user.id) {
-                notify("success", "Congratulations! You are the highest bidder")
+            if (bidRequest.price > highestBid) {
+                notify("success", "Congratulations! You are the highest bidder.")
         }
             else 
-                notify("warning", "There are bids higher than yours. You could again.")
+                notify("warning", "There are bids higher than yours. You could try again.")
             setBids(newBids.data);    
     }
       catch (e) { 
@@ -132,7 +131,7 @@ const ProductPage = ({  match, setBreadcrumb }) => {
                         product={product}
                         minPrice={minPrice}
                         active={active}
-                        bid={bid}
+                        bidFunction={bid}
                         bids={bids}
                         selfPosted={selfPosted}
                     />
@@ -140,13 +139,14 @@ const ProductPage = ({  match, setBreadcrumb }) => {
              ) : null}
               {
                 hasError ?
-                <ErrorComponent message = {errorMessage}></ErrorComponent>
+                <ErrorComponent message={errorMessage}></ErrorComponent>
                 :null
               }
-               {userId !== null && bids.length !== 0 ? (
-                <BidTable bids={bids} />
-            ) : null}
-            {
+               { 
+                 userId !== null && bids.length !== 0 ? (
+                   <BidTable bids={bids} />
+                 ) : null}
+               {
              product !== null ? (
               <div className="featured-container">
                 <h2>

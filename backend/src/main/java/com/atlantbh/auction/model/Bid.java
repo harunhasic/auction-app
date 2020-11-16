@@ -1,7 +1,6 @@
 package com.atlantbh.auction.model;
 
 import org.apache.commons.lang3.NotImplementedException;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,7 +10,7 @@ import java.util.Date;
 @Table(name = "bid")
 public class Bid extends BaseModel<Bid, Long> {
 
-    @CreationTimestamp
+    @Column(name = "bid_date", updatable = false)
     private Date bidDate;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -37,11 +36,18 @@ public class Bid extends BaseModel<Bid, Long> {
     }
 
     public Date getBidDate() {
-        return bidDate;
+        if (bidDate != null) {
+            return new Date(bidDate.getTime());
+        }
+        return null;
     }
 
     public void setBidDate(Date bidDate) {
-        this.bidDate = bidDate;
+        if (bidDate != null) {
+            this.bidDate = new Date(bidDate.getTime());
+        } else {
+            this.bidDate = null;
+        }
     }
 
     public User getUser() {

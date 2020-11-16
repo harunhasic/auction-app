@@ -12,8 +12,7 @@ public class BidRepository extends BaseRepositoryImpl<Bid, Long> {
 
     public List<Bid> getAll() throws RepositoryException {
         try {
-            return getBaseCriteria()
-                    .list();
+            return getBaseCriteria().list();
         } catch (Exception e) {
             throw new RepositoryException("There was issues with returning all the bids");
         }
@@ -27,6 +26,14 @@ public class BidRepository extends BaseRepositoryImpl<Bid, Long> {
                     .list();
         } catch (Exception e) {
             throw new RepositoryException("There were issues with returning bids for the product with id " + id, e);
+        }
+    }
+
+    public double getMaxBidForProduct(Long id) throws RepositoryException {
+        try {
+            return getBidsByProductId(id).stream().mapToDouble(theBid -> theBid.getAmount()).max().orElse(0);
+        } catch (Exception e) {
+            throw new RepositoryException("There were issues with returning the maximum bid for the product with id " + id, e);
         }
     }
 }

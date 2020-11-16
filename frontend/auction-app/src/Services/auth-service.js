@@ -1,5 +1,5 @@
 import BaseService from './BaseService'
-import { setSession, removeSession } from '../utils/LocalStorageUtils';
+import { setSession } from '../utils/LocalStorageUtils';
 
 export default class AuthService extends BaseService {
 
@@ -21,14 +21,5 @@ export default class AuthService extends BaseService {
       url: '/api/users/register',
       data: params
     });
-  }
-
-  authHeader() {
-    const user = JSON.parse(localStorage.getItem('auctionapp-user'));
-    if (user && user.accessToken) {
-      return { Authorization: 'Bearer ' + user.accessToken };
-    } else {
-      return {};
-    }
   }
 }

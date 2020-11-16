@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import GuestRoutes from './GuestRoutes';
-import PrivateRoute from './PrivateRoute';
 import Login from '../Login/Login';
 import Register from '../register/Register';
 import LandingPage from '../LandingPage/LandingPage';

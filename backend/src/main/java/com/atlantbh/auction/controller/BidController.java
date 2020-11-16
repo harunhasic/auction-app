@@ -38,4 +38,14 @@ public class BidController extends BaseController<Bid, Long, BidService> {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @ApiOperation(value = "Return the highest bid for a product")
+    @GetMapping("/highest/{id}")
+    public ResponseEntity getHighestBid(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(service.getHighestBidForProduct(id));
+        } catch (ServiceException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

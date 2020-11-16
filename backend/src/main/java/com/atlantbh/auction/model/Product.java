@@ -1,14 +1,10 @@
 package com.atlantbh.auction.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -58,7 +54,6 @@ public class Product extends BaseModel<Product, Long> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @JsonIgnoreProperties({"password", "firstName", "lastName", "gender", "birthDate", "phoneNumber", "address", "hibernateLazyInitializer"})
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -69,9 +64,6 @@ public class Product extends BaseModel<Product, Long> {
     @JoinColumn(name = "rating_id")
     private Set<Rating> rating;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "product")
-    private List<Bid> bids;
 
     public Product() {
 
@@ -117,14 +109,6 @@ public class Product extends BaseModel<Product, Long> {
         this.shipping = shipping;
         this.user = user;
         this.photos = photos;
-    }
-
-    public List<Bid> getBids() {
-        return bids;
-    }
-
-    public void setBids(List<Bid> bids) {
-        this.bids = bids;
     }
 
     public Set<Rating> getRating() {
