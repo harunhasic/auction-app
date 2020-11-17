@@ -11,17 +11,19 @@ const bidService = new BidService();
 
 const ProductDetails = ({ product, selfPosted, active, bidFunction, bids, minPrice }) => {
 
-const productStarts = moment(product.startDate);
-const productEndDate = new Date(product.endDate);
 const [loading, setLoading] = useState(false);
-const now = new Date();
-const difference = productEndDate.getTime() - now.getTime();
-const leftTime = convertMS(difference);
+
 const [bidAmount, setBidAmount] = useState("");
-const maximumBid = 99999.99;
 const [highestBid, setHighestBid] = useState(0);
 const [hasError, setHasError] = useState(false);
 const [errorMessage, setErrorMessage] = useState(null);
+
+const productStarts = moment(product.startDate);
+const productEndDate = new Date(product.endDate);
+const now = new Date();
+const difference = productEndDate.getTime() - now.getTime();
+const leftTime = convertMS(difference);
+const maximumBid = 99999.99;
 
 useEffect(() => {
     async function fetchData() {
@@ -82,14 +84,11 @@ async function handleBid() {
 }
 
 function validateBid(amount) {
-    if (isNaN(amount)) {
-        setBidAmount(amount);
-    }
     setBidAmount(amount.replace(/(\.\d{2})\d+/, '$1'));
 }
 
 const timeInformation = () => {
-    if (moment().isBefore(productStarts))
+    if (moment().isBefore(productStarts)) {
         return (
             <React.Fragment>
                 Time start: {productStarts.format("D MMMM YYYY [at] HH:mm")}
@@ -97,6 +96,7 @@ const timeInformation = () => {
                 Time end: {moment(product.endDate).format("D MMMM YYYY [at] HH:mm")}
             </React.Fragment>
         );
+    }
 
     const timeLeft = !active ? <h3>Auction has finished</h3> : leftTime.day + " Days " + leftTime.hour + " hours " + leftTime.minute + " minutes";
 

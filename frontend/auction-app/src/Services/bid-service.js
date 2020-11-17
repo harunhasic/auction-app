@@ -24,6 +24,6 @@ export default class BidService extends BaseService {
         return this.baseApi({
             method: 'GET',
             url: `/bid/highest/${productId}`
-        })
+        });
     }
 }

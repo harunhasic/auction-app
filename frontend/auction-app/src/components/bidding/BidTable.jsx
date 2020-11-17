@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Image, Table } from 'react-bootstrap';
 import moment from 'moment';
-
+import { isEmpty } from '../../utils/array'
 import '../../styles/bidding/bidTable.scss'
 import BidService from '../../Services/bid-service';
 import ErrorComponent from '../notFound/ErrorComponent';
@@ -17,8 +17,10 @@ const BidTable = ({ bids }) => {
     useEffect(() => {
         async function fetchData() {
             try {
+              if(!isEmpty(bids)) {
                 const highestBid = await bidService.getHighestBid(bids[0].product.id);
                 setHighestBid(highestBid.data);
+              }
             } catch (error) {
                 setHasError(true);
                 setErrorMessage(error.toString());
