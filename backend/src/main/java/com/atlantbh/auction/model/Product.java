@@ -1,7 +1,5 @@
 package com.atlantbh.auction.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -56,7 +54,6 @@ public class Product extends BaseModel<Product, Long> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @JsonIgnore
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -66,6 +63,7 @@ public class Product extends BaseModel<Product, Long> {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "rating_id")
     private Set<Rating> rating;
+
 
     public Product() {
 

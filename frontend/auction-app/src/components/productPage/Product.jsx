@@ -7,96 +7,166 @@ import ProductPhoto from '../product/ProductPhoto';
 import ProductDetails from '../product/ProductDetails';
 import moment from 'moment';
 import ErrorComponent from '../notFound/ErrorComponent';
-import '../../styles/product/ProductPage.scss';
+import '../../styles/product/Product.scss';
 import ProductCard from '../Map/ProductCard';
 import CategoryService from '../../Services/category-service';
-
-
+import BidService from '../../Services/bid-service';
+import BidTable from '../bidding/BidTable';
+import { Alert } from 'react-bootstrap';
 
 const productService = new ProductService();
 const categoryService = new CategoryService();
+const bidsService = new BidService();
 
 const ProductPage = ({ match, setBreadcrumb }) => {
-    const [product, setProduct] = useState(null);
-    const [relatedProducts, setRelatedProducts] = useState([]);
-    const [category, setCategory] = useState(null);
-    const [active, setActive] = useState(true);
-    const [minPrice, setMinPrice] = useState(0);
-    const [hasError, setHasError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(null);
 
-    useEffect(() => {
-        createBreadcrumb();
-        async function fetchData() {
-            const productId = match.params.id;
-            const amount = 3;
-            try {
-                await productService.getProduct(productId).then(async response => {
-                    const product = response.data;
-                    setProduct(product);
-                    //sets a product to be active if his endDate is not surpassed, if not, display errorComponent
-                    setActive(moment().isBetween(moment(product.startDate), moment(product.endDate)));
-                    setMinPrice(product.startPrice);
-                    await categoryService.getBySubcategoryId(product.subcategory.id).then(response => {
-                        setCategory(response.data);
-                        console.log(category);
-                    })
+const userId = getUserId();
+const [product, setProduct] = useState(null);
+const [relatedProducts, setRelatedProducts] = useState([]);
+const [category, setCategory] = useState(null);
+const [active, setActive] = useState(true);
+const [minPrice, setMinPrice] = useState(0);
+const [hasError, setHasError] = useState(false);
+const [errorMessage, setErrorMessage] = useState(null);
+const [bids, setBids] = useState([]);
+const [selfPosted, setSelfPosted] = useState(false);
+const [alertVisible, setAlertVisible] = useState(false);
+const [variant, setVariant] = useState(null);
+const [message, setMessage] = useState(null);
+const [highestBid, setHighestBid] = useState(0);
+let keepFlag = false;
+
+function notify(variant, message) {
+    setMessage(message);
+    setVariant(variant);
+    setAlertVisible(true);
+    keepFlag = true;
+}
+
+useEffect(() => {
+    createBreadcrumb();
+    async function fetchData() {
+        const productId = match.params.id;
+        const amount = 3;
+        try {
+            await productService.getProduct(productId).then(async response => {
+                const product = response.data;
+                setProduct(product);
+                setSelfPosted(product.user.id === userId);
+                setActive(moment().isBetween(moment(product.startDate), moment(product.endDate)));
+                setMinPrice(product.startPrice);
+                const bids = await bidsService.getBids(productId);
+                const highestBid = await bidsService.getHighestBid(productId);
+                setHighestBid(highestBid.data);
+                setMinPrice(highestBid.data === 0 ? product.startPrice : highestBid.data + 0.5);
+                setBids(bids.data);
+                await categoryService.getBySubcategoryId(product.subcategory.id).then(response => {
+                    setCategory(response.data);
                 })
-                await productService.getRelatedProducts(productId, amount).then(response => {
-                    setRelatedProducts(response.data);
-                }) 
-                setHasError(false);
-            } catch (error) {      
-                setHasError(true);
-                setErrorMessage(error.toString());
-            }
+            })
+            await productService.getRelatedProducts(productId, amount).then(response => {
+                setRelatedProducts(response.data);
+            })
+            setHasError(false);
+        } catch (error) {
+            setHasError(true);
+            setErrorMessage(error.toString());
         }
-        fetchData();
-    }, [match.params.id])
-
-    const createBreadcrumb = () => {
-        const urls = match.url.split("/").slice(1, -1);
-        let matchUrl = "";
-        setBreadcrumb("SINGLE PRODUCT", [...urls.map(url => {
-            matchUrl += "/" + url;
-            return {
-                text: url.toUpperCase().split("_").join(" "),
-                href: encodeURI(matchUrl)
-            }
-        }),]);
     }
+    fetchData();
+}, [match.params.id])
 
-    return (
-        <React.Fragment>
-            {
-             !hasError && product !== null ? (
+const createBreadcrumb = () => {
+    const urls = match.url.split("/").slice(1, -1);
+    let matchUrl = "";
+    setBreadcrumb("SINGLE PRODUCT", [...urls.map(url => {
+        matchUrl += "/" + url;
+        return {
+            text: url.toUpperCase().split("_").join(" "),
+            href: encodeURI(matchUrl)
+        }
+    }),]);
+}
+
+async function bid(price) {
+    if (userId === null) {
+        notify("warning", "You have to be logged in to place bids.");
+        return;
+    }
+    try {
+        const bidRequest = {
+            price: parseFloat(price),
+            productId: product.id,
+            userId: userId
+        };
+        await bidsService.addBid(bidRequest);
+        const newBids = await bidsService.getBids(product.id);
+        const newHighestBid = await bidsService.getHighestBid(product.id);
+        const minPrice = newHighestBid.data;
+        setMinPrice(minPrice);
+        if (bidRequest.price > highestBid) {
+            notify("success", "Congratulations! You are the highest bidder.")
+        }
+        else {
+            notify("warning", "There are bids higher than yours. You could try again.")
+        }
+        setBids(newBids.data);
+    }
+    catch (e) {
+        setHasError(true);
+        setErrorMessage(e.toString());
+    }
+}
+
+return (
+    <React.Fragment>
+        <div className={alertVisible ? "alert-div" : null}>
+            <Alert dismissible onClose={() => setAlertVisible(false)} transition={false} show={alertVisible} variant={variant}>
+                {message}
+            </Alert>
+        </div>
+        {
+            product !== null ? (
                 <div className="product-container">
-                  <ProductPhoto photos={product.photos} />
+                    <ProductPhoto photos={product.photos} />
                     <ProductDetails
                         product={product}
                         minPrice={minPrice}
                         active={active}
+                        bidFunction={bid}
+                        bids={bids}
+                        selfPosted={selfPosted}
                     />
                 </div>
-             ) : <ErrorComponent message = {errorMessage}></ErrorComponent>}
-            {
-             product !== null ? (
-              <div className="featured-container">
-                <h2>
-                    Related products
-                </h2>
-                <div className="line" />
-                <div className="featured-items-container">
-                    {
-                      relatedProducts.map(product => (
-                        <ProductCard key={product.id} data={product} size="xxl" url={productUrl(product, category)} />
-                      ))
-                    }
+            ) : null
+        }
+        {
+            hasError ?
+                <ErrorComponent message={errorMessage}></ErrorComponent>
+                : null
+        }
+        {
+            userId !== null && bids.length !== 0 ? (
+                <BidTable bids={bids} />
+            ) : null}
+        {
+            product !== null ? (
+                <div className="featured-container">
+                    <h2>
+                        Related products
+        </h2>
+                    <div className="line" />
+                    <div className="featured-items-container">
+                        {
+                            relatedProducts.map(product => (
+                                <ProductCard key={product.id} data={product} size="xxl" url={productUrl(product, category)} />
+                            ))
+                        }
+                    </div>
                 </div>
-              </div>
-             ) : null }
-        </React.Fragment>
-    );
+            ) : null}
+    </React.Fragment>
+  );
 }
 
 export default withRouter(ProductPage);

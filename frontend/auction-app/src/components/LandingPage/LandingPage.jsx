@@ -3,7 +3,6 @@ import { Button, Image, ListGroup } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import ProductService from '../../Services/product-service';
 import CategoryService from '../../Services/category-service';
-import { IoIosArrowForward } from "react-icons/io";
 import { categoryUrl, allCategoryUrl, subcategoryUrl, productUrl } from '../../utils/RedirectUrls';
 import '../../styles/landingPage/Landing.scss';
 import ProductCard from '../Map/ProductCard';
@@ -82,7 +81,7 @@ const LandingPage = ({ deleteBreadcrumb }) => {
           <ListGroup.Item>All Categories</ListGroup.Item>
         </ListGroup>
         {
-          !hasError && featuredProducts.length !== 0 ?
+           productInFocus  ?
             <div className="featured-main-container">
               <div className="featured-product-container">
                 <h1>
@@ -106,7 +105,12 @@ const LandingPage = ({ deleteBreadcrumb }) => {
                 </Button>
               </div>
               <Image className="featured-product-image" src={productInFocus.photos[0].photoUrl} />
-            </div> : <ErrorComponent message={errorMessage}></ErrorComponent>
+            </div> : null 
+        }
+        {
+          hasError ? 
+          <ErrorComponent message={errorMessage}></ErrorComponent>
+          : null
         }
       </div>
 
@@ -168,9 +172,9 @@ const LandingPage = ({ deleteBreadcrumb }) => {
                 <ProductCard key={product.id} data={product} size="xxl" url={productUrl(product, getCategoryBySubcategory(categories, product.subcategory))} />
               ))
             ) :
-              lastProducts.map(product => (
-                <ProductCard key={product.id} data={product} size="xxl" url={productUrl(product, getCategoryBySubcategory(categories, product.subcategory))} />
-              ))
+                lastProducts.map(product => (
+                  <ProductCard key={product.id} data={product} size="xxl" url={productUrl(product, getCategoryBySubcategory(categories, product.subcategory))} />
+                ))
           }
         </div>
       </div>

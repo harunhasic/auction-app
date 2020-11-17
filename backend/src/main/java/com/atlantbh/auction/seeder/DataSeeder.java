@@ -290,8 +290,11 @@ public class DataSeeder implements CommandLineRunner {
         listOfUsers.add(new User("Tom", "Hanks", "demo@tom.com", "male", new Date("05/02/1965"), "432-321-2345", new BCryptPasswordEncoder().encode("Tommy123"), "/assets/images/profile3.png"));
         listOfUsers.add(new User("Alice", "Hopkins", "kleopatra@demo.com", "female", new Date("22/02/1927"), "123-456-1231", new BCryptPasswordEncoder().encode("Tommy123"), "/assets/images/profile4.jpg"));
         listOfUsers.get(0).setAddress(listOfAddresses.get(0));
+        listOfUsers.get(0).setProfilePhotoUrl("https://w7.pngwing.com/pngs/340/946/png-transparent-avatar-user-computer-icons-software-developer-avatar-child-face-heroes.png");
         listOfUsers.get(1).setAddress(listOfAddresses.get(1));
+        listOfUsers.get(1).setProfilePhotoUrl("https://png.pngtree.com/element_our/20190604/ourmid/pngtree-user-avatar-boy-image_1482937.jpg");
         listOfUsers.get(2).setAddress(listOfAddresses.get(2));
+        listOfUsers.get(2).setProfilePhotoUrl("https://cdn1.vectorstock.com/i/1000x1000/31/95/user-sign-icon-person-symbol-human-avatar-vector-12693195.jpg");
         listOfUsers.get(3).setAddress(listOfAddresses.get(3));
         if (userRepository.findByFirstName(listOfUsers.get(0).getFirstName()) == null) {
             userRepository.saveAll(listOfUsers);

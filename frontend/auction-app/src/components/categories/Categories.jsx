@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
 import { home } from '../../utils/RedirectUrls';
 import CategoryService from '../../Services/category-service'
-import SubCategoryService from '../../Services/subcategory-service'
 import '../../styles/categories/AllCategories.scss';
 import CategoriesList from '../Map/CategoriesList';
 import ErrorComponent from '../notFound/ErrorComponent';
@@ -11,7 +9,6 @@ import ErrorComponent from '../notFound/ErrorComponent';
 const categoryService = new CategoryService();
 
 const AllCategories = ({ setBreadcrumb }) => {
-    const history = useHistory();
 
     const [categories, setCategories] = useState([]);
     const [hasError, setHasError] = useState(false);
@@ -31,8 +28,8 @@ const AllCategories = ({ setBreadcrumb }) => {
     }, [])
 
     return (
-        <div className="container-fluid">
-            {categories.length !== 0 ?
+        <React.Fragment>
+            {!hasError ?
                 <div className="row">
                     {
                      categories.map(category => (
@@ -40,7 +37,7 @@ const AllCategories = ({ setBreadcrumb }) => {
                      ))
                     }
                 </div> : <ErrorComponent></ErrorComponent>}
-        </div>
+        </React.Fragment>
     );
 }
 

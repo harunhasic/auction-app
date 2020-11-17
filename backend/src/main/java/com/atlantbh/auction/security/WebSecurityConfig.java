@@ -45,6 +45,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${local}")
     private String local;
 
+    private final String[] authorizedRoutes = {
+            "/bids/add"
+    };
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         // configure AuthenticationManager so that it knows from where to load
@@ -67,6 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
+                .antMatchers(authorizedRoutes).authenticated()
                 .anyRequest().permitAll().and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

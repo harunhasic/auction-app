@@ -1,9 +1,8 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import '../../styles/categories/CategoriesList.scss';
-import { categoryUrl, subcategoryUrl } from '../../utils/RedirectUrls';
 
-const CategoriesList = ({ category }) => {
+const CategoriesList = ({ category, setBreadcrumb }) => {
 
 return (
     <React.Fragment>

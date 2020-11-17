@@ -79,7 +79,7 @@ class Login extends Component {
   }
 
   render() {
-    const { match, location, history } = this.props;
+
     return (
       <div className="login-container">
         <div className="login-title">

@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { SiFacebook, SiTwitter, SiInstagram } from 'react-icons/si';
-import { GrFormSearch } from "react-icons/gr";
 import { Link, NavLink } from 'react-router-dom';
 import '../../styles/header/Header.scss';
-import { FormControl, Nav, Navbar, Dropdown } from 'react-bootstrap';
+import { Nav, Navbar, Dropdown } from 'react-bootstrap';
 import { isTokenValid, removeSession } from '../../utils/LocalStorageUtils'
 import { RiAuctionFill } from 'react-icons/ri';
+import { useHistory } from "react-router";
 
 export const getUserName = () => {
     const user = localStorage.getItem('auctionapp-user');
-    console.log(user);
     return user ? JSON.parse(user).firstName : null;
 }
 
-
 const Header = ({ loggedInState }) => {
 
+    const history = useHistory();
     const [isLoggedIn, setLoggedIn] = useState(isTokenValid());
+ 
+    const toHome = () => {
+       history.push('/');   
+    }   
 
     const handleLogout = () => {
         setLoggedIn(false);
         removeSession();
+        toHome();
     };
 
     useEffect(() => {
