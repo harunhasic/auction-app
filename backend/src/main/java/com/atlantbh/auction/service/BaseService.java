@@ -55,5 +55,4 @@ public class BaseService<M extends BaseModel<M, I>, I, R extends BaseRepository<
     public M findById(I id) {
         return repository.findById(id);
     }
-
 }

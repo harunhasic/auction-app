@@ -47,4 +47,3 @@ public class UserRepository extends BaseRepositoryImpl<User, Long> {
                 .uniqueResult();
     }
 }
-
