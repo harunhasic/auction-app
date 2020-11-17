@@ -107,8 +107,9 @@ async function bid(price) {
         if (bidRequest.price > highestBid) {
             notify("success", "Congratulations! You are the highest bidder.")
         }
-        else
+        else {
             notify("warning", "There are bids higher than yours. You could try again.")
+        }
         setBids(newBids.data);
     }
     catch (e) {
@@ -137,7 +138,8 @@ return (
                         selfPosted={selfPosted}
                     />
                 </div>
-            ) : null}
+            ) : null
+        }
         {
             hasError ?
                 <ErrorComponent message={errorMessage}></ErrorComponent>
@@ -152,7 +154,7 @@ return (
                 <div className="featured-container">
                     <h2>
                         Related products
-            </h2>
+        </h2>
                     <div className="line" />
                     <div className="featured-items-container">
                         {
