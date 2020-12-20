@@ -1,6 +1,7 @@
 package com.atlantbh.auction.model;
 
 import com.atlantbh.auction.model.dto.RegisterRequest;
+import com.atlantbh.auction.model.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;

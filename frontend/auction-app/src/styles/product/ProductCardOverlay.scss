@@ -1,0 +1,55 @@
+@import "../defaults/defaults";
+
+.main-container {
+    position: relative;
+}
+
+.overlay-container {
+    position: absolute;
+    width: 14.4vw;
+    height: 19.4vw;
+    z-index: 2;
+    cursor: pointer;
+    background-color: #c4bfd6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay-bid-button {
+    width: 50%;
+    min-height: 36px;
+    margin-top: 60px;
+    font-style: $font-stack;
+    background: #ffffff;
+    border: 3px solid #ececec;
+    font-size: 15px;
+    color: #252525;
+    letter-spacing: 0.52px;
+    line-height: 22px;
+}
+
+.overlay-bid-icon {
+    font-size: 22px;
+    margin-left: 5px;
+    color:#252525;
+}
+
+@media (max-width: 1199px) {
+    .overlay-bid-button {
+        width: 90%;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 767px) {
+    .overlay-container {
+        width: 100%;
+        height: calc(82% - 25px);
+    }
+    .overlay-bid-button {
+        width: 50%;
+        margin-top: 60px;
+    }
+}

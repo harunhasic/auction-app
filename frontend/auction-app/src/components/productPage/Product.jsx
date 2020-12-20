@@ -21,6 +21,8 @@ const bidsService = new BidService();
 const ProductPage = ({ match, setBreadcrumb }) => {
 
 const userId = getUserId();
+let keepFlag = false;
+
 const [product, setProduct] = useState(null);
 const [relatedProducts, setRelatedProducts] = useState([]);
 const [category, setCategory] = useState(null);
@@ -34,7 +36,7 @@ const [alertVisible, setAlertVisible] = useState(false);
 const [variant, setVariant] = useState(null);
 const [message, setMessage] = useState(null);
 const [highestBid, setHighestBid] = useState(0);
-let keepFlag = false;
+
 
 function notify(variant, message) {
     setMessage(message);
@@ -154,7 +156,7 @@ return (
                 <div className="featured-container">
                     <h2>
                         Related products
-        </h2>
+                    </h2>
                     <div className="line" />
                     <div className="featured-items-container">
                         {

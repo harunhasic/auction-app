@@ -5,6 +5,7 @@ import com.atlantbh.auction.exceptions.ServiceException;
 import com.atlantbh.auction.model.User;
 import com.atlantbh.auction.model.dto.JWTLoginSucessResponse;
 import com.atlantbh.auction.model.dto.LoginRequest;
+import com.atlantbh.auction.model.filter.NullFilterBuilder;
 import com.atlantbh.auction.repository.UserRepository;
 import com.atlantbh.auction.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ import java.util.Optional;
  * @author Harun Hasic
  */
 @Service
-public class UserService extends BaseService<User, Long, UserRepository> implements UserDetailsService {
+public class UserService extends BaseService<User, Long, NullFilterBuilder, UserRepository> implements UserDetailsService {
 
     @Autowired
     private JwtTokenProvider tokenProvider;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
-import { home } from '../../utils/RedirectUrls';
+import { home, shopUrl } from '../../utils/RedirectUrls';
 import CategoryService from '../../Services/category-service'
 import '../../styles/categories/AllCategories.scss';
 import CategoriesList from '../Map/CategoriesList';
@@ -9,7 +10,7 @@ import ErrorComponent from '../notFound/ErrorComponent';
 const categoryService = new CategoryService();
 
 const AllCategories = ({ setBreadcrumb }) => {
-
+    const history = useHistory();
     const [categories, setCategories] = useState([]);
     const [hasError, setHasError] = useState(false);
 

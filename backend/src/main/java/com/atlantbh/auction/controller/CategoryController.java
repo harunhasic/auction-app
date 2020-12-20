@@ -42,4 +42,14 @@ public class CategoryController extends BaseController<Category, Long, CategoryS
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @ApiOperation(value = "Get category by name")
+    @GetMapping("/{name}")
+    public ResponseEntity getCategoryBySubcategoryId(@PathVariable String name) {
+        try {
+            return ResponseEntity.ok(service.getByName(name));
+        } catch (ServiceException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

@@ -3,6 +3,7 @@ package com.atlantbh.auction.service;
 import com.atlantbh.auction.exceptions.RepositoryException;
 import com.atlantbh.auction.exceptions.ServiceException;
 import com.atlantbh.auction.model.BaseModel;
+import com.atlantbh.auction.model.PaginatedResult;
 import com.atlantbh.auction.repository.BaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Harun Hasic
  */
-public class BaseService<M extends BaseModel<M, I>, I, R extends BaseRepository<M, I>> {
+public class BaseService<M extends BaseModel<M, I>, I, F, R extends BaseRepository<M, I, F>> {
 
     @Autowired
     protected R repository;
@@ -54,5 +55,9 @@ public class BaseService<M extends BaseModel<M, I>, I, R extends BaseRepository<
 
     public M findById(I id) {
         return repository.findById(id);
+    }
+
+    public PaginatedResult<M> find(F filterBuilder) {
+        return repository.find(filterBuilder);
     }
 }

@@ -7,7 +7,6 @@
   text-align: center;
   position: relative;
   min-height: 100vh;
-  width: auto;
 }
 
 .route-container {
@@ -41,7 +40,7 @@
 
 .form-control-gray {
   background: #fcfcfc;
-  border: 1px solid #d8d8d8;
+  border: 1px solid $silver-color;
 }
 
 .form-group,
@@ -95,21 +94,55 @@
 /* bracdcrumb */
 
 .breadcrumb {
-  height: 60px;
-  text-align: right;
+  background: #fafafa;
   align-items: center;
+  border-radius: 0;
+  margin-bottom: 0;
+  padding-left: 11.1%  !important;
+  padding-right: 11.1% !important;
+  text-align: right !important;
+  justify-content: flex-end;
+  height: 60px;
   position: relative;
-  background: #fafafa !important;
-  justify-content: end;
-  width: auto;
 }
 
 .breadcrumb-title {
-  padding-left: 245px;
-  left: 11%;
+  position: absolute;
+  left: 11.1%;
   font-size: 18px;
-  letter-spacing: 0.64px;
-  margin-right: 10px;
+  letter-spacing: 0.63px;
+  padding-left: 10px;
+}
+
+.breadcrumb-item > a {
+  font-weight: lighter;
+  color: #252525;
+  padding-right: 100px;
+  width: 20px;
+}
+
+.breadcrumb-item > a:hover {
+  font-weight: normal;
+}
+
+.breadcrumb-item.active {
+  color: #252525;
+}
+
+@media (max-width: 991px) {
+  .breadcrumb-title {
+    top: 4px;
+    margin: 0 auto;
+    width: max-content;
+    right: 0;
+    left: 0;
+  }
+  .breadcrumb {
+    justify-content: center;
+    align-items: flex-end;
+    padding-top: 30px;
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 765px) {
@@ -142,7 +175,7 @@
   color: #ffffff;
 
   &:hover {
-    color: #d8d8d8;
+    color: $silver-color;
   }
 }
 
@@ -153,12 +186,12 @@
 .purple-nav-link:hover {
   color: #573bac;
 }
+
 .dark-nav-link-crumb {
   font-style: $font-light;
   font-size: 16px;
   color: #252525;
   letter-spacing: 0.56px;
-  margin-left: 1255px;
   margin-right: -5px;
 }
 
@@ -169,4 +202,50 @@
 .dark-active-nav-link {
   color: $purple-color;
   font-weight: bold;
+}
+
+.modal-content,
+.popover,
+.popover-header {
+  color: #252525;
+  font-size: 16px;
+  letter-spacing: 0.56px;
+  border-radius: 0;
+}
+
+.popover-header {
+  background-color: #fafafa;
+}
+
+.rc-rate-star-second > svg {
+  stroke: $purple-color;
+  stroke-width: 0.7px;
+}
+
+.rc-rate-star {
+  color: transparent;
+  margin-right: 10px;
+}
+
+.rc-rate-star-focused {
+  transform: unset;
+}
+
+.rc-rate-star-full .rc-rate-star-second,
+.rc-rate-star-full:hover .rc-rate-star-second {
+  color: $purple-color;
+}
+
+@media (max-width: 767px) {
+  .verify-phone {
+    width: unset;
+  }
+}
+
+@media (max-width: 575px) {
+  .verify-phone {
+    width: unset;
+    font-size: 14px;
+    letter-spacing: 0.49px;
+  }
 }

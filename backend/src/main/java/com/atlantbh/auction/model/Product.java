@@ -1,10 +1,12 @@
 package com.atlantbh.auction.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -29,7 +31,7 @@ public class Product extends BaseModel<Product, Long> {
     private String name;
 
     @Column(length = 4000, columnDefinition = "text")
-    @Size(min = 20, max = 4000)
+    @javax.validation.constraints.Size(min = 20, max = 4000)
     private String description;
 
     @Column(name = "start_price")
@@ -60,10 +62,21 @@ public class Product extends BaseModel<Product, Long> {
     @JoinColumn(name = "subcategory_id")
     private SubCategory subCategory;
 
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "rating_id")
     private Set<Rating> rating;
 
+    private String color;
+
+    private String size;
+
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "product")
+    private List<Bid> bids;
+
+    private Integer numberOfBids = 0;
 
     public Product() {
 
@@ -98,7 +111,8 @@ public class Product extends BaseModel<Product, Long> {
             boolean featured,
             boolean shipping,
             User user,
-            Set<Photo> photos
+            Set<Photo> photos,
+            String color
     ) {
         this.name = name;
         this.description = description;
@@ -109,6 +123,7 @@ public class Product extends BaseModel<Product, Long> {
         this.shipping = shipping;
         this.user = user;
         this.photos = photos;
+        this.color = color;
     }
 
     public Set<Rating> getRating() {
@@ -183,6 +198,22 @@ public class Product extends BaseModel<Product, Long> {
         this.shipping = shipping;
     }
 
+    public int getBids() {
+        return bids.size();
+    }
+
+    public void setBids(List<Bid> numberOfBids) {
+        this.bids = numberOfBids;
+    }
+
+    public Integer getNumberOfBids() {
+        return bids.size();
+    }
+
+    public void setNumberOfBids(Integer numberOfBids) {
+        this.numberOfBids = numberOfBids;
+    }
+
     public Set<Photo> getPhotos() {
         return photos;
     }
@@ -215,8 +246,20 @@ public class Product extends BaseModel<Product, Long> {
         this.subCategory = subCategory;
     }
 
-    public SubCategory getSubCategory() {
-        return subCategory;
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 
     @Override

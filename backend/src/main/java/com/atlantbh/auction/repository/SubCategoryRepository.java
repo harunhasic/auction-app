@@ -2,6 +2,7 @@ package com.atlantbh.auction.repository;
 
 import com.atlantbh.auction.exceptions.RepositoryException;
 import com.atlantbh.auction.model.SubCategory;
+import com.atlantbh.auction.model.filter.NullFilterBuilder;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +10,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public class SubCategoryRepository extends BaseRepositoryImpl<SubCategory, Long> {
+public class SubCategoryRepository extends BaseRepositoryImpl<SubCategory, Long, NullFilterBuilder> {
 
     public List<SubCategory> getRandomSubcategories(int n) throws RepositoryException {
         try {

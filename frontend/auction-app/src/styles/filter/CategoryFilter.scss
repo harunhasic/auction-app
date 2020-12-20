@@ -1,0 +1,65 @@
+@import "../defaults/defaults";
+
+.list-group-filter {
+    border: 1px solid $silver-color;
+    border-radius: 0;
+    text-align: left;
+    height: max-content;
+    overflow-y: auto;
+    width: 100%;
+    font-style: $font-stack;
+    margin-bottom: 30px;
+}
+
+.list-group-filter > .list-group-item {
+    color: #252525;
+    background-color: #ffffff;
+    border: none !important;
+    letter-spacing: 0.49px;
+    display: flex;
+    align-items: center;
+    height: 51px;
+    font-size: 14px;
+    justify-content: space-between;
+    outline: none;
+}
+
+.list-group-filter > .filter-list-title {
+    color: $purple-color;
+    font-weight: bold;
+}
+
+.list-group-filter > .list-group-item:hover {
+    background-color: $silver-color;
+}
+
+.list-group-filter > .filter-list-title:hover {
+    background-color: initial;
+}
+
+.list-clear-icon {
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.fa-minus {
+    font-size: 19px;
+    color: $purple-color;
+}
+
+.fa-plus {
+    font-size: 19px;
+}
+
+.category-name {
+    color: #252525;
+}
+
+.subcategories-name {
+    color: #9B9B9B !important;
+}
+
+.active-category {
+    font-weight: bold;
+    color : #9B9B9B;
+}

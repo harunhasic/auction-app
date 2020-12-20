@@ -2,6 +2,7 @@ package com.atlantbh.auction.repository;
 
 import com.atlantbh.auction.exceptions.RepositoryException;
 import com.atlantbh.auction.model.BaseModel;
+import com.atlantbh.auction.model.PaginatedResult;
 
 /**
  * The base repository interface that describes the methods
@@ -12,7 +13,7 @@ import com.atlantbh.auction.model.BaseModel;
  * @param <I> represents models id
  * @author Harun Hasic
  */
-public interface BaseRepository<M extends BaseModel<M, I>, I> {
+public interface BaseRepository<M extends BaseModel<M, I>, I, F> {
 
     M save(M entity) throws RepositoryException;
 
@@ -25,4 +26,6 @@ public interface BaseRepository<M extends BaseModel<M, I>, I> {
     M findById(I id);
 
     M get(I id) throws RepositoryException;
+
+    PaginatedResult<M> find(F filterBuilder);
 }

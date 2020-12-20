@@ -1,0 +1,25 @@
+@import "../defaults/defaults";
+
+.privacy-container {
+    position: absolute;
+    top: 25%;
+    left: 35%;
+    width: 700px;
+    height: auto;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    font-family: $font-stack;
+}
+
+.privacy-header {
+    font-size: 46px;
+    color: #252525;
+    letter-spacing: 1.61px;
+}
+
+.privacy-content {
+    font-size: 18px;
+    color: #9b9b9b;
+    letter-spacing: 0.63px;
+    line-height: 25px;
+}

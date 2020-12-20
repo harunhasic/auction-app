@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import '../../styles/header/Header.scss';
-import { Nav, Navbar, Dropdown } from 'react-bootstrap';
+import { Nav, Navbar, Dropdown, FormControl, Image } from 'react-bootstrap';
 import { isTokenValid, removeSession } from '../../utils/LocalStorageUtils'
 import { RiAuctionFill } from 'react-icons/ri';
+import { GrFormSearch } from "react-icons/gr";
 import { useHistory } from "react-router";
+import {shopUrl, home, about, terms, privacy, registerUrl, loginUrl } from '../../utils/RedirectUrls';
+import * as qs from 'query-string';
+import { SiFacebook, SiTwitter, SiInstagram } from "react-icons/si";
 
 export const getUserName = () => {
     const user = localStorage.getItem('auctionapp-user');
@@ -14,11 +18,23 @@ export const getUserName = () => {
 const Header = ({ loggedInState }) => {
 
     const history = useHistory();
+
     const [isLoggedIn, setLoggedIn] = useState(isTokenValid());
- 
+    const [searchText, setSearchText] = useState("")
+
     const toHome = () => {
        history.push('/');   
     }   
+
+    function pressEnter(e) {
+        if (e.key === "Enter") {
+            searchFunction();
+        }
+    }
+
+    function toShop() {
+        history.push('/shop');
+    }
 
     const handleLogout = () => {
         setLoggedIn(false);
@@ -27,14 +43,37 @@ const Header = ({ loggedInState }) => {
     };
 
     useEffect(() => {
-        if (loggedInState !== null)
+        const urlParams = qs.parse(history.location.search);
+        if (searchText !== urlParams.query)
+            setSearchText(urlParams.query);
+        if (loggedInState === false)
             setLoggedIn(!isLoggedIn);
     }, [loggedInState]);
 
+    const searchFunction = async () => {
+        const urlParams = {
+            query: searchText,
+            sort: "newness"
+        };
+        history.push({
+            pathname: shopUrl,
+            search: qs.stringify(urlParams)
+        });
+    }
+  
     return (
     <div>
         <div className="header-container">
             <div className="socials-container">
+              <a className="social-link" rel="noopener noreferrer" href="https://www.facebook.com/AtlantBH" target="_blank">
+                <SiFacebook />
+              </a>
+              <a className="social-link" rel="noopener noreferrer" href="https://twitter.com/atlantbh" target="_blank">
+               <SiTwitter />
+              </a>
+              <a className="social-link" rel="noopener noreferrer" href="https://www.instagram.com/atlantbh" target="_blank">
+                <SiInstagram />
+              </a>
             </div>
             <Nav>
                 {isLoggedIn ?
@@ -82,9 +121,38 @@ const Header = ({ loggedInState }) => {
                 AUCTION
             </Link>
             <div className="col-md-4">
+            <div className="lower-header-search">
+                    <FormControl
+                        value={searchText || ""}
+                        onChange={(e) => setSearchText(e.target.value)}
+                        size="xl-18"
+                        type="text"
+                        maxLength="155"
+                        placeholder="Try enter: Shoes"
+                        onKeyUp={(e) => e.key === 'Enter' ? searchFunction() : null}
+                    />
+                    <GrFormSearch className="lower-header-search-icon" onClick={searchFunction} />
+                </div>
             </div>
+            
             <Nav>
-                <NavLink exact className="dark-nav-link nav-link" activeClassName="dark-active-nav-link" to="/">HOME</NavLink>
+            <NavLink
+                        isActive={(match, location) => (match.isExact || location.pathname === loginUrl || location.pathname === registerUrl)}
+                        className="dark-nav-link nav-link"
+                        activeClassName="dark-active-nav-link"
+                        to={home}
+                    >
+                        HOME
+                    </NavLink>
+                    <NavLink
+                        isActive={(match, location) => ((match !== null && match.url === shopUrl) || location.pathname === about || location.pathname === terms ||
+                            location.pathname === privacy)}
+                        className="dark-nav-link nav-link"
+                        activeClassName="dark-active-nav-link"
+                        to={shopUrl}
+                    >
+                        SHOP
+                    </NavLink>
             </Nav>
         </div>
     </div>

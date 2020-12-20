@@ -2,10 +2,10 @@
 
 .landing-page-container {
     min-height: 563px;
-    margin-left: -14.3%;
-    margin-right: -14.3%;
-    padding-left: 14.3%;
-    padding-right: 14.3%;
+    margin-left: -14.2%;
+    margin-right: -14.2%;
+    padding-left: 14.2%;
+    padding-right: 14.2%;
     background: #fafafa;
     display: flex;
 }
@@ -94,6 +94,7 @@
     color: $purple-color;
     font-weight: bold;
     border-bottom: none;
+    outline:none;
 }
 
 .tabs-container {
@@ -138,7 +139,7 @@
     font-size: 28px;
     letter-spacing: 0.98px;
     width: 180px;
-    border-bottom: 4px solid #8367d8;
+    border-bottom: 4px solid $purple-color;
 }
 
 .space {
@@ -146,7 +147,7 @@
 }
 
 .page-active {
-    border-bottom: 4px solid #8367d8;
+    border-bottom: 4px solid $purple-color;
 }
 
 @media (max-width: 1200px) {

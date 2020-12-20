@@ -3,7 +3,7 @@ import { Button, Image, ListGroup } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import ProductService from '../../Services/product-service';
 import CategoryService from '../../Services/category-service';
-import { categoryUrl, allCategoryUrl, subcategoryUrl, productUrl } from '../../utils/RedirectUrls';
+import {  allCategoryUrl, subcategoryUrl, productUrl, shopUrl } from '../../utils/RedirectUrls';
 import '../../styles/landingPage/Landing.scss';
 import ProductCard from '../Map/ProductCard';
 import SubCategoryCard from '../Map/MapSubcategory'
@@ -65,7 +65,7 @@ const LandingPage = ({ deleteBreadcrumb }) => {
     }
     fetchData();
   }, [deleteBreadcrumb])
-
+ 
   const productInFocus = featuredProducts[0];
 
   return (
@@ -75,7 +75,7 @@ const LandingPage = ({ deleteBreadcrumb }) => {
           <ListGroup.Item className="categories-link" action onClick={() => history.push(allCategoryUrl)}>CATEGORIES</ListGroup.Item>
           {
             categories.map(category => (
-              <ListGroup.Item key={category.name} action onClick={() => history.push(categoryUrl(category))}>{category.name}</ListGroup.Item>
+              <ListGroup.Item key={category.name} action onClick={() => history.push(shopUrl)}>{category.name}</ListGroup.Item>
             ))
           }
           <ListGroup.Item>All Categories</ListGroup.Item>

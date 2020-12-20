@@ -15,5 +15,12 @@ export default class CategoryService extends BaseService {
             url: `/categories/subcategory/${id}`
         });
     }
+
+    getByName(name) {
+        return this.baseApi({
+            method: 'GET',
+            url: `/categories/${name}`
+        })
+    }
 }
 

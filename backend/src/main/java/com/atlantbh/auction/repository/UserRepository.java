@@ -2,6 +2,7 @@ package com.atlantbh.auction.repository;
 
 import com.atlantbh.auction.exceptions.RepositoryException;
 import com.atlantbh.auction.model.User;
+import com.atlantbh.auction.model.filter.NullFilterBuilder;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +19,7 @@ import java.util.Optional;
  * @author Harun Hasic
  */
 @Repository
-public class UserRepository extends BaseRepositoryImpl<User, Long> {
+public class UserRepository extends BaseRepositoryImpl<User, Long, NullFilterBuilder> {
 
     @Transactional
     public Optional<User> findByEmail(String email) throws RepositoryException {
