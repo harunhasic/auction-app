@@ -6,20 +6,20 @@ export const myAccountUrl = "/my_account";
 export const allCategoryUrl = "/categories";
 
 export const shopUrl = "/shop";
-export const about = "/shop/about";
-export const terms = "/shop/terms";
-export const privacy = "/shop/privacy";
+export const about = "/about";
+export const terms = "/terms";
+export const privacy = "/privacy";
 
 
 export function productUrl(product, category) {
-    return `/${encodeURI(category.name)}/${encodeURI(product.subcategory.name)}/${product.id}`;
+    return `/shop/${encodeURI(category.name)}/${encodeURI(product.subcategory.name)}/${product.id}`;
 }
 
 export function categoryUrl(category) {
-    return `/${encodeURI(category.name)}`;
+    return `/shop/${encodeURI(category.name)}`;
 }
 
 export function subcategoryUrl(subcategory) {
-    return `/${(subcategory.name)}`;
+    return `/shop/${subcategory.category.name}/${encodeURI(subcategory.name)}`;
 }
 

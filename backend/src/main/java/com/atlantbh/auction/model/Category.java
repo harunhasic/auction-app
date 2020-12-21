@@ -6,6 +6,12 @@ import org.apache.commons.lang3.NotImplementedException;
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * Model that is used as an category property for the products.
+ * Represents categories to which the subcategories will belong to.
+ *
+ * @author Harun Hasic
+ */
 @Entity
 @Table(name = "category")
 public class Category extends BaseModel<Category, Long> {

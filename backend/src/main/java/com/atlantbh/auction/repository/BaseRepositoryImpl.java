@@ -2,6 +2,8 @@ package com.atlantbh.auction.repository;
 
 import com.atlantbh.auction.exceptions.RepositoryException;
 import com.atlantbh.auction.model.BaseModel;
+import com.atlantbh.auction.model.PaginatedResult;
+import com.atlantbh.auction.model.filter.BaseFilterBuilder;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +21,7 @@ import java.util.List;
  * @param <I> represents models id
  * @author Harun Hasic
  */
-public class BaseRepositoryImpl<M extends BaseModel<M, I>, I> implements BaseRepository<M, I> {
+public class BaseRepositoryImpl<M extends BaseModel<M, I>, I, F extends BaseFilterBuilder<?, F>> implements BaseRepository<M, I, F> {
 
     @PersistenceContext
     protected EntityManager entityManager;
@@ -109,6 +111,22 @@ public class BaseRepositoryImpl<M extends BaseModel<M, I>, I> implements BaseRep
         } catch (Exception e) {
             throw new RepositoryException("The object could not be saved.", e);
         }
+    }
+
+    @Override
+    @Transactional
+    public PaginatedResult<M> find(F filterBuilder) {
+        PaginatedResult<M> paginatedResult = new PaginatedResult<>();
+        paginatedResult.setPageNumber(filterBuilder.getPageNumber());
+        paginatedResult.setPageSize(filterBuilder.getPageSize());
+        paginatedResult.setData(filterBuilder.buildCriteria(getBaseCriteria()).list());
+        paginatedResult.setAvailable(Math.toIntExact(count(filterBuilder)));
+        return paginatedResult;
+    }
+
+    private Long count(F filterBuilder) {
+        Long count = (Long) filterBuilder.buildCountCriteria(getBaseCriteria()).uniqueResult();
+        return count == null ? 0 : count;
     }
 }
 

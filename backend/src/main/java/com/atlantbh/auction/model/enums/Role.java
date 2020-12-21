@@ -1,4 +1,4 @@
-package com.atlantbh.auction.model;
+package com.atlantbh.auction.model.enums;
 
 
 import org.springframework.security.core.GrantedAuthority;

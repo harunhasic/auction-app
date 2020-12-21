@@ -6,6 +6,7 @@ import com.atlantbh.auction.model.Bid;
 import com.atlantbh.auction.model.Product;
 import com.atlantbh.auction.model.User;
 import com.atlantbh.auction.model.dto.BidRequest;
+import com.atlantbh.auction.model.filter.NullFilterBuilder;
 import com.atlantbh.auction.repository.BidRepository;
 import com.atlantbh.auction.repository.ProductRepository;
 import com.atlantbh.auction.repository.UserRepository;
@@ -16,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class BidService extends BaseService<Bid, Long, BidRepository> {
+public class BidService extends BaseService<Bid, Long, NullFilterBuilder, BidRepository> {
 
     @Autowired
     private ProductRepository productRepository;

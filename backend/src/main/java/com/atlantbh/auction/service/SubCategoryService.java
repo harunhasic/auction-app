@@ -3,13 +3,14 @@ package com.atlantbh.auction.service;
 import com.atlantbh.auction.exceptions.RepositoryException;
 import com.atlantbh.auction.exceptions.ServiceException;
 import com.atlantbh.auction.model.SubCategory;
+import com.atlantbh.auction.model.filter.NullFilterBuilder;
 import com.atlantbh.auction.repository.SubCategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class SubCategoryService extends BaseService<SubCategory, Long, SubCategoryRepository> {
+public class SubCategoryService extends BaseService<SubCategory, Long, NullFilterBuilder, SubCategoryRepository> {
 
     public List<SubCategory> getRandomSubcategories(int n) throws ServiceException {
         try {

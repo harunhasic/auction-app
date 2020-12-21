@@ -3,11 +3,15 @@ package com.atlantbh.auction.controller;
 
 import com.atlantbh.auction.exceptions.ServiceException;
 import com.atlantbh.auction.model.BaseModel;
+import com.atlantbh.auction.model.filter.BaseFilterBuilder;
 import com.atlantbh.auction.service.BaseService;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.transaction.Transactional;
 
@@ -17,7 +21,7 @@ import javax.transaction.Transactional;
  *
  * @author Harun Hasic
  */
-public abstract class BaseController<M extends BaseModel<M, I>, I, S extends BaseService<M, I, ?>> {
+public abstract class BaseController<M extends BaseModel<M, I>, I, S extends BaseService<M, I, ?,?>> {
 
     @Autowired
     protected S service;

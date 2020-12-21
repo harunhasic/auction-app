@@ -1,0 +1,83 @@
+@import "../defaults/defaults";
+
+.price-filter-container {
+    justify-content: space-evenly;
+    text-align: left;
+    min-height: 200px;
+    border: 1px solid $silver-color;
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.price-filter-title {
+    color: $purple-color;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 0.49px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.price-range-container {
+    position: relative;
+    height: 90px;
+}
+
+.chart-container {
+    bottom: 9px;
+    height: inherit;
+    display: flex;
+    position: absolute;
+    width: 100%;
+    align-items: flex-end;
+}
+
+.histogram-bar {
+    background-color: #e4e5ec;
+}
+
+.slider {
+    margin-top: 90px;
+    padding-top: 0;
+    bottom: 0;
+}
+
+.slider>.rc-slider-track {
+    cursor: pointer;
+    background-color: $purple-color;
+    border-radius: 0.1em;
+    height: 0.1em;
+}
+
+.slider>.rc-slider-rail {
+    cursor: pointer;
+    background-color: #E4E5EC;
+    border-radius: 0.1em;
+    height: 0.1em;
+}
+
+.slider>.rc-slider-step {
+    cursor: pointer;
+    height: 0.1em;
+}
+
+.slider>.rc-slider-handle {
+    position:absolute;
+    width: 1em;
+    height: 1em;
+    background-image: radial-gradient(circle, $purple-color 40%, #ffffff 40%);
+    margin-top: -0.5em;
+    border: 1px solid #E4E5EC;
+}
+
+.slider>.rc-slider-handle:hover {
+    border: 1px solid #b4b1af;
+}
+.prices-container {
+    margin-top:15px;
+    font-size: 14px;
+    letter-spacing: 0.49px;
+    color: #9b9b9b;
+}

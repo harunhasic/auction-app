@@ -2,7 +2,9 @@ package com.atlantbh.auction.repository;
 
 import com.atlantbh.auction.exceptions.RepositoryException;
 import com.atlantbh.auction.model.Product;
+import com.atlantbh.auction.model.filter.ProductFilterBuilder;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +12,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public class ProductRepository extends BaseRepositoryImpl<Product, Long> {
+public class ProductRepository extends BaseRepositoryImpl<Product, Long, ProductFilterBuilder> {
 
     public List<Product> getRandomFeaturedProducts(int n) throws RepositoryException {
         try {
@@ -65,6 +67,16 @@ public class ProductRepository extends BaseRepositoryImpl<Product, Long> {
                     .list();
         } catch (Exception e) {
             throw new RepositoryException("There was an issue with returning the top rated products", e);
+        }
+    }
+
+    public List<Double> getPrices() throws RepositoryException {
+        try {
+            return getBaseCriteria()
+                    .setProjection(Projections.property("startPrice"))
+                    .list();
+        } catch (Exception e) {
+            throw new RepositoryException("There was an issue with returning the prices of all products", e);
         }
     }
 

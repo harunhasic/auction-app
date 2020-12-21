@@ -3,13 +3,14 @@ package com.atlantbh.auction.service;
 import com.atlantbh.auction.exceptions.RepositoryException;
 import com.atlantbh.auction.exceptions.ServiceException;
 import com.atlantbh.auction.model.Product;
+import com.atlantbh.auction.model.filter.ProductFilterBuilder;
 import com.atlantbh.auction.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ProductService extends BaseService<Product, Long, ProductRepository> {
+public class ProductService extends BaseService<Product, Long, ProductFilterBuilder, ProductRepository> {
 
     public List<Product> getFeaturedRandomProducts(int n) throws ServiceException {
         try {
@@ -57,6 +58,14 @@ public class ProductService extends BaseService<Product, Long, ProductRepository
             return repository.get(productId);
         } catch (RepositoryException e) {
             throw new ServiceException("There was an issue with returning the product", e);
+        }
+    }
+
+    public List<Double> getPrices() throws ServiceException {
+        try {
+            return repository.getPrices();
+        } catch (RepositoryException e) {
+            throw new ServiceException("There were issues with returning the prices of all products", e);
         }
     }
 }

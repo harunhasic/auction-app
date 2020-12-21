@@ -1,0 +1,29 @@
+@import "../defaults/defaults";
+
+.list-group-filter > .filter-list-title {
+    color: $purple-color;
+    font-weight: bold;
+}
+
+.list-group-filter > .list-group-item:hover {
+    background-color: $silver-color;
+}
+
+.list-group-filter > .filter-list-title:hover {
+    background-color: initial;
+}
+
+.list-clear-icon {
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.color-name {
+    color: #252525;
+}
+
+
+.active-color {
+    font-weight: bold;
+    color : #9B9B9B;
+}

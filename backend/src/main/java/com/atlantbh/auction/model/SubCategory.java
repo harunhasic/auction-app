@@ -1,11 +1,18 @@
 package com.atlantbh.auction.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.NotImplementedException;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+/**
+ * Model that is used as an collection/subcategory property for the products.
+ * Represents the subcategories to which the products will belong to.
+ *
+ * @author Harun Hasic
+ */
 @Entity
 @Table(name = "subcategory")
 public class SubCategory extends BaseModel<SubCategory, Long> {
@@ -17,7 +24,7 @@ public class SubCategory extends BaseModel<SubCategory, Long> {
     private String photoUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonIgnoreProperties({"id", "subcategories"})
     private Category category;
 
     public SubCategory() {

@@ -1,4 +1,6 @@
-import BaseService from './BaseService'
+import BaseService from './BaseService';
+import { getParams, getUserId } from '../utils/LocalStorageUtils';
+import { authorizedApi } from './calls';
 
 export default class ProductService extends BaseService {
 
@@ -42,5 +44,20 @@ export default class ProductService extends BaseService {
             method: 'GET',
             url: `/products/related/${productId}/${n}`
         });
+    }
+
+    filter(params) {
+        return this.baseApi({
+            method: 'GET',
+            url: `/products/filter`,
+            params: params
+        })
+    }
+
+    getPrices() {
+        return this.baseApi({
+            method: 'GET',
+            url: '/products/prices'
+        })
     }
 }

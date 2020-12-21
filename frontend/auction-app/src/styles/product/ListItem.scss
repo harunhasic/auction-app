@@ -1,0 +1,77 @@
+@import "../defaults/defaults";
+
+.list-item-container {
+    display: flex;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.list-item-image {
+    width: 12vw;
+    height: 15.9vw;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.list-item-image:hover {
+    scale: 1.02;
+    transition: all 0.1s;
+}
+
+.list-info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.list-item-description {
+    font-style: $font-stack;
+    font-size: 16px;
+    color: #9b9b9b;
+    letter-spacing: 0.56px;
+    line-height: 21px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+
+.button-container {
+    display: flex;
+}
+
+.bid-button {
+    width: 100px;
+    min-height: 36px;
+    margin-top: 60px;
+    font-style: $font-stack;
+    background: #ffffff;
+    border: 3px solid #ececec;
+    font-size: 15px;
+    color: #252525;
+    letter-spacing: 0.52px;
+    line-height: 22px;
+}
+
+.auction-icon {
+    font-size: 22px;
+    margin-left: 5px;
+    color: gray;
+}
+
+.product-name {
+    cursor: pointer;
+}
+
+@media (max-width: 767px) {
+    .list-item-container {
+        flex-wrap: wrap;
+    }
+    .list-item-image {
+        margin-right: 0;
+        width: 100%;
+        height: 30vw;
+    }
+}

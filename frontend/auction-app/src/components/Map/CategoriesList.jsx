@@ -8,10 +8,10 @@ return (
     <React.Fragment>
         <Container className="categories-list-container">
             <Row >
-                <Col className="category-name">{category.name}
+                <Col className="category-list-name">{category.name}
                     {
                         category.subcategories.map(subcategory => (
-                            <Col className="subcategory-name" key={subcategory.id}>{subcategory.name}</Col>
+                            <Col className="subcategory-name" key={subcategory.id} >{subcategory.name}</Col>
                         ))
                     }
                 </Col>

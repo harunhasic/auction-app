@@ -2,13 +2,14 @@ package com.atlantbh.auction.repository;
 
 import com.atlantbh.auction.exceptions.RepositoryException;
 import com.atlantbh.auction.model.Bid;
+import com.atlantbh.auction.model.filter.NullFilterBuilder;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public class BidRepository extends BaseRepositoryImpl<Bid, Long> {
+public class BidRepository extends BaseRepositoryImpl<Bid, Long, NullFilterBuilder> {
 
     public List<Bid> getAll() throws RepositoryException {
         try {

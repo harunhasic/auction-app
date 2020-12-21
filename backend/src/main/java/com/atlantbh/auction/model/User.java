@@ -1,6 +1,7 @@
 package com.atlantbh.auction.model;
 
 import com.atlantbh.auction.model.dto.RegisterRequest;
+import com.atlantbh.auction.model.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -104,7 +105,9 @@ public class User extends BaseModel<User, Long> implements UserDetails {
         this.firstName = firstName;
     }
 
+
     @NotBlank(message = "Users last name is required.")
+
     public String getLastName() {
         return lastName;
     }
@@ -120,6 +123,7 @@ public class User extends BaseModel<User, Long> implements UserDetails {
     public void setEmail(String email) {
         this.email = email;
     }
+
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -237,3 +241,4 @@ public class User extends BaseModel<User, Long> implements UserDetails {
         return null;
     }
 }
+

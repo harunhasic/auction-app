@@ -32,7 +32,7 @@
   font-family: $font-stack;
   font-weight: lighter;
   font-size: 1em;
-  color: #8367d8bb;
+  color: $purple-color;
   letter-spacing: 0.84px;
 }
 
@@ -49,7 +49,7 @@
 
 .login-word {
   text-decoration: none;
-  color: #8367d8;
+  color: $purple-color;
   letter-spacing: 0.63px;
 }
 
@@ -58,9 +58,11 @@
   color: #f1f1f1;
   font-size: 14px;
 }
+
 .social-link {
   padding-right: 10px;
 }
+
 .header-logout {
   text-decoration: none;
   color: #9b9b9b;
@@ -165,5 +167,26 @@ a:hover {
   &:focus {
     box-shadow: none !important;
     background-color: transparent !important;
+  }
+
+  @media (max-width: 575px) {
+    .name-msg {
+      max-width: 20vw;
+    }
+    .welcome-msg {
+      max-width: 20vw;
+    }
+    .header-nav-links .nav-link {
+      padding: 0.25rem 0.5rem;
+    }
+    .lower-header-container {
+      flex-direction: column;
+    }
+    .lower-header-brand {
+      padding-top: 10px;
+    }
+    .lower-header-search {
+      width: 90%;
+    }
   }
 }

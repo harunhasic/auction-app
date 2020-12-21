@@ -65,6 +65,10 @@ export default class Register extends Component {
     });
   }
 
+  toLogin() {
+    this.props.history.push('/login');
+  }
+
   handleRegister(e) {
     e.preventDefault();
 
@@ -81,9 +85,9 @@ export default class Register extends Component {
     if (!this.checkBtn.context._errors.length) {
       this.authService.register(params).then(response => {
         this.setState({
-          message: response.data.message,
+          message: 'User registration successful. You can now log in.',
           successful: true
-        });
+        })
       }).catch(error => {
         this.setState({
           successful: false,
